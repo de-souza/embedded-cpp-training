@@ -3,12 +3,12 @@
 
 void main()
 {
-    int i = 3.7;
-    printf("The value of i is %d\n",i);
+    int a = 3.7;
+    printf("The value of a is %d\n", a);
 
-    // int i = 3.7 + 7.3;   // Impossible because i is already declared
-    // printf("%d\n",i);
+    // int a = 3.7 + 7.3;   // Impossible because a is already declared
+    // printf("%d\n", a);
 
-    i = 3.7 + 7.3;
-    printf("The value of i is %d\n",i);
+    a = 3.7 + 7.3;
+    printf("The value of a is %d\n", a);
 }
