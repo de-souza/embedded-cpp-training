@@ -1,4 +1,4 @@
-/* Check how to initialize an array and assign values to it. */
+/* Check how to manipulate arrays. */
 #include <stdio.h>
 
 void main()
