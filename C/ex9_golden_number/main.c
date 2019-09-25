@@ -1,4 +1,4 @@
-/* Ask the user to guess a number between 0 and 100. */
+/* Ask the user to guess a number between 0 and 99. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
