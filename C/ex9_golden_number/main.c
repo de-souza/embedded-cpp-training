@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-void main()
+int main()
 {
     int tries=0, number, guess, error;
     time_t t;
     srand((unsigned) time(&t));     // initialize the random number generator
     number = rand() % 100;
-    while (guess != number || tries == 0) {
+    while (1) {
         tries++;
         printf("Please enter a number between 0 and 99. n = ");
         while (!scanf("%d", &guess)) {
@@ -17,10 +17,13 @@ void main()
             int c;
             while ((c = getchar()) != '\n' && c != EOF) {}     // flush stdin
         }
-        if (guess < number)
+        if (guess < number) {
             printf("The number is higher.\n");
-        else if (guess > number)
+        } else if (guess > number) {
             printf("The number is lower.\n");
+        } else {
+            printf("Well done. Total number of tries: %d.\n", tries);
+            return 0;
+        }
     }
-    printf("Well done. Total number of tries: %d.\n", tries);
 }
