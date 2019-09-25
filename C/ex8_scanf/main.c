@@ -5,7 +5,7 @@ void main()
 {
     int i;
     char c;
-    char *s;
+    char s[128];
 
     printf("Please enter an integer. i = ");
     scanf("%d", &i);
@@ -14,7 +14,7 @@ void main()
     scanf(" %c", &c);  // the leading whitespace is necessary with char
 
     printf("Please enter a string. s = ");
-    scanf("%s", s);
+    scanf("%127s", s);
 
     printf("i = %d, c = %c, s = %s\n", i, c, s);
 }
