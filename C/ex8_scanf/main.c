@@ -11,7 +11,7 @@ void main()
     scanf("%d", &i);
 
     printf("Please enter a character. c = ");
-    scanf(" %c", &c);  // the leading whitespace is necessary with char
+    scanf(" %c", &c);  // space to ignore remaining leading whitespace
 
     printf("Please enter a string. s = ");
     scanf("%127s", s);
