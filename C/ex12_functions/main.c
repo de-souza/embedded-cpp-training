@@ -28,7 +28,7 @@ int safe_scanf(char *format, ...)
 {
     va_list args;
     va_start(args, format);
-    int r=vscanf(format, args);
+    int r = vscanf(format, args);
     va_end(args);
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {}  // flush stdin

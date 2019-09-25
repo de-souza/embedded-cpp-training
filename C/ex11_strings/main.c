@@ -4,11 +4,11 @@
 
 void main()
 {
-    char *name="Leo";
+    char *name = "Leo";
     char copy[strlen(name)];
-    char memory_before[]={'B', 'e', 'f', 'o', 'r', 'e', '\0'};
-    char bad_name[]={'L', 'e', 'o'};    // forget to add trailing zero
-    char memory_after[]={'A', 'f', 't', 'e', 'r', '\0'};
+    char memory_before[] = {'B', 'e', 'f', 'o', 'r', 'e', '\0'};
+    char bad_name[] = {'L', 'e', 'o'};    // forget to add trailing zero
+    char memory_after[] = {'A', 'f', 't', 'e', 'r', '\0'};
     strcpy(copy, name);
     printf("name = %s\n", name);
     printf("copy = %s\n", copy);
