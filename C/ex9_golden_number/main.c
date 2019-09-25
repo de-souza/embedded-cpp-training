@@ -22,5 +22,5 @@ void main()
         else if (guess > number)
             printf("The number is lower.\n");
     }
-    printf("Well done. Total tries: %d.\n", tries);
+    printf("Well done. Total number of tries: %d.\n", tries);
 }
