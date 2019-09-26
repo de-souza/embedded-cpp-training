@@ -115,7 +115,7 @@ void main()
     printf("\n--- capitalize(s) ---\n");
     query_string(s, "Please enter a string. s = ");
     capitalize(s);
-    printf("firstcapital(s) => s = %s\n", s);
+    printf("capitalize(s) => s = %s\n", s);
     
     printf("\n--- uppercase(s) ---\n");
     query_string(s, "Please enter a string. s = ");
