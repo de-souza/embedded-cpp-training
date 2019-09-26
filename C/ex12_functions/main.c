@@ -1,7 +1,11 @@
 /* Implement various functions. */
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
+
+#define STR_LEN 128
 
 int max(const int a, const int b)
 {
@@ -25,61 +29,75 @@ char Char(const int i)
     return (char) i;
 }
 
-char capital(char c)
-{
-    return ('a' <= c || c <= 'z') ? c - 32 : c;
-}
-
 void capitalize(char *restrict s)
 {
-    s[0] = capital(s[0]);
+    s[0] = toupper(s[0]);
 }
 
-int safe_scanf(const char *restrict format, ...)
+void uppercase(char *restrict s)
 {
-    int c, r;
-    va_list args;
-    va_start(args, format);
-    r = vscanf(format, args);
-    va_end(args);
-    while ((c = getchar()) != '\n' && c != EOF) {}  // flush stdin
-    return r;
+    int i = 0;
+    while (s[i++])
+        s[i] = toupper(s[i]);
+}
+
+void query_string(char *restrict s, const char *restrict message, const char *restrict name)
+{
+    printf((message ? message : "Please enter a string. %s = "), name);
+    fgets(s, STR_LEN, stdin);
+    s[strcspn(s, "\n")] = 0;
+}
+
+int query_number(const char *restrict name)
+{
+    int n;
+    char input[STR_LEN], *remainer;
+    query_string(input, "Please enter a number. %s = ", name);
+    n = strtol(input, &remainer, 0);
+    while (strlen(remainer) || remainer == input) {
+        query_string(input, "Not a number. Please try again. %s = ", name);
+        n = strtol(input, &remainer, 0);
+    }
+    return n;
+}
+
+char query_character(const char *restrict name)
+{
+    char input[STR_LEN];
+    query_string(input, "Please enter a character. %s = ", name);
+    while (strlen(input) != 1) {
+        query_string(input, "Not a character. Please try again. %s = ", name);
+    }
+    return input[0];
 }
 
 void main()
 {
     int a, b, i;
     char c;
-    char s[128];
+    char s[STR_LEN];
 
     printf("--- max(a, b), min(a, b) ---\n");
-
-    printf("Please enter a number. a = ");
-    while (!safe_scanf("%d", &a))
-        printf("This is not a number. Please try again. a = ");
-    printf("Please enter a number. b = ");
-    while (!safe_scanf("%d", &b))
-        printf("This is not a number. Please try again. b = ");
+    a = query_number("a");
+    b = query_number("b");
     printf("max(%d, %d) = %d\n", a, b, max(a,b));
     printf("min(%d, %d) = %d\n", a, b, min(a,b));
 
     printf("\n--- ascii(c) ---\n");
-
-    printf("Please enter a character. c = ");
-    safe_scanf("%c", &c);
+    c = query_character("c");
     printf("ascii('%c') = %d\n", c, ascii(c));
 
     printf("\n--- Char(i) ---\n");
-
-    printf("Please enter a number. i = ");
-    while (!safe_scanf("%d", &i))
-        printf("This is not a number. Please try again. i = ");
+    i = query_number("i");
     printf("Char(%d) = '%c'\n", i, Char(i));
 
     printf("\n--- capitalize(s) ---\n");
-
-    printf("Please enter a string. s = ");
-    safe_scanf("%127[^\n]", s);
+    query_string(s, 0, "s");
     capitalize(s);
     printf("firstcapital(s) => s = %s\n", s);
+    
+    printf("\n--- uppercase(s) ---\n");
+    query_string(s, 0, "s");
+    uppercase(s);
+    printf("uppercase(s) => s = %s\n", s);
 }
