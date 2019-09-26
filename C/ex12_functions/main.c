@@ -35,7 +35,7 @@ int safe_scanf(const char *restrict format, ...)
     return r;
 }
 
-int main()
+void main()
 {
     int a, b, i;
     char c;
