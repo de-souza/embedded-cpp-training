@@ -63,7 +63,7 @@ void query_string(char *restrict s, const char *restrict message)
     fgets(s, STR_LEN, stdin);
     size_t idx_newline = strcspn(s, "\n");
     while (s[idx_newline] != '\n') {
-        printf("Maximum %d characters. Please try again. : ", STR_LEN - 2);
+        printf("Maximum %d characters. Please try again : ", STR_LEN - 2);
         flush_stdin();
         fgets(s, STR_LEN, stdin);   
         idx_newline = strcspn(s, "\n");
