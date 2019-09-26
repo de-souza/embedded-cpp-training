@@ -26,11 +26,11 @@ char Char(const int i)
 
 int safe_scanf(const char *restrict format, ...)
 {
+    int c, r;
     va_list args;
     va_start(args, format);
-    int r = vscanf(format, args);
+    r = vscanf(format, args);
     va_end(args);
-    int c;
     while ((c = getchar()) != '\n' && c != EOF) {}  // flush stdin
     return r;
 }
