@@ -1,5 +1,4 @@
 /* Implement various functions. */
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -37,8 +36,19 @@ void capitalize(char *restrict s)
 void uppercase(char *restrict s)
 {
     int i = 0;
-    while (s[i++])
+    while (s[i]) {
         s[i] = toupper(s[i]);
+        i++;
+    }
+}
+
+void lowercase(char *restrict s)
+{
+    int i = 0;
+    while (s[i]) {
+        s[i] = tolower(s[i]);
+        i++;
+    }
 }
 
 void query_string(char *restrict s, const char *restrict message, const char *restrict name)
@@ -100,4 +110,9 @@ void main()
     query_string(s, 0, "s");
     uppercase(s);
     printf("uppercase(s) => s = %s\n", s);
+    
+    printf("\n--- lowercase(s) ---\n");
+    query_string(s, 0, "s");
+    lowercase(s);
+    printf("lowercase(s) => s = %s\n", s);
 }
