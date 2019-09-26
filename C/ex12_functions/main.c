@@ -42,6 +42,7 @@ int main()
     char s[128];
 
     printf("--- max(a, b), min(a, b) ---\n");
+
     printf("Please enter a number. a = ");
     while (!safe_scanf("%d", &a))
         printf("This is not a number. Please try again. a = ");
@@ -52,17 +53,20 @@ int main()
     printf("min(%d, %d) = %d\n", a, b, min(a,b));
 
     printf("--- ascii(c) ---\n");
+
     printf("Please enter a character. c = ");
     safe_scanf("%c", &c);
     printf("ascii('%c') = %d\n", c, ascii(c));
 
     printf("--- Char(i) ---\n");
+
     printf("Please enter a number. i = ");
     while (!safe_scanf("%d", &i))
         printf("This is not a number. Please try again. i = ");
     printf("Char(%d) = '%c'\n", i, Char(i));
 
     printf("--- firstcapital(s) ---\n");
+
     printf("Please enter a string. s = ");
     scanf("%127[^\n]s", s);
     printf("%s\n", s);
