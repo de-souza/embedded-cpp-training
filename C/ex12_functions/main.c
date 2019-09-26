@@ -59,10 +59,9 @@ void flush_stdin()
 
 void query_string(char *restrict s, const char *restrict message)
 {
-    size_t idx_newline;
     printf("%s", message);
     fgets(s, STR_LEN, stdin);
-    idx_newline = strcspn(s, "\n");
+    size_t idx_newline = strcspn(s, "\n");
     while (s[idx_newline] != '\n') {
         printf("Maximum %d characters. Please try again. : ", STR_LEN - 2);
         flush_stdin();
@@ -74,10 +73,9 @@ void query_string(char *restrict s, const char *restrict message)
 
 int query_number(const char *restrict message)
 {
-    int n;
     char input[STR_LEN], *remainer;
     query_string(input, message);
-    n = strtol(input, &remainer, 0);
+    int n = strtol(input, &remainer, 0);
     while (strlen(remainer) || remainer == input) {
         query_string(input, "Not a number. Please try again : ");
         n = strtol(input, &remainer, 0);
