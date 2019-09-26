@@ -2,29 +2,29 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-int max(int a, int b)
+int max(const int a, const int b)
 {
     return a > b ? a : b;
 }
 
-int min(int a, int b)
+int min(const int a, const int b)
 {
     return a < b ? a : b;
 }
 
-int ascii(char c)
+int ascii(const char c)
 {
     return (int) c;
 }
 
-char Char(int i)
+char Char(const int i)
 {
     if (i < 0 || i > 255)
         printf("The ASCII code must be between 0 and 255!\n");
     return (char) i;
 }
 
-int safe_scanf(char *format, ...)
+int safe_scanf(const char *restrict format, ...)
 {
     va_list args;
     va_start(args, format);
