@@ -14,11 +14,10 @@ void reverse_using_arr(char arr[])
 
 void reverse_using_ptr(char *restrict ptr)
 {
-    char *ptr_end = ptr + strlen(ptr) - 1;
-    while (ptr < ptr_end) {
+    for (char *end = ptr + strlen(ptr) - 1; ptr < end; ptr++, end--) {
         char temp = *ptr;
-        *ptr++ = *ptr_end;
-        *ptr_end-- = temp;
+        *ptr = *end;
+        *end = temp;
     }
 }
 
