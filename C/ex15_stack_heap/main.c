@@ -1,4 +1,4 @@
-/* Check which addresses are on the stack (static) and which are on the heap. */
+/* Check which addresses are on the stack and which are on the heap. */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -32,25 +32,31 @@ void main()
     int local_arr1[8];
     int local_arr2[8];
     int local_arr3[8];
-    printf("Address of local_var1: %p\n", &local_var1);
-    printf("Address of local_var2: %p\n", &local_var2);
-    printf("Address of local_var3: %p\n", &local_var3);
-    printf("Address of global_var1: %p\n", &global_var1);
-    printf("Address of global_var2: %p\n", &global_var2);
-    printf("Address of global_var3: %p\n", &global_var3);
+    int *ptr1 = (int *) malloc(1024 * sizeof(int));
+    int *ptr2 = (int *) malloc(1024 * sizeof(int));
+    int *ptr3 = (int *) malloc(1024 * sizeof(int));
     printf("Address of static_var1: %p\n", &static_var1);
     printf("Address of static_var2: %p\n", &static_var2);
     printf("Address of static_var3: %p\n", &static_var3);
-    printf("Address of local_arr1: %p\n", &local_arr1);
-    printf("Address of local_arr2: %p\n", &local_arr2);
-    printf("Address of local_arr3: %p\n", &local_arr3);
-    printf("Address of global_arr1: %p\n", &global_arr1);
-    printf("Address of global_arr2: %p\n", &global_arr2);
-    printf("Address of global_arr3: %p\n", &global_arr3);
-    printf("Address of const1: %p\n", &const1);
-    printf("Address of const2: %p\n", &const2);
-    printf("Address of const3: %p\n", &const3);
+    printf("Address of global_var1: %p\n", &global_var1);
+    printf("Address of global_var2: %p\n", &global_var2);
+    printf("Address of global_var3: %p\n", &global_var3);
+    printf("Address of global_arr1: %p\n", global_arr1);
+    printf("Address of global_arr2: %p\n", global_arr2);
+    printf("Address of global_arr3: %p\n", global_arr3);
     printf("Address of function1: %p\n", &function1);
     printf("Address of function2: %p\n", &function2);
     printf("Address of function3: %p\n", &function3);
+    printf("Address of const1: %p\n", &const1);
+    printf("Address of const2: %p\n", &const2);
+    printf("Address of const3: %p\n", &const3);
+    printf("Address of local_var1: %p\n", &local_var1);
+    printf("Address of local_var2: %p\n", &local_var2);
+    printf("Address of local_var3: %p\n", &local_var3);
+    printf("Address of local_arr1: %p\n", local_arr1);
+    printf("Address of local_arr2: %p\n", local_arr2);
+    printf("Address of local_arr3: %p\n", local_arr3);
+    printf("Address of ptr1: %p\n", ptr1);
+    printf("Address of ptr2: %p\n", ptr2);
+    printf("Address of ptr3: %p\n", ptr3);
 }
