@@ -1,19 +1,15 @@
-/* Check how to act on pointers with functions. */
+/* Check how to use pointers in functions. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void parse_date(const char *date, int *day, int *month, int *year)
+void parse_date(const char *date, int *restrict day, int *restrict month, int *restrict year)
 {
-    char s_day[3];
-    char s_month[3];
-    char s_year[5];
-    strncpy(s_day, date, 2);
-    strncpy(s_month, date+3, 2);
-    strncpy(s_year, date+6, 4);
-    *day = strtol(s_day, NULL, 0);
-    *month = strtol(s_month, NULL, 0);
-    *year = strtol(s_year, NULL, 0);
+    char buffer[strlen(date)+1];
+    strcpy(buffer, date);
+    *day = strtol(strtok(buffer, "/"), NULL, 0);
+    *month = strtol(strtok(NULL, "/"), NULL, 0);
+    *year = strtol(strtok(NULL, "/"), NULL, 0);
 }
 
 void main()
