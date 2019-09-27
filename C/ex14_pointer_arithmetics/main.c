@@ -12,7 +12,7 @@ void reverse_using_arr(char arr[])
     }
 }
 
-void reverse_using_ptr(char *ptr)
+void reverse_using_ptr(char *restrict ptr)
 {
     char *ptr_end = ptr + strlen(ptr) - 1;
     while (ptr < ptr_end) {
