@@ -15,14 +15,11 @@ void reverse_using_arr(char arr[])
 void reverse_using_ptr(char *ptr)
 {
     int len = strlen(ptr);
-    char *ptr2 = ptr + len - 1;
-    int offset = (len+1) % 2;
-    while(ptr != ptr2 + offset) {
+    char *ptr_end = ptr + len - 1;
+    while (ptr < ptr_end) {
         char temp = *ptr;
-        *ptr = *ptr2;
-        *ptr2 = temp;
-        ptr++;
-        ptr2--;
+        *ptr++ = *ptr_end;
+        *ptr_end-- = temp;
     }
 }
 
