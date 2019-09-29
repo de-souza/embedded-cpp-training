@@ -32,9 +32,9 @@ void main()
     int local_arr1[8];
     int local_arr2[8];
     int local_arr3[8];
-    int *ptr1 = (int *) malloc(1024 * sizeof(int));
-    int *ptr2 = (int *) malloc(1024 * sizeof(int));
-    int *ptr3 = (int *) malloc(1024 * sizeof(int));
+    int *ptr1 = malloc(sizeof (int) * 1024);
+    int *ptr2 = malloc(sizeof (int) * 1024);
+    int *ptr3 = malloc(sizeof (int) * 1024);
     printf("Address of static_var1: %p\n", &static_var1);
     printf("Address of static_var2: %p\n", &static_var2);
     printf("Address of static_var3: %p\n", &static_var3);
