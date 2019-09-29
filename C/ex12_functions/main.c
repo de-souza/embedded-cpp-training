@@ -35,20 +35,14 @@ void capitalize(char *restrict s)
 
 void uppercase(char *restrict s)
 {
-    int i = 0;
-    while (s[i]) {
+    for (int i=0; s[i]; i++)
         s[i] = toupper(s[i]);
-        i++;
-    }
 }
 
 void lowercase(char *restrict s)
 {
-    int i = 0;
-    while (s[i]) {
+    for (int i=0; s[i]; i++)
         s[i] = tolower(s[i]);
-        i++;
-    }
 }
 
 void flush_stdin()
