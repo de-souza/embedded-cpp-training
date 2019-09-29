@@ -24,7 +24,7 @@ int ascii(const char c)
 char Char(const int i)
 {
     if (i < 0 || i > 255)
-        printf("The ASCII code must be between 0 and 255!\n");
+        puts("The ASCII code must be between 0 and 255!");
     return (char) i;
 }
 
@@ -92,31 +92,31 @@ void main()
     char c;
     char s[STR_LEN];
 
-    printf("--- max(a, b), min(a, b) ---\n");
+    puts("--- max(a, b), min(a, b) ---");
     a = query_number("Please enter a number. a = ");
     b = query_number("Please enter a number. b = ");
     printf("max(%d, %d) = %d\n", a, b, max(a,b));
     printf("min(%d, %d) = %d\n", a, b, min(a,b));
 
-    printf("\n--- ascii(c) ---\n");
+    puts("--- ascii(c) ---");
     c = query_character("Please enter a character. c = ");
     printf("ascii('%c') = %d\n", c, ascii(c));
 
-    printf("\n--- Char(i) ---\n");
+    puts("--- Char(i) ---");
     i = query_number("Please enter a number. i = ");
     printf("Char(%d) = '%c'\n", i, Char(i));
 
-    printf("\n--- capitalize(s) ---\n");
+    puts("--- capitalize(s) ---");
     query_string(s, "Please enter a string. s = ");
     capitalize(s);
     printf("capitalize(s) => s = %s\n", s);
     
-    printf("\n--- uppercase(s) ---\n");
+    puts("--- uppercase(s) ---");
     query_string(s, "Please enter a string. s = ");
     uppercase(s);
     printf("uppercase(s) => s = %s\n", s);
     
-    printf("\n--- lowercase(s) ---\n");
+    puts("--- lowercase(s) ---");
     query_string(s, "Please enter a string. s = ");
     lowercase(s);
     printf("lowercase(s) => s = %s\n", s);

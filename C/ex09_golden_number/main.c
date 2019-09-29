@@ -17,9 +17,9 @@ int main()
             while ((guess = getchar()) != '\n' && guess != EOF) {}  // flush stdin
         }
         if (guess < number) {
-            printf("The number is higher.\n");
+            puts("The number is higher.");
         } else if (guess > number) {
-            printf("The number is lower.\n");
+            puts("The number is lower.");
         } else {
             printf("Well done. Total number of tries: %d.\n", tries);
             return 0;
