@@ -1,6 +1,5 @@
-/* How to use variadic functions. */
+/* How to implement variadic functions. */
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
 
 void printf_newline(const char *restrict format, ...)
