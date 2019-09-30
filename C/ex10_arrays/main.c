@@ -1,7 +1,7 @@
 /* Check how to manipulate arrays. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     int size=30, arr[size], inv_arr[size];
     arr[0] = inv_arr[size-1] = 1;

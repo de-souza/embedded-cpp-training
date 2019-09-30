@@ -21,7 +21,7 @@ void reverse_using_ptr(char *restrict ptr)
     }
 }
 
-void main()
+int main()
 {
     char maman[] = "maman";
     char papa[] = "papa";

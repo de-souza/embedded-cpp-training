@@ -1,7 +1,7 @@
 /* Check how to manipulate pointers. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     char c = 'a';
     char *p = &c;   // use "*" to declare p as a pointer

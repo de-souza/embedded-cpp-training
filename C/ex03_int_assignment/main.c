@@ -1,7 +1,7 @@
 /* Check what happens when assigning floats to ints. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     int a = 3.7;
     printf("The value of a is %d\n", a);

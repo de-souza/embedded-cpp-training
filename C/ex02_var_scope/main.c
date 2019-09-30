@@ -1,7 +1,7 @@
 /* Check how scoping affects variables. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     int a = 5;
     printf("The value of a is %d\n", a);

@@ -21,7 +21,7 @@ void function2()
 void function3()
 {}
 
-void main()
+int main()
 {
     const int const1;
     const int const2;

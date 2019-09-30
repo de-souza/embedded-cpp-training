@@ -1,7 +1,7 @@
 /* Check different types of variable assignment. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     int a = 3, b, c;
 

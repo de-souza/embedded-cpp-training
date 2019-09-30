@@ -12,7 +12,7 @@ void parse_date(const char *date, int *restrict day, int *restrict month, int *r
     *year = strtol(strtok(NULL, "/"), NULL, 0);
 }
 
-void main()
+int main()
 {
     char *date = "23/03/2014";
     int day, month, year;

@@ -1,7 +1,7 @@
 /* Check how bitwise operators affect different types of variables. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     {
         int a = 17;     // 0001 0001

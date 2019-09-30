@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void main()
+int main()
 {
     char *name = "Leo";
     char copy[strlen(name)];

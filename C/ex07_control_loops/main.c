@@ -1,7 +1,7 @@
 /* Use a control loop to display characters a-z and their ASCII code. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     puts("Characters a-z and their ASCII code:");
     for (char c='a'; c <= 'z'; c++)

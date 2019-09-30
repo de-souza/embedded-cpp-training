@@ -1,7 +1,7 @@
 /* Use the function scanf to read user input. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     int i;
     char c;

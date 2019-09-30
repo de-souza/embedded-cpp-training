@@ -86,7 +86,7 @@ char query_character(const char *restrict message)
     return input[0];
 }
 
-void main()
+int main()
 {
     int a, b, i;
     char c;

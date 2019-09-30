@@ -1,7 +1,7 @@
 /* Simple "Hello, World!" program. */
 #include <stdio.h>
 
-void main()
+int main()
 {
     puts("Hello World!");
 }
