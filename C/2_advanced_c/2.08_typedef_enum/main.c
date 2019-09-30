@@ -18,6 +18,6 @@ const char *day_t_to_str(day_t d)
 
 int main()
 {
-    for (day_t d=mon; d<=sun; d++)
+    for (day_t d=mon; d <= sun; d++)
         printf("%s\n", day_t_to_str(d));
 }
