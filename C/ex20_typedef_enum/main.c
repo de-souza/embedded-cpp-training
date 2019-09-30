@@ -3,7 +3,7 @@
 
 typedef enum {mon, tue, wed, thu, fri, sat, sun} day_t;
 
-const char *string_from_day_t(day_t d)
+const char *day_t_to_str(day_t d)
 {
     switch (d) {
     case mon: return "Monday";
@@ -19,5 +19,5 @@ const char *string_from_day_t(day_t d)
 int main()
 {
     for (day_t d=mon; d<=sun; d++)
-        printf("%s\n", string_from_day_t(d));
+        printf("%s\n", day_t_to_str(d));
 }
