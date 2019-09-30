@@ -7,9 +7,12 @@ void parse_date(const char *date, int *restrict day, int *restrict month, int *r
 {
     char buffer[strlen(date)+1];
     strcpy(buffer, date);
-    *day = strtol(strtok(buffer, "/"), NULL, 0);
-    *month = strtol(strtok(NULL, "/"), NULL, 0);
-    *year = strtol(strtok(NULL, "/"), NULL, 0);
+    char *s_day = strtok(buffer, "/");
+    char *s_month = strtok(NULL, "/");
+    char *s_year = strtok(NULL, "/");
+    *day = strtol(s_day, NULL, 0);
+    *month = strtol(s_month, NULL, 0);
+    *year = strtol(s_year, NULL, 0);
 }
 
 int main()
