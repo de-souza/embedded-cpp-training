@@ -84,13 +84,26 @@ void copy_book(book_t *ptr_dest, book_t *ptr_source)
 
 }
 
-void add_book(book_t *shelf, const int len)
+void insert_book(book_t *shelf, const int len)
 {
     book_t new_book;
     puts("\nFirst, enter the new book's characteristics.\n");
     enter_book(&new_book);
     puts("\nNow, enter the index of the book in the shelf.\n");
-    shelf[enter_index(len)] = new_book;
+    book_t *ptr_new_book = shelf + enter_index(len);
+    book_t *ptr_book = ptr_new_book;
+    if (is_not_empty(ptr_new_book)) {
+        while (is_not_empty(ptr_book++));
+        book_t *ptr_previous_book = ptr_book - 1;
+        while (ptr_previous_book >= ptr_new_book) {
+            copy_book(ptr_book, ptr_previous_book);
+            ptr_book--, ptr_previous_book--;
+        }
+    } else {
+        while (!is_not_empty(--ptr_new_book));
+        ptr_new_book++;
+    }
+    *ptr_new_book = new_book;
     puts("");
 }
 
@@ -98,8 +111,8 @@ void remove_book(book_t *shelf, const int len)
 {
     puts("\nChoose the index of the book to delete.\n");
     book_t *ptr_book = shelf + enter_index(len);
+    book_t *ptr_next_book = ptr_book + 1;
     while (is_not_empty(ptr_book)) {
-        book_t *ptr_next_book = ptr_book + 1;
         copy_book(ptr_book, ptr_next_book);
         ptr_book++, ptr_next_book++;
     }
@@ -108,9 +121,9 @@ void remove_book(book_t *shelf, const int len)
 
 void list_books(book_t *shelf, int len)
 {
-    book_t *ptr_book = shelf;
     puts("\nBooks currently on the shelf:\n");
     int i = 0;
+    book_t *ptr_book = shelf;
     while (is_not_empty(ptr_book)) {
         printf("%d. %s - %s (%d)\n", i, ptr_book->author, ptr_book->title, ptr_book->year);
         ptr_book++, i++;
@@ -136,7 +149,7 @@ int main()
         puts("  Q. Quit program.");
         printf("Please enter your selection: ");
         switch (enter_char()) {
-        case '1': add_book(shelf, len); break;
+        case '1': insert_book(shelf, len); break;
         case '2': remove_book(shelf, len); break;
         case '3': list_books(shelf, len); break;
         case 'q':
