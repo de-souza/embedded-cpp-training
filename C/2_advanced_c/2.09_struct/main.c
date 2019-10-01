@@ -59,7 +59,7 @@ void enter_book(book_t *ptr_book)
     ptr_book->year = enter_num(buffer, sizeof(buffer));
 }
 
-void add_book(book_t *shelf, int len)
+void add_book(book_t *shelf)
 {
     book_t new_book;
     char buffer[10];
@@ -72,7 +72,7 @@ void add_book(book_t *shelf, int len)
     puts("");
 }
 
-void remove_book(book_t *shelf, int len)
+void remove_book(book_t *shelf)
 {
     book_t empty_book = { "", "", 0 };
     char buffer[10];
@@ -114,8 +114,8 @@ int main()
         puts("  Q. Quit program.");
         printf("\nPlease enter a character: ");
         switch (enter_char()) {
-        case '1': add_book(shelf, len); break;
-        case '2': remove_book(shelf, len); break;
+        case '1': add_book(shelf); break;
+        case '2': remove_book(shelf); break;
         case '3': list_books(shelf, len); break;
         case 'q':
         case 'Q': return 0;
