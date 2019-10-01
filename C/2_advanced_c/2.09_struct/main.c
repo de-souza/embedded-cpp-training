@@ -35,7 +35,7 @@ char enter_char()
     return buffer[0];
 }
 
-int enter_num(char buffer, const int max_size)
+int enter_num(char *buffer, const int max_size)
 {
     char *endptr;
     enter_string(buffer, max_size);
@@ -48,18 +48,24 @@ int enter_num(char buffer, const int max_size)
     return n;
 }
 
+void enter_book(book_t *ptr_book)
+{
+    char buffer[6];
+    printf("Please enter an author: ");
+    enter_string(ptr_book->author, sizeof(ptr_book->author));
+    printf("Please enter an title: ");
+    enter_string(ptr_book->title, sizeof(ptr_book->title));
+    printf("Please enter a year: ");
+    ptr_book->year = enter_num(buffer, sizeof(buffer));
+}
+
 void add_book(book_t *shelf, int len)
 {
     book_t new_book;
     char buffer[10];
-    puts("\nFirst, enter the new book's characteristics.\n");
-    printf("Please enter an author: ");
-    enter_string(new_book.author, sizeof(new_book.author));
-    printf("Please enter an title: ");
-    enter_string(new_book.title, sizeof(new_book.title));
-    printf("Please enter a year: ");
-    new_book.year = enter_num(buffer, 6);
-    puts("\nNow, enter the index of the book in the shelf.\n");
+    puts("\nFirst, enter the new book's characteristics.");
+    enter_book(&new_book);
+    puts("Now, enter the index of the book in the shelf.");
     printf("Please enter an index: ");
     int idx = enter_num(buffer, sizeof(buffer));
     shelf[idx] = new_book;
