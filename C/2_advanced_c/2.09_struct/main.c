@@ -33,7 +33,7 @@ int enter_num(char *buffer, const int max_size)
     char *endptr;
     enter_string(buffer, max_size);
     int n = strtol(buffer, &endptr, 10);
-    while (strlen(endptr) || endptr == buffer) {
+    while (strlen(endptr) != 0 || endptr == buffer) {
         printf("Not a number. Please try again: ");
         enter_string(buffer, sizeof(buffer));
         n = strtol(buffer, &endptr, 10);
@@ -73,7 +73,15 @@ void enter_book(book_t *ptr_book)
 
 int is_not_empty(book_t *ptr_book)
 {
-    return ptr_book->author[0] && ptr_book->title[0] && ptr_book->year;
+    return ptr_book->author && ptr_book->title && ptr_book->year;
+}
+
+void copy_book(book_t *ptr_dest, book_t *ptr_source)
+{
+    strcpy(ptr_dest->author, ptr_source->author);
+    strcpy(ptr_dest->title, ptr_source->title);
+    ptr_dest->year = ptr_source->year;
+
 }
 
 void add_book(book_t *shelf, const int len)
@@ -82,17 +90,19 @@ void add_book(book_t *shelf, const int len)
     puts("\nFirst, enter the new book's characteristics.\n");
     enter_book(&new_book);
     puts("\nNow, enter the index of the book in the shelf.\n");
-    int idx = enter_index(len);
-    shelf[idx] = new_book;
+    shelf[enter_index(len)] = new_book;
     puts("");
 }
 
 void remove_book(book_t *shelf, const int len)
 {
-    book_t empty_book = { "", "", 0 };
     puts("\nChoose the index of the book to delete.\n");
-    int idx = enter_index(len);
-    shelf[idx] = empty_book;
+    book_t *ptr_book = shelf + enter_index(len);
+    while (is_not_empty(ptr_book)) {
+        book_t *ptr_next_book = ptr_book + 1;
+        copy_book(ptr_book, ptr_next_book);
+        ptr_book++, ptr_next_book++;
+    }
     puts("");
 }
 
