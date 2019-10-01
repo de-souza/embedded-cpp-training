@@ -28,13 +28,6 @@ void enter_string(char *buffer, const int max_size)
     buffer[idx_newline] = 0;
 }
 
-char enter_char()
-{
-    char buffer[3];
-    enter_string(buffer, sizeof(buffer));
-    return buffer[0];
-}
-
 int enter_num(char *buffer, const int max_size)
 {
     char *endptr;
@@ -48,6 +41,26 @@ int enter_num(char *buffer, const int max_size)
     return n;
 }
 
+char enter_char()
+{
+    char buffer[3];
+    printf("Please enter a character: ");
+    enter_string(buffer, sizeof(buffer));
+    return buffer[0];
+}
+
+int enter_index(const int len)
+{
+    char buffer[10];
+    printf("Please enter an index: ");
+    int i = enter_num(buffer, sizeof(buffer));
+    while (i < 0 || i >= len) {
+        printf("Invalid index (0 < i < %d). Please try again: ", len - 1);
+        i = enter_num(buffer, sizeof(buffer));
+    }
+    return i;
+}
+
 void enter_book(book_t *ptr_book)
 {
     char buffer[6];
@@ -59,26 +72,23 @@ void enter_book(book_t *ptr_book)
     ptr_book->year = enter_num(buffer, sizeof(buffer));
 }
 
-void add_book(book_t *shelf)
+void add_book(book_t *shelf, const int len)
 {
     book_t new_book;
-    char buffer[10];
-    puts("\nFirst, enter the new book's characteristics.");
+    puts("\nFirst, enter the new book's characteristics.\n");
     enter_book(&new_book);
-    puts("Now, enter the index of the book in the shelf.");
-    printf("Please enter an index: ");
-    int idx = enter_num(buffer, sizeof(buffer));
+    puts("\nNow, enter the index of the book in the shelf.\n");
+    int idx = enter_index(len);
     shelf[idx] = new_book;
     puts("");
 }
 
-void remove_book(book_t *shelf)
+void remove_book(book_t *shelf, const int len)
 {
     book_t empty_book = { "", "", 0 };
     char buffer[10];
     puts("\nChoose the index of the book to delete.\n");
-    printf("Please enter an index: ");
-    int idx = enter_num(buffer, sizeof(buffer));
+    int idx = enter_index(len);
     shelf[idx] = empty_book;
     puts("");
 }
@@ -112,10 +122,9 @@ int main()
         puts("  2. Remove a book.");
         puts("  3. List all books.");
         puts("  Q. Quit program.");
-        printf("\nPlease enter a character: ");
         switch (enter_char()) {
-        case '1': add_book(shelf); break;
-        case '2': remove_book(shelf); break;
+        case '1': add_book(shelf, len); break;
+        case '2': remove_book(shelf, len); break;
         case '3': list_books(shelf, len); break;
         case 'q':
         case 'Q': return 0;
