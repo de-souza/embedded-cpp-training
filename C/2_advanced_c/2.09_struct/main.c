@@ -44,7 +44,6 @@ int enter_num(char *buffer, const int max_size)
 char enter_char()
 {
     char buffer[3];
-    printf("Please enter a character: ");
     enter_string(buffer, sizeof(buffer));
     return buffer[0];
 }
@@ -72,6 +71,11 @@ void enter_book(book_t *ptr_book)
     ptr_book->year = enter_num(buffer, sizeof(buffer));
 }
 
+int is_not_empty(book_t *ptr_book)
+{
+    return ptr_book->author[0] && ptr_book->title[0] && ptr_book->year;
+}
+
 void add_book(book_t *shelf, const int len)
 {
     book_t new_book;
@@ -86,7 +90,6 @@ void add_book(book_t *shelf, const int len)
 void remove_book(book_t *shelf, const int len)
 {
     book_t empty_book = { "", "", 0 };
-    char buffer[10];
     puts("\nChoose the index of the book to delete.\n");
     int idx = enter_index(len);
     shelf[idx] = empty_book;
@@ -95,13 +98,12 @@ void remove_book(book_t *shelf, const int len)
 
 void list_books(book_t *shelf, int len)
 {
-    book_t *ptr = shelf;
+    book_t *ptr_book = shelf;
     puts("\nBooks currently on the shelf:\n");
-    int i=0;
-    while (ptr != shelf + len) {
-        if (ptr->author[0] != '\0' && ptr->title[0] != '\0' && ptr->year != 0)
-            printf("%d. %s - %s (%d)\n", i, ptr->author, ptr->title, ptr->year);
-        ptr++, i++;
+    int i = 0;
+    while (is_not_empty(ptr_book)) {
+        printf("%d. %s - %s (%d)\n", i, ptr_book->author, ptr_book->title, ptr_book->year);
+        ptr_book++, i++;
     }
     puts("");
 }
@@ -122,6 +124,7 @@ int main()
         puts("  2. Remove a book.");
         puts("  3. List all books.");
         puts("  Q. Quit program.");
+        printf("Please enter your selection: ");
         switch (enter_char()) {
         case '1': add_book(shelf, len); break;
         case '2': remove_book(shelf, len); break;
