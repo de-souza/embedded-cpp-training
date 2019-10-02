@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LEN_SHELF 100       // 100 = 99 books + 1 empty slot
-#define MAX_SIZE_INDEX 10   // 10 = 8 digits + \n + \0
-#define MAX_SIZE_YEAR 6     // 6 = 4 digits + \n + \0
+#define SHELF_LEN 100       // 100 = max 99 books + 1 empty slot
+#define INDEX_MAX_SIZE 10   // 10 = max 8 digits + \n + \0
+#define YEAR_MAX_SIZE 6     // 6 = max 4 digits + \n + \0
 
 typedef struct {
     char author[40];
@@ -29,7 +29,7 @@ void safe_fgets(char *buffer, const int max_size)
         fgets(buffer, max_size, stdin);   
         idx_newline = strcspn(buffer, "\n");
     }
-    buffer[idx_newline] = 0;
+    buffer[idx_newline] = '\0';
 }
 
 char safe_getchar()
@@ -54,7 +54,7 @@ int enter_num(char *buffer, const int max_size)
 
 int enter_index(const int len)
 {
-    char buffer[MAX_SIZE_INDEX];
+    char buffer[INDEX_MAX_SIZE];
     printf("Please enter an index: ");
     int i = enter_num(buffer, sizeof(buffer));
     while (i < 1 || i > len - 2) {
@@ -66,7 +66,7 @@ int enter_index(const int len)
 
 void enter_book(book_t *ptr_book)
 {
-    char buffer[MAX_SIZE_YEAR];
+    char buffer[YEAR_MAX_SIZE];
     printf("Please enter an author: ");
     safe_fgets(ptr_book->author, sizeof(ptr_book->author));
     printf("Please enter an title: ");
@@ -139,7 +139,7 @@ void list_books(book_t *ptr_first_book, const int len)
 
 int main()
 {
-    book_t shelf[LEN_SHELF] = {
+    book_t shelf[SHELF_LEN] = {
         { "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978 },
         { "Nassim Nicholas Taleb", "The Black Swan", 2008 },
         { "Nick Bostrom", "Superintelligence", 2008 },
