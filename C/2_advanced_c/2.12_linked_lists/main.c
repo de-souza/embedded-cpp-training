@@ -25,7 +25,7 @@ void safe_fgets(char *buffer, const int max_size)
 
 char safe_getchar()
 {
-    char buffer[3];
+    char buffer[3];  // allow 1 character
     safe_fgets(buffer, sizeof(buffer));
     return buffer[0];
 }
