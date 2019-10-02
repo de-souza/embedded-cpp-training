@@ -138,23 +138,6 @@ book_t *add(book_t *head)
     return push(head, book);
 }
 
-book_t *delete(book_t *head)
-{
-    if (head != NULL) {
-        puts("\nPlease enter the index of the book to delete.\n");
-        int max_idx = index_of_last_book(head);
-        int idx = enter_index(max_idx);
-        if (idx != 1) {
-            book_t *current = point_index(head, idx-1);
-            current->next = pop(current->next);
-            return head;
-        }
-        return pop(head);
-    }
-    puts("\nSorry, there is no book to delete. Please add a book first.\n");
-    return head;
-}
-
 void list(book_t *head)
 {
     if (head != NULL) {
@@ -172,6 +155,34 @@ void list(book_t *head)
     }
 }
 
+book_t *delete(book_t *head)
+{
+    if (head != NULL) {
+        puts("\nPlease enter the index of the book to delete.\n");
+        int max_idx = index_of_last_book(head);
+        int idx = enter_index(max_idx);
+        if (idx != 1) {
+            book_t *current = point_index(head, idx-1);
+            current->next = pop(current->next);
+            return head;
+        }
+        return pop(head);
+    }
+    puts("\nSorry, there is no book to delete. Please add a book first.\n");
+    return head;
+}
+
+book_t *delete_all(book_t *head)
+{
+    if (head != NULL) {
+        while(pop(point_index(head, index_of_last_book(head))) != NULL);
+        puts("\nAll the books were successfully deleted.\n");
+    } else {
+        puts("\nSorry, there is no book to delete. Please add a book first.\n");
+    }
+    return NULL;
+}
+
 int main()
 {
     book_t *head = NULL;
@@ -183,14 +194,16 @@ int main()
     while (1) {
         puts("Main menu. Choose between:");
         puts("  1. Add a book.");
-        puts("  2. Remove a book.");
-        puts("  3. List all books.");
+        puts("  2. List all books.");
+        puts("  3. Remove a book.");
+        puts("  4. Remove all books.");
         puts("  Q. Quit program.");
         printf("Please enter your selection: ");
         switch (safe_getchar()) {
         case '1': head = add(head); break;
-        case '2': head = delete(head); break;
-        case '3': list(head); break;
+        case '2': list(head); break;
+        case '3': head = delete(head); break;
+        case '4': head = delete_all(head); break;
         case 'q':
         case 'Q': return 0;
         default: puts("\nPlease type either 1, 2, 3, or Q.\n"); break;
