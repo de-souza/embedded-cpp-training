@@ -23,19 +23,6 @@ void safe_fgets(char *buffer, const int max_size)
     buffer[newline_span] = '\0';
 }
 
-// void safe_fgets(char *buffer, const int max_size)
-// {
-//     fgets(buffer, max_size, stdin);
-//     size_t idx_newline = strcspn(buffer, "\n");
-//     while (buffer[idx_newline] != '\n') {
-//         printf("Too many characters (max = %d). Please try again : ", max_size-2);
-//         while (getchar() != '\n');
-//         fgets(buffer, max_size, stdin);   
-//         idx_newline = strcspn(buffer, "\n");
-//     }
-//     buffer[idx_newline] = '\0';
-// }
-
 char safe_getchar()
 {
     char buffer[3];
