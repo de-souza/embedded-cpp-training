@@ -46,7 +46,7 @@ int enter_num(char *buffer, const int max_size)
 int enter_index(const int max_idx)
 {
     printf("Please enter an index: ");
-    char buffer[11];  // allow 9 digits so a maximum of 1 billion books
+    char buffer[11];  // allow up to 9 digits so a maximum of 1 billion books
     int idx = enter_num(buffer, sizeof(buffer));
     while (idx < 1 || idx > max_idx) {
         printf("Index out of range (0 < i < %d). Please try again: ", max_idx+1);
@@ -64,7 +64,7 @@ book_t enter_book()
     printf("Please enter an title: ");
     safe_fgets(book.title, sizeof(book.title));
     printf("Please enter a year: ");
-    char buffer[6];
+    char buffer[6];  // allow up to 4 digits for the year
     book.year = enter_num(buffer, sizeof(buffer));
     puts("");
     return book;
