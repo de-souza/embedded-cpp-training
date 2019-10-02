@@ -81,7 +81,11 @@ void copy_book(book_t *ptr_dest, book_t *ptr_source)
     strcpy(ptr_dest->author, ptr_source->author);
     strcpy(ptr_dest->title, ptr_source->title);
     ptr_dest->year = ptr_source->year;
+}
 
+void print_book(const int i, book_t *ptr_book)
+{
+    printf("%d. %s - %s (%d)\n", i, ptr_book->author, ptr_book->title, ptr_book->year);
 }
 
 void insert_book(book_t *ptr_first_book, const int len)
@@ -124,10 +128,8 @@ void list_books(book_t *ptr_first_book, int len)
     puts("\nBooks currently on the shelf:\n");
     int i = 0;
     book_t *ptr_book = ptr_first_book;
-    while (!is_empty(ptr_book)) {
-        printf("%d. %s - %s (%d)\n", i, ptr_book->author, ptr_book->title, ptr_book->year);
-        ptr_book++, i++;
-    }
+    while (!is_empty(ptr_book))
+        print_book(i++, ptr_book++);
     puts("");
 }
 
