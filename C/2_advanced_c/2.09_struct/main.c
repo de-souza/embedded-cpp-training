@@ -53,11 +53,11 @@ int enter_index(const int len)
     char buffer[10];
     printf("Please enter an index: ");
     int i = enter_num(buffer, sizeof(buffer));
-    while (i < 0 || i >= len) {
-        printf("Invalid index (0 < i < %d). Please try again: ", len - 1);
+    while (i < 1 || i > len - 2) {
+        printf("Invalid index (1 <= i <= %d). Please try again: ", len - 2);
         i = enter_num(buffer, sizeof(buffer));
     }
-    return i;
+    return i - 1;
 }
 
 void enter_book(book_t *ptr_book)
@@ -76,22 +76,22 @@ int is_empty(book_t *ptr_book)
     return ptr_book->author[0] == '\0' && ptr_book->title[0] == '\0' && ptr_book->year == 0;
 }
 
-void copy_book(book_t *ptr_dest, book_t *ptr_source)
+void copy_book(book_t *restrict ptr_dest, book_t *restrict ptr_source)
 {
     strcpy(ptr_dest->author, ptr_source->author);
     strcpy(ptr_dest->title, ptr_source->title);
     ptr_dest->year = ptr_source->year;
 }
 
-void print_book(const int i, book_t *ptr_book)
+void print_book(book_t *ptr_book, const int idx)
 {
-    printf("%d. %s - %s (%d)\n", i, ptr_book->author, ptr_book->title, ptr_book->year);
+    printf("%d. %s - %s (%d)\n", idx, ptr_book->author, ptr_book->title, ptr_book->year);
 }
 
 void insert_book(book_t *ptr_first_book, const int len)
 {
     if (!is_empty(ptr_first_book + len - 2)) {
-        puts("\nSorry, there is no space left. Please delete a book first.\n");
+        puts("\nSorry, there is no space left. Please remove a book first.\n");
     } else {
         book_t new_book;
         puts("\nFirst, enter the new book's characteristics.\n");
@@ -102,8 +102,8 @@ void insert_book(book_t *ptr_first_book, const int len)
         if (!is_empty(ptr_book)) {
             while (!is_empty(++ptr_book));
             book_t *ptr_next_book = ptr_book + 1;
-            while (ptr_next_book != ptr_new_book)
-                copy_book(ptr_next_book--, ptr_book--);
+            while (ptr_book != ptr_new_book)
+                copy_book(--ptr_next_book, --ptr_book);
         } else {
             while (is_empty(--ptr_new_book));
             ptr_new_book++;
@@ -126,10 +126,10 @@ void remove_book(book_t *ptr_first_book, const int len)
 void list_books(book_t *ptr_first_book, int len)
 {
     puts("\nBooks currently on the shelf:\n");
-    int i = 0;
     book_t *ptr_book = ptr_first_book;
+    int idx = 1;
     while (!is_empty(ptr_book))
-        print_book(i++, ptr_book++);
+        print_book(ptr_book++, idx++);
     puts("");
 }
 
