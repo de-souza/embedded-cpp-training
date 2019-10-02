@@ -86,11 +86,11 @@ void print_book(const int idx, const book_t *book)
 
 int index_of_last_book(book_t *head)
 {
-    book_t *current = head;
     int idx = 1;
+    book_t *current = head;
     while (current->next != NULL) {
-        current = current->next;
         idx++;
+        current = current->next;
     }
     return idx;
 }
@@ -159,12 +159,12 @@ void list(book_t *head)
 {
     if (head != NULL) {
         puts("\nBooks currently in the database:\n");
-        book_t *current = head;
         int idx = 1;
+        book_t *current = head;
         while (current != NULL) {
             print_book(idx, current);
-            current = current->next;
             idx++;
+            current = current->next;
         }
         puts("");
     } else {
