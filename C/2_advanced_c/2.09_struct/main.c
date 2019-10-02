@@ -4,8 +4,8 @@
 #include <string.h>
 
 #define LEN_SHELF 100       // 100 = 99 books + 1 empty slot
-#define MAX_SIZE_INDEX 10   // 10 = 8 digits + '\n' + '\0'
-#define MAX_SIZE_YEAR 6     // 6 = 4 digits + '\n' + '\0'
+#define MAX_SIZE_INDEX 10   // 10 = 8 digits + \n + \0
+#define MAX_SIZE_YEAR 6     // 6 = 4 digits + \n + \0
 
 typedef struct {
     char author[40];
