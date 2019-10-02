@@ -10,24 +10,31 @@ typedef struct book {
     struct book *next;
 } book_t;
 
-void flush_stdin()
-{
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
 void safe_fgets(char *buffer, const int max_size)
 {
     fgets(buffer, max_size, stdin);
-    size_t idx_newline = strcspn(buffer, "\n");
-    while (buffer[idx_newline] != '\n') {
-        printf("Too many characters (max = %d). Please try again : ", max_size - 2);
-        flush_stdin();
-        fgets(buffer, max_size, stdin);   
-        idx_newline = strcspn(buffer, "\n");
+    size_t newline_span = strcspn(buffer, "\n");
+    while (buffer[newline_span] != '\n') {
+        printf("Too many characters (max = %d). Please try again : ", max_size-2);
+        while (getchar() != '\n');
+        fgets(buffer, max_size, stdin);
+        newline_span = strcspn(buffer, "\n");
     }
-    buffer[idx_newline] = '\0';
+    buffer[newline_span] = '\0';
 }
+
+// void safe_fgets(char *buffer, const int max_size)
+// {
+//     fgets(buffer, max_size, stdin);
+//     size_t idx_newline = strcspn(buffer, "\n");
+//     while (buffer[idx_newline] != '\n') {
+//         printf("Too many characters (max = %d). Please try again : ", max_size-2);
+//         while (getchar() != '\n');
+//         fgets(buffer, max_size, stdin);   
+//         idx_newline = strcspn(buffer, "\n");
+//     }
+//     buffer[idx_newline] = '\0';
+// }
 
 char safe_getchar()
 {
