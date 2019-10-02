@@ -47,18 +47,22 @@ int index_of_last_book(book_t *head)
 {
     book_t *current = head;
     int idx = 1;
-    while ((current = current->next) != NULL)
+    while (current->next != NULL) {
+        current = current->next;
         idx++;
+    }
     return idx;
 }
 
-int enter_index(book_t *head)
+int enter_index(const int max_idx)
 {
-    char buffer[10];
     printf("Please enter an index: ");
-    int max_idx=index_of_last_book(head), idx;
-    while ((idx = enter_num(buffer, sizeof(buffer))) < 1 || idx > max_idx)
+    char buffer[11];  // allow 9 digits so a maximum of 1 billion books
+    int idx = enter_num(buffer, sizeof(buffer));
+    while (idx < 1 || idx > max_idx) {
         printf("Index out of range (0 < i < %d). Please try again: ", max_idx+1);
+        idx = enter_num(buffer, sizeof(buffer));
+    }
     puts("");
     return idx;
 }
@@ -91,7 +95,7 @@ void print_book(int idx, book_t *book)
     printf("%d. %s - %s (%d)\n", idx, book->author, book->title, book->year);
 }
 
-book_t *current_at_index(book_t *head, const int idx)
+book_t *point_index(book_t *head, const int idx)
 {
     book_t *current = head;
     for (int curr_idx=1; curr_idx < idx; curr_idx++)
@@ -122,10 +126,11 @@ book_t *add(book_t *head)
     puts("\nPlease enter the new book's characteristics.\n");
     book_t book = enter_book();
     if (head != NULL) {
-        puts("Now, please enter the index of the book in the shelf.\n");
-        int idx = enter_index(head);
+        puts("Now, please enter the index of the book in the database.\n");
+        int max_idx = index_of_last_book(head) + 1;
+        int idx = enter_index(max_idx);
         if (idx != 1) {
-            book_t *current = current_at_index(head, idx-1);
+            book_t *current = point_index(head, idx-1);
             current->next = push(current->next, book);
             return head;
         }
@@ -137,9 +142,10 @@ book_t *delete(book_t *head)
 {
     if (head != NULL) {
         puts("\nPlease enter the index of the book to delete.\n");
-        int idx = enter_index(head);
+        int max_idx = index_of_last_book(head);
+        int idx = enter_index(max_idx);
         if (idx != 1) {
-            book_t *current = current_at_index(head, idx-1);
+            book_t *current = point_index(head, idx-1);
             current->next = pop(current->next);
             return head;
         }
@@ -152,13 +158,14 @@ book_t *delete(book_t *head)
 void list(book_t *head)
 {
     if (head != NULL) {
-        puts("\nBooks currently on the shelf:\n");
+        puts("\nBooks currently in the database:\n");
         book_t *current = head;
         int idx = 1;
-        do {
-            print_book(idx++, current);
+        while (current != NULL) {
+            print_book(idx, current);
             current = current->next;
-        } while (current != NULL);
+            idx++;
+        }
         puts("");
     } else {
         puts("\nSorry, there is no book to list. Please add a book first.\n");
