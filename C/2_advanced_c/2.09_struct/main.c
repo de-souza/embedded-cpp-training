@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define LEN_SHELF 100       // 100 = 99 books + 1 empty slot
+#define MAX_SIZE_INDEX 10   // 10 = 8 digits + '\n' + '\0'
+#define MAX_SIZE_YEAR 6     // 6 = 4 digits + '\n' + '\0'
+
 typedef struct {
     char author[40];
     char title[30];
@@ -50,7 +54,7 @@ int enter_num(char *buffer, const int max_size)
 
 int enter_index(const int len)
 {
-    char buffer[10];
+    char buffer[MAX_SIZE_INDEX];
     printf("Please enter an index: ");
     int i = enter_num(buffer, sizeof(buffer));
     while (i < 1 || i > len - 2) {
@@ -62,7 +66,7 @@ int enter_index(const int len)
 
 void enter_book(book_t *ptr_book)
 {
-    char buffer[6];
+    char buffer[MAX_SIZE_YEAR];
     printf("Please enter an author: ");
     safe_fgets(ptr_book->author, sizeof(ptr_book->author));
     printf("Please enter an title: ");
@@ -135,7 +139,7 @@ void list_books(book_t *ptr_first_book, const int len)
 
 int main()
 {
-    book_t shelf[10] = {
+    book_t shelf[LEN_SHELF] = {
         { "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978 },
         { "Nassim Nicholas Taleb", "The Black Swan", 2008 },
         { "Nick Bostrom", "Superintelligence", 2008 },
