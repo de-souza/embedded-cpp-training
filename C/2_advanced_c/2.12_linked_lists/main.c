@@ -79,7 +79,7 @@ book_t generate_book(const char *restrict author, const char *restrict title, co
     return book;
 }
 
-void print_book(int idx, book_t *book)
+void print_book(const int idx, const book_t *book)
 {
     printf("%d. %s - %s (%d)\n", idx, book->author, book->title, book->year);
 }
@@ -103,7 +103,7 @@ book_t *point_index(book_t *head, const int idx)
     return current;
 }
 
-book_t *push(book_t *head, book_t book)
+book_t *push(book_t *head, const book_t book)
 {
     book_t *temp = malloc(sizeof(*temp));
     strcpy(temp->author, book.author);
