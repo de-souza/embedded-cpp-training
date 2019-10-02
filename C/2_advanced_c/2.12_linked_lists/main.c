@@ -84,10 +84,10 @@ void print_book(const int idx, const book_t *book)
     printf("%d. %s - %s (%d)\n", idx, book->author, book->title, book->year);
 }
 
-int index_of_last_book(book_t *head)
+int index_of_last_book(book_t *slot)
 {
     int idx = 1;
-    book_t *current = head;
+    book_t *current = slot;
     while (current->next != NULL) {
         idx++;
         current = current->next;
@@ -95,30 +95,30 @@ int index_of_last_book(book_t *head)
     return idx;
 }
 
-book_t *point_index(book_t *head, const int idx)
+book_t *point_index(book_t *slot, const int idx)
 {
-    book_t *current = head;
+    book_t *current = slot;
     for (int curr_idx=1; curr_idx < idx; curr_idx++)
         current = current->next;
     return current;
 }
 
-book_t *push(book_t *head, const book_t book)
+book_t *push(book_t *slot, const book_t book)
 {
     book_t *temp = malloc(sizeof(*temp));
     strcpy(temp->author, book.author);
     strcpy(temp->title, book.title);
     temp->year = book.year;
-    temp->next = head;
+    temp->next = slot;
     return temp;
 }
 
-book_t *pop(book_t *head)
+book_t *pop(book_t *slot)
 {
-    book_t *temp = head;
-    head = head->next;
+    book_t *temp = slot;
+    slot = slot->next;
     free(temp);
-    return head;
+    return slot;
 }
 
 book_t *add(book_t *head)
