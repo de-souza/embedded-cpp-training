@@ -15,7 +15,7 @@ void flush_stdin()
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void enter_string(char *buffer, const int max_size)
+void safe_fgets(char *buffer, const int max_size)
 {
     fgets(buffer, max_size, stdin);
     size_t idx_newline = strcspn(buffer, "\n");
@@ -28,24 +28,24 @@ void enter_string(char *buffer, const int max_size)
     buffer[idx_newline] = 0;
 }
 
+char safe_getchar()
+{
+    char buffer[3];
+    safe_fgets(buffer, sizeof(buffer));
+    return buffer[0];
+}
+
 int enter_num(char *buffer, const int max_size)
 {
     char *endptr;
-    enter_string(buffer, max_size);
+    safe_fgets(buffer, max_size);
     int n = strtol(buffer, &endptr, 10);
     while (strlen(endptr) != 0 || endptr == buffer) {
         printf("Not a number. Please try again: ");
-        enter_string(buffer, sizeof(buffer));
+        safe_fgets(buffer, sizeof(buffer));
         n = strtol(buffer, &endptr, 10);
     }
     return n;
-}
-
-char enter_char()
-{
-    char buffer[3];
-    enter_string(buffer, sizeof(buffer));
-    return buffer[0];
 }
 
 int enter_index(const int len)
@@ -64,16 +64,16 @@ void enter_book(book_t *ptr_book)
 {
     char buffer[6];
     printf("Please enter an author: ");
-    enter_string(ptr_book->author, sizeof(ptr_book->author));
+    safe_fgets(ptr_book->author, sizeof(ptr_book->author));
     printf("Please enter an title: ");
-    enter_string(ptr_book->title, sizeof(ptr_book->title));
+    safe_fgets(ptr_book->title, sizeof(ptr_book->title));
     printf("Please enter a year: ");
     ptr_book->year = enter_num(buffer, sizeof(buffer));
 }
 
-int is_not_empty(book_t *ptr_book)
+int is_empty(book_t *ptr_book)
 {
-    return ptr_book->author && ptr_book->title && ptr_book->year;
+    return ptr_book->author[0] == '\0' && ptr_book->title[0] == '\0' && ptr_book->year == 0;
 }
 
 void copy_book(book_t *ptr_dest, book_t *ptr_source)
@@ -84,47 +84,47 @@ void copy_book(book_t *ptr_dest, book_t *ptr_source)
 
 }
 
-void insert_book(book_t *shelf, const int len)
+void insert_book(book_t *ptr_first_book, const int len)
 {
-    book_t new_book;
-    puts("\nFirst, enter the new book's characteristics.\n");
-    enter_book(&new_book);
-    puts("\nNow, enter the index of the book in the shelf.\n");
-    book_t *ptr_new_book = shelf + enter_index(len);
-    book_t *ptr_book = ptr_new_book;
-    if (is_not_empty(ptr_new_book)) {
-        while (is_not_empty(ptr_book++));
-        book_t *ptr_previous_book = ptr_book - 1;
-        while (ptr_previous_book >= ptr_new_book) {
-            copy_book(ptr_book, ptr_previous_book);
-            ptr_book--, ptr_previous_book--;
-        }
+    if (!is_empty(ptr_first_book + len - 2)) {
+        puts("\nSorry, there is no space left. Please delete a book first.");
     } else {
-        while (!is_not_empty(--ptr_new_book));
-        ptr_new_book++;
+        book_t new_book;
+        puts("\nFirst, enter the new book's characteristics.\n");
+        enter_book(&new_book);
+        puts("\nNow, enter the index of the book in the shelf.\n");
+        book_t *ptr_new_book = ptr_first_book + enter_index(len);
+        book_t *ptr_book = ptr_new_book;
+        if (!is_empty(ptr_book)) {
+            while (!is_empty(++ptr_book));
+            book_t *ptr_next_book = ptr_book + 1;
+            while (ptr_next_book != ptr_new_book)
+                copy_book(ptr_next_book--, ptr_book--);
+        } else {
+            while (is_empty(--ptr_new_book));
+            ptr_new_book++;
+        }
+        *ptr_new_book = new_book;
     }
-    *ptr_new_book = new_book;
     puts("");
 }
 
-void remove_book(book_t *shelf, const int len)
+void remove_book(book_t *ptr_first_book, const int len)
 {
     puts("\nChoose the index of the book to delete.\n");
-    book_t *ptr_book = shelf + enter_index(len);
+    book_t *ptr_book = ptr_first_book + enter_index(len);
     book_t *ptr_next_book = ptr_book + 1;
-    while (is_not_empty(ptr_book)) {
-        copy_book(ptr_book, ptr_next_book);
-        ptr_book++, ptr_next_book++;
-    }
+    while (!is_empty(ptr_book))
+        copy_book(ptr_book++, ptr_next_book++);
     puts("");
 }
 
-void list_books(book_t *shelf, int len)
+void list_books(book_t *ptr_first_book, int len)
 {
     puts("\nBooks currently on the shelf:\n");
     int i = 0;
-    book_t *ptr_book = shelf;
-    while (is_not_empty(ptr_book)) {
+    book_t *ptr_book = ptr_first_book;
+    while (!is_empty(ptr_book)) {
         printf("%d. %s - %s (%d)\n", i, ptr_book->author, ptr_book->title, ptr_book->year);
         ptr_book++, i++;
     }
@@ -133,7 +133,7 @@ void list_books(book_t *shelf, int len)
 
 int main()
 {
-    book_t shelf[100] = {
+    book_t shelf[10] = {
         { "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978 },
         { "Nassim Nicholas Taleb", "The Black Swan", 2008 },
         { "Nick Bostrom", "Superintelligence", 2008 },
@@ -148,7 +148,7 @@ int main()
         puts("  3. List all books.");
         puts("  Q. Quit program.");
         printf("Please enter your selection: ");
-        switch (enter_char()) {
+        switch (safe_getchar()) {
         case '1': insert_book(shelf, len); break;
         case '2': remove_book(shelf, len); break;
         case '3': list_books(shelf, len); break;
