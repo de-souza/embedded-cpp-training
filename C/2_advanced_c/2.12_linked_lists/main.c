@@ -95,7 +95,7 @@ int index_of_last_book(book_t *slot)
     return idx;
 }
 
-book_t *point_index(book_t *slot, const int idx)
+book_t *move_to_index(book_t *slot, const int idx)
 {
     book_t *current = slot;
     for (int curr_idx=1; curr_idx < idx; curr_idx++)
@@ -130,7 +130,7 @@ book_t *add(book_t *head)
         int max_idx = index_of_last_book(head) + 1;
         int idx = enter_index(max_idx);
         if (idx != 1) {
-            book_t *current = point_index(head, idx-1);
+            book_t *current = move_to_index(head, idx-1);
             current->next = push(current->next, book);
             return head;
         }
@@ -162,7 +162,7 @@ book_t *delete(book_t *head)
         int max_idx = index_of_last_book(head);
         int idx = enter_index(max_idx);
         if (idx != 1) {
-            book_t *current = point_index(head, idx-1);
+            book_t *current = move_to_index(head, idx-1);
             current->next = pop(current->next);
             return head;
         }
@@ -175,7 +175,7 @@ book_t *delete(book_t *head)
 book_t *delete_all(book_t *head)
 {
     if (head != NULL) {
-        while(pop(point_index(head, index_of_last_book(head))) != NULL);
+        while(pop(move_to_index(head, index_of_last_book(head))) != NULL);
         puts("\nAll the books were successfully deleted.\n");
     } else {
         puts("\nSorry, there is no book to delete. Please add a book first.\n");
