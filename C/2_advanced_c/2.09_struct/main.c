@@ -71,19 +71,19 @@ void enter_book(book_t *ptr_book)
     ptr_book->year = enter_num(buffer, sizeof(buffer));
 }
 
-int is_empty(book_t *ptr_book)
+int is_empty(const book_t *ptr_book)
 {
     return ptr_book->author[0] == '\0' && ptr_book->title[0] == '\0' && ptr_book->year == 0;
 }
 
-void copy_book(book_t *restrict ptr_dest, book_t *restrict ptr_source)
+void copy_book(book_t *restrict ptr_dest, const book_t *restrict ptr_source)
 {
     strcpy(ptr_dest->author, ptr_source->author);
     strcpy(ptr_dest->title, ptr_source->title);
     ptr_dest->year = ptr_source->year;
 }
 
-void print_book(book_t *ptr_book, const int idx)
+void print_book(const book_t *ptr_book, const int idx)
 {
     printf("%d. %s - %s (%d)\n", idx, ptr_book->author, ptr_book->title, ptr_book->year);
 }
@@ -123,7 +123,7 @@ void remove_book(book_t *ptr_first_book, const int len)
     puts("");
 }
 
-void list_books(book_t *ptr_first_book, int len)
+void list_books(book_t *ptr_first_book, const int len)
 {
     puts("\nBooks currently on the shelf:\n");
     book_t *ptr_book = ptr_first_book;
