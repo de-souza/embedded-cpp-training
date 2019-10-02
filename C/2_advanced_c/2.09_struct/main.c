@@ -91,7 +91,7 @@ void print_book(const int i, book_t *ptr_book)
 void insert_book(book_t *ptr_first_book, const int len)
 {
     if (!is_empty(ptr_first_book + len - 2)) {
-        puts("\nSorry, there is no space left. Please delete a book first.");
+        puts("\nSorry, there is no space left. Please delete a book first.\n");
     } else {
         book_t new_book;
         puts("\nFirst, enter the new book's characteristics.\n");
@@ -109,8 +109,8 @@ void insert_book(book_t *ptr_first_book, const int len)
             ptr_new_book++;
         }
         *ptr_new_book = new_book;
+        puts("");
     }
-    puts("");
 }
 
 void remove_book(book_t *ptr_first_book, const int len)
