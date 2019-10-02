@@ -43,17 +43,6 @@ int enter_num(char *buffer, const int max_size)
     return num;
 }
 
-int index_of_last_book(book_t *head)
-{
-    book_t *current = head;
-    int idx = 1;
-    while (current->next != NULL) {
-        current = current->next;
-        idx++;
-    }
-    return idx;
-}
-
 int enter_index(const int max_idx)
 {
     printf("Please enter an index: ");
@@ -93,6 +82,17 @@ book_t generate_book(const char *restrict author, const char *restrict title, co
 void print_book(int idx, book_t *book)
 {
     printf("%d. %s - %s (%d)\n", idx, book->author, book->title, book->year);
+}
+
+int index_of_last_book(book_t *head)
+{
+    book_t *current = head;
+    int idx = 1;
+    while (current->next != NULL) {
+        current = current->next;
+        idx++;
+    }
+    return idx;
 }
 
 book_t *point_index(book_t *head, const int idx)
