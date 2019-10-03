@@ -70,15 +70,6 @@ book_t enter_book()
     return book;
 }
 
-book_t generate_book(const char *restrict author, const char *restrict title, const short year)
-{
-    book_t book;
-    strcpy(book.author, author);
-    strcpy(book.title, title);
-    book.year = year;
-    return book;
-}
-
 void print_book(const int idx, const book_t book)
 {
     printf("%d. %s - %s (%d)\n", idx, book.author, book.title, book.year);
@@ -292,11 +283,11 @@ void list_file()
 int main()
 {
     book_t *head = NULL;
-    head = push(head, generate_book("Ivan Cukic", "Functional Programming in C++", 2018));
-    head = push(head, generate_book("Daniel Kahneman", "Thinking, Fast and Slow", 2012));
-    head = push(head, generate_book("Nick Bostrom", "Superintelligence", 2008));
-    head = push(head, generate_book("Nassim Nicholas Taleb", "The Black Swan", 2008));
-    head = push(head, generate_book("Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978));
+    head = push(head, (book_t) { "Ivan Cukic", "Functional Programming in C++", 2018 });
+    head = push(head, (book_t) { "Daniel Kahneman", "Thinking, Fast and Slow", 2012 });
+    head = push(head, (book_t) { "Nick Bostrom", "Superintelligence", 2008 });
+    head = push(head, (book_t) { "Nassim Nicholas Taleb", "The Black Swan", 2008 });
+    head = push(head, (book_t) { "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978 });
     while (1) {
         puts("Main menu.\n");
         puts("  1. Add a book.");
