@@ -10,13 +10,6 @@ typedef struct book {
     struct book *next;
 } book_t;
 
-void pause(const char *message)
-{
-    printf("%s\nPress enter to continue...\n", message);
-    while(getchar() != '\n');
-    puts("");
-}
-
 void safe_fgets(char *buffer, const int max_size)
 {
     fgets(buffer, max_size, stdin);
@@ -156,7 +149,7 @@ book_t *add(book_t *head)
     } else {
         head = push(head, book);
     }
-    pause("The book was successfully added.");
+    puts("The book was successfully added.");
     return head;
 }
 
@@ -170,9 +163,9 @@ void list(book_t *head)
             idx++;
             head = head->next;
         }
-        pause("");
+        puts("");
     } else {
-        pause("\nThere is no book in the database.");
+        puts("\nThere is no book in the database.");
     }
 }
 
@@ -188,9 +181,9 @@ book_t *delete(book_t *head)
         } else {
             head = pop(head);
         }
-        pause("The book was successfully deleted.");
+        puts("The book was successfully deleted.");
     } else {
-        pause("\nThere is no book in the database.");
+        puts("\nThere is no book in the database.");
     }
     return head;
 }
@@ -208,9 +201,9 @@ book_t *sort(book_t *head)
                 }
             }
         }
-        pause("\nThe books were successfully sorted by author.");
+        puts("\nThe books were successfully sorted by author.");
     } else {
-        pause("\nNot enough books to do a sorting.");
+        puts("\nThere are not enough books to do a sorting.");
     }
     return head;
 }
@@ -219,7 +212,7 @@ book_t *clear(book_t *head)
 {
     while (head != NULL)
         head = pop(head);
-    pause("\nSuccessfully cleared database.");
+    puts("\nSuccessfully cleared database.");
     return head;
 }
 
@@ -236,7 +229,7 @@ void save_file(book_t *head)
         head = head->next;
     }
     fclose(fp);
-    pause("\nSuccessfully saved database.");
+    printf("\nSuccessfully saved database to \"%s\".\n", buffer);
 }
 
 book_t *load_file(book_t *head)
@@ -260,9 +253,9 @@ book_t *load_file(book_t *head)
                 head = push(head, book);
             }
         }
-        pause("\nSuccessfully added books to database.");
+        puts("\nSuccessfully added books to database.");
     } else {
-        pause("\nFile not found.");
+        puts("\nFile not found.");
     }
     fclose(fp);
     return head;
@@ -273,7 +266,7 @@ void list_file()
     printf("\nPlease enter a filename to read: ");
     char buffer[32];  // allow up to 30 characters for the filename
     safe_fgets(buffer, sizeof(buffer));
-    printf("\nBooks in %s:\n\n", buffer);
+    printf("\nBooks in \n%s\n:\n\n", buffer);
     FILE *fp = fopen(buffer, "r");
     if (fp != NULL) {
         book_t book;
@@ -284,15 +277,16 @@ void list_file()
             book.author[strlen(book.author)-1] = '\0';
             book.title[strlen(book.title)-1] = '\0';
             fscanf(fp, "%hd ", &(book.year));
+            print_book(idx, book);
             is_empty = 0;
             idx++;
         }
         if (is_empty)
-            pause("Sorry, there is no book to list.");
+        puts("The file is empty.");
         else
-            pause("");
+            puts("");
     } else {
-        pause("\nFile not found.");
+        puts("\nFile not found.");
     }
     fclose(fp);
 }
@@ -327,8 +321,10 @@ int main()
         case '7': head = load_file(head); break;
         case '8': list_file(head); break;
         case 'q':
-        case 'Q': pause("\nGood bye!"); return 0;
+        case 'Q': puts("\nGood bye!"); return 0;
         default: puts("\nPlease type a number between 1 and 8, or Q to quit.\n"); break;
         }
+        puts("Press enter to continue...");
+        while(getchar() != '\n');
     }
 }
