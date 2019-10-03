@@ -30,6 +30,13 @@ char safe_getchar()
     return buffer[0];
 }
 
+void pause(const char *message)
+{
+    printf("%s\nPress enter to continue...\n", message);
+    while(getchar() != '\n');
+    puts("");
+}
+
 int enter_num(char *buffer, const int max_size)
 {
     safe_fgets(buffer, max_size);
@@ -132,10 +139,12 @@ book_t *add(book_t *head)
         if (idx != 1) {
             book_t *current = move_to_index(head, idx-1);
             current->next = push(current->next, book);
-            return head;
         }
+    } else {
+        head = push(head, book);
     }
-    return push(head, book);
+    pause("The book was successfully added.");
+    return head;
 }
 
 void list(book_t *head)
@@ -149,9 +158,9 @@ void list(book_t *head)
             idx++;
             current = current->next;
         }
-        puts("");
+        pause("");
     } else {
-        puts("\nSorry, there is no book to list. Please add a book first.\n");
+        pause("\nSorry, there is no book to list.");
     }
 }
 
@@ -166,9 +175,11 @@ book_t *delete(book_t *head)
             current->next = pop(current->next);
             return head;
         }
-        return pop(head);
+        head = pop(head);
+        pause("The book was successfully deleted.");
+    } else {
+        pause("\nSorry, there is no book to delete.");
     }
-    puts("\nSorry, there is no book to delete. Please add a book first.\n");
     return head;
 }
 
@@ -191,22 +202,30 @@ book_t *sort(book_t *head)
                 }
             }
         }
-        puts("\nThe books were successfully sorted by author.\n");
-        return head;
+        pause("\nThe books were successfully sorted by author.");
+    } else {
+        pause("\nSorry, there is no book to sort.");
     }
-    puts("\nSorry, there is no book to sort. Please add a book first.\n");
     return head;
 }
 
 book_t *clear(book_t *head)
 {
     if (head != NULL) {
-        while(pop(move_to_index(head, index_of_last_book(head))) != NULL);
-        puts("\nAll the books were successfully deleted.\n");
+        book_t *current;
+        do {
+            current = move_to_index(head, index_of_last_book(head));
+        } while(pop(current) != NULL);
+        pause("\nAll the books were successfully deleted.");
     } else {
-        puts("\nSorry, there is no book to delete. Please add a book first.\n");
+        pause("\nSorry, there is no book to delete.");
     }
-    return NULL;
+    return head;
+}
+
+void bye()
+{
+    pause("\nGood bye!");
 }
 
 int main()
@@ -218,13 +237,15 @@ int main()
     head = push(head, generate_book("Nassim Nicholas Taleb", "The Black Swan", 2008));
     head = push(head, generate_book("Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978));
     while (1) {
-        puts("Main menu. Choose between:");
+        puts("Main menu.\n");
         puts("  1. Add a book.");
         puts("  2. List all books.");
         puts("  3. Remove a book.");
         puts("  4. Sort books by author.");
-        puts("  5. Remove all books.");
-        puts("  Q. Quit program.");
+        puts("  5. Remove all books.\n");
+        puts("  6. Save books to file.");
+        puts("  5. Load books from file.\n");
+        puts("  Q. Quit program.\n");
         printf("Please enter your selection: ");
         switch (safe_getchar()) {
         case '1': head = add(head); break;
@@ -232,8 +253,10 @@ int main()
         case '3': head = delete(head); break;
         case '4': head = sort(head); break;
         case '5': head = clear(head); break;
+        // case '6': save(head); break;
+        // case '7': head = load(); break;
         case 'q':
-        case 'Q': return 0;
+        case 'Q': bye(); return 0;
         default: puts("\nPlease type either 1, 2, 3, or Q.\n"); break;
         }
     }
