@@ -186,7 +186,8 @@ book_t *delete(book_t *head)
 book_t *sort(book_t *head)
 {
     if (head != NULL && head->next != NULL) {
-        for (int i=1; i < index_of_last_book(head); i++) {
+        int max_idx = index_of_last_book(head);
+        for (int i=1; i < max_idx; i++) {
             for (int j=i; j > 0; j--) {
                 if (j != 1) {
                     book_t *current = move_to_index(head, j-1);
