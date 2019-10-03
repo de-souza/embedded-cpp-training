@@ -34,7 +34,7 @@ char safe_getchar()
     return buffer[0];
 }
 
-int enter_num(char *buffer, const int max_size)
+int enter_number(char *buffer, const int max_size)
 {
     safe_fgets(buffer, max_size);
     char *endptr;
@@ -51,10 +51,10 @@ int enter_index(const int max_idx)
 {
     printf("Please enter an index: ");
     char buffer[INDEX_LEN+2];
-    int idx = enter_num(buffer, sizeof(buffer));
+    int idx = enter_number(buffer, sizeof(buffer));
     while (idx < 1 || idx > max_idx) {
         printf("Index out of range (1 <= i <= %d). Please try again: ", max_idx);
-        idx = enter_num(buffer, sizeof(buffer));
+        idx = enter_number(buffer, sizeof(buffer));
     }
     puts("");
     return idx;
@@ -69,7 +69,7 @@ book_t enter_book()
     safe_fgets(book.title, sizeof(book.title));
     printf("Please enter a year: ");
     char buffer[YEAR_LEN+2];
-    book.year = enter_num(buffer, sizeof(buffer));
+    book.year = enter_number(buffer, sizeof(buffer));
     puts("");
     return book;
 }
