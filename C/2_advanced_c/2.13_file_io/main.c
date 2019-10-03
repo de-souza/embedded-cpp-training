@@ -212,14 +212,13 @@ book_t *sort(book_t *head)
 book_t *clear(book_t *head)
 {
     if (head != NULL) {
-        book_t *current;
-        do {
-            current = move_to_index(head, index_of_last_book(head));
-        } while(pop(current) != NULL);
-        pause("\nAll the books were successfully deleted.");
-    } else {
-        pause("\nSorry, there is no book to delete.");
+        while(head->next != NULL) {
+            book_t *current = move_to_index(head, index_of_last_book(head)-1);
+            current->next = pop(current->next);
+        }
+        head = pop(head);
     }
+    pause("\nSuccessfully cleared database.");
     return head;
 }
 
@@ -255,7 +254,7 @@ int main()
         puts("  2. List all books.");
         puts("  3. Remove a book.");
         puts("  4. Sort books by author.");
-        puts("  5. Remove all books.\n");
+        puts("  5. Clear database.\n");
         puts("  6. Save books to file.");
         puts("  5. Load books from file.\n");
         puts("  Q. Quit program.\n");
