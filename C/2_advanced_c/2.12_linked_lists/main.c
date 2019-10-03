@@ -243,8 +243,6 @@ int main()
         puts("  3. Remove a book.");
         puts("  4. Sort books by author.");
         puts("  5. Remove all books.\n");
-        puts("  6. Save books to file.");
-        puts("  5. Load books from file.\n");
         puts("  Q. Quit program.\n");
         printf("Please enter your selection: ");
         switch (safe_getchar()) {
@@ -253,8 +251,6 @@ int main()
         case '3': head = delete(head); break;
         case '4': head = sort(head); break;
         case '5': head = clear(head); break;
-        // case '6': save(head); break;
-        // case '7': head = load(); break;
         case 'q':
         case 'Q': bye(); return 0;
         default: puts("\nPlease type either 1, 2, 3, or Q.\n"); break;
