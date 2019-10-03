@@ -101,10 +101,10 @@ int index_of_last_book(book_t *head)
     return idx;
 }
 
-book_t *move_to_index(book_t *slot, const int idx)
+book_t *move_to_index(book_t *slot, const int new_idx)
 {
     book_t *current = slot;
-    for (int curr_idx=1; curr_idx < idx; curr_idx++)
+    for (int idx=1; idx < new_idx; idx++)
         current = current->next;
     return current;
 }
