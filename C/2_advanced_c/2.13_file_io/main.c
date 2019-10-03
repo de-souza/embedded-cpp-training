@@ -266,9 +266,9 @@ void list_file()
     printf("\nPlease enter a filename to read: ");
     char buffer[32];  // allow up to 30 characters for the filename
     safe_fgets(buffer, sizeof(buffer));
-    printf("\nBooks in \"%s\":\n\n", buffer);
     FILE *fp = fopen(buffer, "r");
     if (fp != NULL) {
+        printf("\nBooks in \"%s\":\n\n", buffer);
         book_t book;
         int is_empty = 1;
         int idx = 1;
