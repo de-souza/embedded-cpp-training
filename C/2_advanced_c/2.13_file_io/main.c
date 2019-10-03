@@ -282,7 +282,7 @@ void list_file()
             idx++;
         }
         if (is_empty)
-        puts("The file is empty.");
+            puts("The file is empty.");
         else
             puts("");
     } else {
