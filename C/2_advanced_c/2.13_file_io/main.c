@@ -222,17 +222,12 @@ book_t *clear(book_t *head)
 void save_file(book_t *head)
 {
     printf("\nPlease enter a filename to write: ");
-    char filename[32];  // allow up to 30 characters
-    safe_fgets(filename, sizeof(filename));
-    FILE *fp = fopen(filename, "w");
+    char buffer[32];  // allow up to 30 characters for the filename
+    safe_fgets(buffer, sizeof(buffer));
+    FILE *fp = fopen(buffer, "w");
     while (head != NULL) {
-        book_t buffer;
-        strcpy(buffer.author, head->author);
-        strcpy(buffer.title, head->title);
-        buffer.author[sizeof(buffer.author)-1] = '\n';
-        buffer.title[sizeof(buffer.title)-1] = '\n';
-        fwrite(buffer.author, sizeof(buffer.author), 1, fp);
-        fwrite(buffer.title, sizeof(buffer.title), 1, fp);
+        fprintf(fp, "%s\n", head->author);
+        fprintf(fp, "%s\n", head->title);
         fprintf(fp, "%d\n", head->year);
         head = head->next;
     }
@@ -243,16 +238,16 @@ void save_file(book_t *head)
 book_t *load_file(book_t *head)
 {
     printf("\nPlease enter a filename to read: ");
-    char filename[32];  // allow up to 30 characters
-    safe_fgets(filename, sizeof(filename));
-    FILE *fp = fopen(filename, "r");
+    char buffer[32];  // allow up to 30 characters for the filename
+    safe_fgets(buffer, sizeof(buffer));
+    FILE *fp = fopen(buffer, "r");
     if (fp != NULL) {
         book_t book;
-        while (fread(book.author, sizeof(book.author), 1, fp) != 0) {
-            fread(book.title, sizeof(book.title), 1, fp);
-            book.author[sizeof(book.author)-1] = '\0';
-            book.title[sizeof(book.title)-1] = '\0';
+        while (fgets(book.author, sizeof(book.author), fp) != NULL) {
+            fgets(book.title, sizeof(book.title), fp);
             fscanf(fp, "%hd ", &(book.year));
+            book.author[strlen(book.author)-1] = '\0';
+            book.title[strlen(book.title)-1] = '\0';
             if (head != NULL) {
                 int idx = index_of_last_book(head);
                 book_t *current = move_to_index(head, idx);
@@ -272,22 +267,21 @@ book_t *load_file(book_t *head)
 void list_file()
 {
     printf("\nPlease enter a filename to read: ");
-    char filename[32];  // allow up to 30 characters
-    safe_fgets(filename, sizeof(filename));
-    printf("\nBooks in %s:\n\n", filename);
-    FILE *fp = fopen(filename, "r");
+    char buffer[32];  // allow up to 30 characters for the filename
+    safe_fgets(buffer, sizeof(buffer));
+    printf("\nBooks in %s:\n\n", buffer);
+    FILE *fp = fopen(buffer, "r");
     if (fp != NULL) {
         book_t book;
-        int idx = 1;
         int is_empty = 1;
-        while (fread(book.author, sizeof(book.author), 1, fp) != 0) {
-            fread(book.title, sizeof(book.title), 1, fp);
-            book.author[sizeof(book.author)-1] = '\0';
-            book.title[sizeof(book.title)-1] = '\0';
+        int idx = 1;
+        while (fgets(book.author, sizeof(book.author), fp) != NULL) {
+            fgets(book.title, sizeof(book.title), fp);
+            book.author[strlen(book.author)-1] = '\0';
+            book.title[strlen(book.title)-1] = '\0';
             fscanf(fp, "%hd ", &(book.year));
-            print_book(idx, book);
-            idx++;
             is_empty = 0;
+            idx++;
         }
         if (is_empty)
             pause("Sorry, there is no book to list.");
