@@ -221,16 +221,43 @@ book_t *clear(book_t *head)
 
 void save(book_t *head)
 {
-    FILE *fp = fopen("books.txt", "wa+");
+    printf("\nPlease enter a filename to write: ");
+    char filename[32];  // allow up to 30 characters
+    safe_fgets(filename, sizeof(filename));
+    FILE *fp = fopen(filename, "wa+");
     while (head != NULL) {
-        char *author_line = strcat(head->author, "\n");
-        char *title_line = strcat(head->title, "\n");
-        fwrite(author_line, strlen(author_line), 1, fp);
-        fwrite(title_line, strlen(title_line), 1, fp);
+        book_t buffer;
+        strcpy(buffer.author, head->author);
+        strcpy(buffer.title, head->title);
+        buffer.author[sizeof(buffer.author)-1] = '\n';
+        buffer.title[sizeof(buffer.title)-1] = '\n';
+        fwrite(buffer.author, sizeof(buffer.author), 1, fp);
+        fwrite(buffer.title, sizeof(buffer.title), 1, fp);
         fprintf(fp, "%d\n", head->year);
         head = head->next;
     }
     fclose(fp);
+    pause("\nSuccessfully saved database.");
+}
+
+book_t *load()
+{
+    printf("\nPlease enter a filename to read: ");
+    char filename[32];  // allow up to 30 characters
+    safe_fgets(filename, sizeof(filename));
+    FILE *fp = fopen(filename, "r");
+    book_t book;
+    book_t *head = NULL;
+    while (fread(book.author, sizeof(book.author), 1, fp) != 0) {
+        fread(book.title, sizeof(book.title), 1, fp);
+        book.author[sizeof(book.author)-1] = '\0';
+        book.title[sizeof(book.title)-1] = '\0';
+        fscanf(fp, "%hd ", &(book.year));
+        head = push(head, book);
+    }
+    fclose(fp);
+    pause("\nSuccessfully loaded database.");
+    return head;
 }
 
 int main()
@@ -259,10 +286,10 @@ int main()
         case '4': head = sort(head); break;
         case '5': head = clear(head); break;
         case '6': save(head); break;
-        // case '7': head = load(); break;
+        case '7': head = load(); break;
         case 'q':
         case 'Q': pause(""); return 0;
-        default: puts("\nPlease type either 1, 2, 3, or Q.\n"); break;
+        default: puts("\nPlease type a number between 1 and 7, or Q to quit.\n"); break;
         }
     }
 }
