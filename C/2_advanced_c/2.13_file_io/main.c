@@ -219,7 +219,7 @@ book_t *clear(book_t *head)
     return head;
 }
 
-void save(book_t *head)
+void save_file(book_t *head)
 {
     printf("\nPlease enter a filename to write: ");
     char filename[32];  // allow up to 30 characters
@@ -240,7 +240,7 @@ void save(book_t *head)
     pause("\nSuccessfully saved database.");
 }
 
-book_t *load(book_t *head)
+book_t *load_file(book_t *head)
 {
     printf("\nPlease enter a filename to read: ");
     char filename[32];  // allow up to 30 characters
@@ -269,7 +269,7 @@ book_t *load(book_t *head)
     return head;
 }
 
-void display_file()
+void list_file()
 {
     printf("\nPlease enter a filename to read: ");
     char filename[32];  // allow up to 30 characters
@@ -325,9 +325,9 @@ int main()
         case '3': head = delete(head); break;
         case '4': head = sort(head); break;
         case '5': head = clear(head); break;
-        case '6': save(head); break;
-        case '7': head = load(head); break;
-        case '8': display_file(head); break;
+        case '6': save_file(head); break;
+        case '7': head = load_file(head); break;
+        case '8': list_file(head); break;
         case 'q':
         case 'Q': pause(""); return 0;
         default: puts("\nPlease type a number between 1 and 8, or Q to quit.\n"); break;
