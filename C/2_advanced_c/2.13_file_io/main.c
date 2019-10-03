@@ -322,7 +322,7 @@ int main()
         case '8': list_file(head); break;
         case 'q':
         case 'Q': puts("\nGood bye!"); return 0;
-        default: puts("\nPlease type a number between 1 and 8, or Q to quit.\n"); break;
+        default: puts("\nPlease enter a number between 1 and 8, or Q to quit.\n"); break;
         }
         puts("Press enter to continue...");
         while(getchar() != '\n');
