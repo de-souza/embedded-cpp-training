@@ -131,6 +131,14 @@ book_t *pop(book_t *slot)
     return slot;
 }
 
+book_t *sort_two_books(book_t *slot) {
+    if (strcmp(slot->author, slot->next->author) > 0) {
+        slot->next->next = push(slot->next->next, *slot);
+        slot = pop(slot);
+    }
+    return slot;
+}
+
 book_t *add(book_t *head)
 {
     puts("\nPlease enter the new book's characteristics.\n");
@@ -164,7 +172,7 @@ void list(book_t *head)
         }
         pause("");
     } else {
-        pause("\nSorry, there is no book to list.");
+        pause("\nThere is no book in the database.");
     }
 }
 
@@ -177,38 +185,32 @@ book_t *delete(book_t *head)
         if (idx != 1) {
             book_t *current = move_to_index(head, idx-1);
             current->next = pop(current->next);
-            return head;
+        } else {
+            head = pop(head);
         }
-        head = pop(head);
         pause("The book was successfully deleted.");
     } else {
-        pause("\nSorry, there is no book to delete.");
+        pause("\nThere is no book in the database.");
     }
     return head;
 }
 
 book_t *sort(book_t *head)
 {
-    if (head != NULL) {
+    if (head != NULL && head->next != NULL) {
         for (int i=1; i < index_of_last_book(head); i++) {
             for (int j=i; j > 0; j--) {
                 if (j != 1) {
                     book_t *current = move_to_index(head, j-1);
-                    if (strcmp(current->next->author, current->next->next->author) > 0) {
-                        current->next->next->next = push(current->next->next->next, *(current->next));
-                        current->next = pop(current->next);
-                    }
+                    current->next = sort_two_books(current->next);
                 } else {
-                    if (strcmp(head->author, head->next->author) > 0) {
-                        head->next->next = push(head->next->next, *head);
-                        head = pop(head);
-                    }
+                    head = sort_two_books(head);
                 }
             }
         }
         pause("\nThe books were successfully sorted by author.");
     } else {
-        pause("\nSorry, there is no book to sort.");
+        pause("\nNot enough books to do a sorting.");
     }
     return head;
 }
