@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define INDEX_LEN 9
+#define YEAR_LEN 4
+#define PATH_LEN 30
+
 typedef struct book {
     char author[40];
     char title[30];
@@ -25,7 +29,7 @@ void safe_fgets(char *buffer, const int max_size)
 
 char safe_getchar()
 {
-    char buffer[3];  // allow 1 character
+    char buffer[3];
     safe_fgets(buffer, sizeof(buffer));
     return buffer[0];
 }
@@ -46,10 +50,10 @@ int enter_num(char *buffer, const int max_size)
 int enter_index(const int max_idx)
 {
     printf("Please enter an index: ");
-    char buffer[11];  // allow up to 9 digits for the index
+    char buffer[INDEX_LEN+2];
     int idx = enter_num(buffer, sizeof(buffer));
     while (idx < 1 || idx > max_idx) {
-        printf("Index out of range (0 < i < %d). Please try again: ", max_idx+1);
+        printf("Index out of range (1 <= i <= %d). Please try again: ", max_idx);
         idx = enter_num(buffer, sizeof(buffer));
     }
     puts("");
@@ -64,7 +68,7 @@ book_t enter_book()
     printf("Please enter an title: ");
     safe_fgets(book.title, sizeof(book.title));
     printf("Please enter a year: ");
-    char buffer[6];  // allow up to 4 digits for the year
+    char buffer[YEAR_LEN+2];
     book.year = enter_num(buffer, sizeof(buffer));
     puts("");
     return book;
@@ -210,7 +214,7 @@ book_t *clear(book_t *head)
 void save_file(book_t *head)
 {
     printf("\nPlease enter a filename to write: ");
-    char buffer[32];  // allow up to 30 characters for the filename
+    char buffer[PATH_LEN+2];
     safe_fgets(buffer, sizeof(buffer));
     FILE *fp = fopen(buffer, "w");
     while (head != NULL) {
@@ -224,7 +228,7 @@ void save_file(book_t *head)
 book_t *load_file(book_t *head)
 {
     printf("\nPlease enter a filename to read: ");
-    char buffer[32];  // allow up to 30 characters for the filename
+    char buffer[PATH_LEN+2];
     safe_fgets(buffer, sizeof(buffer));
     FILE *fp = fopen(buffer, "r");
     if (fp != NULL) {
@@ -253,7 +257,7 @@ book_t *load_file(book_t *head)
 void list_file()
 {
     printf("\nPlease enter a filename to read: ");
-    char buffer[32];  // allow up to 30 characters for the filename
+    char buffer[PATH_LEN+2];
     safe_fgets(buffer, sizeof(buffer));
     FILE *fp = fopen(buffer, "r");
     if (fp != NULL) {
