@@ -329,7 +329,7 @@ int main()
         case '7': head = load_file(head); break;
         case '8': list_file(head); break;
         case 'q':
-        case 'Q': pause(""); return 0;
+        case 'Q': pause("\nGood bye!"); return 0;
         default: puts("\nPlease type a number between 1 and 8, or Q to quit.\n"); break;
         }
     }
