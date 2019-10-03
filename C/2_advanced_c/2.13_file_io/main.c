@@ -86,9 +86,9 @@ book_t generate_book(const char *restrict author, const char *restrict title, co
     return book;
 }
 
-void print_book(const int idx, const book_t *book)
+void print_book(const int idx, const book_t book)
 {
-    printf("%d. %s - %s (%d)\n", idx, book->author, book->title, book->year);
+    printf("%d. %s - %s (%d)\n", idx, book.author, book.title, book.year);
 }
 
 int index_of_last_book(book_t *head)
@@ -156,7 +156,7 @@ void list(book_t *head)
         puts("\nBooks currently in the database:\n");
         int idx = 1;
         while (head != NULL) {
-            print_book(idx, head);
+            print_book(idx, *head);
             idx++;
             head = head->next;
         }
@@ -224,7 +224,7 @@ void save(book_t *head)
     printf("\nPlease enter a filename to write: ");
     char filename[32];  // allow up to 30 characters
     safe_fgets(filename, sizeof(filename));
-    FILE *fp = fopen(filename, "wa+");
+    FILE *fp = fopen(filename, "w");
     while (head != NULL) {
         book_t buffer;
         strcpy(buffer.author, head->author);
@@ -261,12 +261,42 @@ book_t *load(book_t *head)
                 head = push(head, book);
             }
         }
-        fclose(fp);
         pause("\nSuccessfully added books to database.");
     } else {
         pause("\nFile not found.");
     }
+    fclose(fp);
     return head;
+}
+
+void display_file()
+{
+    printf("\nPlease enter a filename to read: ");
+    char filename[32];  // allow up to 30 characters
+    safe_fgets(filename, sizeof(filename));
+    printf("\nBooks in %s:\n\n", filename);
+    FILE *fp = fopen(filename, "r");
+    if (fp != NULL) {
+        book_t book;
+        int idx = 1;
+        int is_empty = 1;
+        while (fread(book.author, sizeof(book.author), 1, fp) != 0) {
+            fread(book.title, sizeof(book.title), 1, fp);
+            book.author[sizeof(book.author)-1] = '\0';
+            book.title[sizeof(book.title)-1] = '\0';
+            fscanf(fp, "%hd ", &(book.year));
+            print_book(idx, book);
+            idx++;
+            is_empty = 0;
+        }
+        if (is_empty)
+            pause("Sorry, there is no book to list.");
+        else
+            pause("");
+    } else {
+        pause("\nFile not found.");
+    }
+    fclose(fp);
 }
 
 int main()
@@ -285,7 +315,8 @@ int main()
         puts("  4. Sort books by author.");
         puts("  5. Clear database.\n");
         puts("  6. Save books to file.");
-        puts("  7. Load books from file.\n");
+        puts("  7. Add books from file.");
+        puts("  8. Display books from file.\n");
         puts("  Q. Quit program.\n");
         printf("Please enter your selection: ");
         switch (safe_getchar()) {
@@ -296,9 +327,10 @@ int main()
         case '5': head = clear(head); break;
         case '6': save(head); break;
         case '7': head = load(head); break;
+        case '8': display_file(head); break;
         case 'q':
         case 'Q': pause(""); return 0;
-        default: puts("\nPlease type a number between 1 and 7, or Q to quit.\n"); break;
+        default: puts("\nPlease type a number between 1 and 8, or Q to quit.\n"); break;
         }
     }
 }
