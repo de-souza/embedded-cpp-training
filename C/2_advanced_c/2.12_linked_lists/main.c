@@ -172,7 +172,33 @@ book_t *delete(book_t *head)
     return head;
 }
 
-book_t *delete_all(book_t *head)
+book_t *sort(book_t *head)
+{
+    if (head != NULL) {
+        for (int total_idx=1; total_idx < index_of_last_book(head); total_idx++) {
+            for (int idx=total_idx; idx > 0; idx--) {
+                if (idx != 1) {
+                    book_t *current = move_to_index(head, idx-1);
+                    if (strcmp(current->next->author, current->next->next->author) > 0) {
+                        current->next->next->next = push(current->next->next->next, *(current->next));
+                        current->next = pop(current->next);
+                    }
+                } else {
+                    if (strcmp(head->author, head->next->author) > 0) {
+                        head->next->next = push(head->next->next, *head);
+                        head = pop(head);
+                    }
+                }
+            }
+        }
+        puts("\nThe books were successfully sorted by author.\n");
+        return head;
+    }
+    puts("\nSorry, there is no book to sort. Please add a book first.\n");
+    return head;
+}
+
+book_t *clear(book_t *head)
 {
     if (head != NULL) {
         while(pop(move_to_index(head, index_of_last_book(head))) != NULL);
@@ -196,14 +222,16 @@ int main()
         puts("  1. Add a book.");
         puts("  2. List all books.");
         puts("  3. Remove a book.");
-        puts("  4. Remove all books.");
+        puts("  4. Sort books by author.");
+        puts("  5. Remove all books.");
         puts("  Q. Quit program.");
         printf("Please enter your selection: ");
         switch (safe_getchar()) {
         case '1': head = add(head); break;
         case '2': list(head); break;
         case '3': head = delete(head); break;
-        case '4': head = delete_all(head); break;
+        case '4': head = sort(head); break;
+        case '5': head = clear(head); break;
         case 'q':
         case 'Q': return 0;
         default: puts("\nPlease type either 1, 2, 3, or Q.\n"); break;
