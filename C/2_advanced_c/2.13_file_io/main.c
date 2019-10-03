@@ -30,13 +30,6 @@ char safe_getchar()
     return buffer[0];
 }
 
-void pause(const char *message)
-{
-    printf("%s\nPress enter to continue...\n", message);
-    while(getchar() != '\n');
-    puts("");
-}
-
 int enter_num(char *buffer, const int max_size)
 {
     safe_fgets(buffer, max_size);
@@ -53,7 +46,7 @@ int enter_num(char *buffer, const int max_size)
 int enter_index(const int max_idx)
 {
     printf("Please enter an index: ");
-    char buffer[11];  // allow up to 9 digits so a maximum of 1 billion books
+    char buffer[11];  // allow up to 9 digits for the index
     int idx = enter_num(buffer, sizeof(buffer));
     while (idx < 1 || idx > max_idx) {
         printf("Index out of range (0 < i < %d). Please try again: ", max_idx+1);
@@ -91,10 +84,10 @@ void print_book(const int idx, const book_t *book)
     printf("%d. %s - %s (%d)\n", idx, book->author, book->title, book->year);
 }
 
-int index_of_last_book(book_t *slot)
+int index_of_last_book(book_t *head)
 {
     int idx = 1;
-    book_t *current = slot;
+    book_t *current = head;
     while (current->next != NULL) {
         idx++;
         current = current->next;
@@ -113,6 +106,8 @@ book_t *move_to_index(book_t *slot, const int idx)
 book_t *push(book_t *slot, const book_t book)
 {
     book_t *temp = malloc(sizeof(*temp));
+    if (temp == NULL)
+        exit(EXIT_FAILURE)
     strcpy(temp->author, book.author);
     strcpy(temp->title, book.title);
     temp->year = book.year;
@@ -222,12 +217,21 @@ void save(book_t *head)
     FILE *fp = fopen("books.txt", "wa+");
     book_t *current = head;
     while (current != NULL) {
-        fwrite(strcat(current->author, "\n"), sizeof(current->author), 1, fp);
-        fwrite(strcat(current->title, "\n"), sizeof(current->title), 1, fp);
+        char *author_line = strcat(current->author, "\n");
+        char *title_line = strcat(current->author, "\n");
+        fwrite(author_line, sizeof(author_line), 1, fp);
+        fwrite(title_line, sizeof(title_line), 1, fp);
         fprintf(fp, "%d\n", current->year);
         current = current->next;
     }
     fclose(fp);
+}
+
+void pause(const char *message)
+{
+    printf("%s\nPress enter to continue...\n", message);
+    while(getchar() != '\n');
+    puts("");
 }
 
 int main()
