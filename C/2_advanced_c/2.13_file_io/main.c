@@ -142,6 +142,8 @@ book_t *add(book_t *head)
         if (idx != 1) {
             book_t *current = move_to_index(head, idx-1);
             current->next = push(current->next, book);
+        } else {
+            head = push(head, book);
         }
     } else {
         head = push(head, book);
