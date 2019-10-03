@@ -10,6 +10,13 @@ typedef struct book {
     struct book *next;
 } book_t;
 
+void pause(const char *message)
+{
+    printf("%s\nPress enter to continue...\n", message);
+    while(getchar() != '\n');
+    puts("");
+}
+
 void safe_fgets(char *buffer, const int max_size)
 {
     fgets(buffer, max_size, stdin);
@@ -87,10 +94,9 @@ void print_book(const int idx, const book_t *book)
 int index_of_last_book(book_t *head)
 {
     int idx = 1;
-    book_t *current = head;
-    while (current->next != NULL) {
+    while (head->next != NULL) {
         idx++;
-        current = current->next;
+        head = head->next;
     }
     return idx;
 }
@@ -106,8 +112,10 @@ book_t *move_to_index(book_t *slot, const int idx)
 book_t *push(book_t *slot, const book_t book)
 {
     book_t *temp = malloc(sizeof(*temp));
-    if (temp == NULL)
-        exit(EXIT_FAILURE)
+    if (temp == NULL) {
+        puts("Out of memory error.");
+        exit(EXIT_FAILURE);
+    }
     strcpy(temp->author, book.author);
     strcpy(temp->title, book.title);
     temp->year = book.year;
@@ -147,11 +155,10 @@ void list(book_t *head)
     if (head != NULL) {
         puts("\nBooks currently in the database:\n");
         int idx = 1;
-        book_t *current = head;
-        while (current != NULL) {
-            print_book(idx, current);
+        while (head != NULL) {
+            print_book(idx, head);
             idx++;
-            current = current->next;
+            head = head->next;
         }
         pause("");
     } else {
@@ -215,23 +222,15 @@ book_t *clear(book_t *head)
 void save(book_t *head)
 {
     FILE *fp = fopen("books.txt", "wa+");
-    book_t *current = head;
-    while (current != NULL) {
-        char *author_line = strcat(current->author, "\n");
-        char *title_line = strcat(current->author, "\n");
-        fwrite(author_line, sizeof(author_line), 1, fp);
-        fwrite(title_line, sizeof(title_line), 1, fp);
-        fprintf(fp, "%d\n", current->year);
-        current = current->next;
+    while (head != NULL) {
+        char *author_line = strcat(head->author, "\n");
+        char *title_line = strcat(head->title, "\n");
+        fwrite(author_line, strlen(author_line), 1, fp);
+        fwrite(title_line, strlen(title_line), 1, fp);
+        fprintf(fp, "%d\n", head->year);
+        head = head->next;
     }
     fclose(fp);
-}
-
-void pause(const char *message)
-{
-    printf("%s\nPress enter to continue...\n", message);
-    while(getchar() != '\n');
-    puts("");
 }
 
 int main()
@@ -250,7 +249,7 @@ int main()
         puts("  4. Sort books by author.");
         puts("  5. Clear database.\n");
         puts("  6. Save books to file.");
-        puts("  5. Load books from file.\n");
+        puts("  7. Load books from file.\n");
         puts("  Q. Quit program.\n");
         printf("Please enter your selection: ");
         switch (safe_getchar()) {
