@@ -223,9 +223,7 @@ void save_file(book_t *head)
     safe_fgets(buffer, sizeof(buffer));
     FILE *fp = fopen(buffer, "w");
     while (head != NULL) {
-        fprintf(fp, "%s\n", head->author);
-        fprintf(fp, "%s\n", head->title);
-        fprintf(fp, "%d\n", head->year);
+        fprintf(fp, "%s\n%s\n%d\n", head->author, head->title, head->year);
         head = head->next;
     }
     fclose(fp);
