@@ -211,13 +211,8 @@ book_t *sort(book_t *head)
 
 book_t *clear(book_t *head)
 {
-    if (head != NULL) {
-        while(head->next != NULL) {
-            book_t *current = move_to_index(head, index_of_last_book(head)-1);
-            current->next = pop(current->next);
-        }
+    while (head != NULL)
         head = pop(head);
-    }
     pause("\nSuccessfully cleared database.");
     return head;
 }
@@ -233,11 +228,6 @@ void save(book_t *head)
         current = current->next;
     }
     fclose(fp);
-}
-
-void bye()
-{
-    pause("\nGood bye!");
 }
 
 int main()
@@ -268,7 +258,7 @@ int main()
         case '6': save(head); break;
         // case '7': head = load(); break;
         case 'q':
-        case 'Q': bye(); return 0;
+        case 'Q': pause(""); return 0;
         default: puts("\nPlease type either 1, 2, 3, or Q.\n"); break;
         }
     }
