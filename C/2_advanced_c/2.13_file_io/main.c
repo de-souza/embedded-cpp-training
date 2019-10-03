@@ -1,4 +1,4 @@
-/* How to file input/output works. */
+/* How file input/output works. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
