@@ -1,7 +1,11 @@
-/* How to use linked lists. */
+/* How file input/output works. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define INDEX_LEN 9
+#define YEAR_LEN 4
+#define PATH_LEN 30
 
 typedef struct book {
     char author[40];
@@ -10,7 +14,7 @@ typedef struct book {
     struct book *next;
 } book_t;
 
-void safe_fgets(char *buffer, const int max_size)
+void enter_string(char *buffer, const int max_size)
 {
     fgets(buffer, max_size, stdin);
     size_t newline_span = strcspn(buffer, "\n");
@@ -23,237 +27,224 @@ void safe_fgets(char *buffer, const int max_size)
     buffer[newline_span] = '\0';
 }
 
-char safe_getchar()
+char enter_character()
 {
-    char buffer[3];  // allow 1 character
-    safe_fgets(buffer, sizeof(buffer));
+    char buffer[3];
+    enter_string(buffer, sizeof(buffer));
     return buffer[0];
 }
 
-void pause(const char *message)
+int enter_number(char *buffer, const int max_size)
 {
-    printf("%s\nPress enter to continue...\n", message);
-    while(getchar() != '\n');
-    puts("");
-}
-
-int enter_num(char *buffer, const int max_size)
-{
-    safe_fgets(buffer, max_size);
+    enter_string(buffer, max_size);
     char *endptr;
-    int num = strtol(buffer, &endptr, 10);
+    int number = strtol(buffer, &endptr, 10);
     while (strlen(endptr) != 0 || endptr == buffer) {
         printf("Not a number. Please try again: ");
-        safe_fgets(buffer, sizeof(buffer));
-        num = strtol(buffer, &endptr, 10);
+        enter_string(buffer, sizeof(buffer));
+        number = strtol(buffer, &endptr, 10);
     }
-    return num;
+    return number;
 }
 
-int enter_index(const int max_idx)
+int enter_index(const int idx_max)
 {
-    printf("Please enter an index: ");
-    char buffer[11];  // allow up to 9 digits so a maximum of 1 billion books
-    int idx = enter_num(buffer, sizeof(buffer));
-    while (idx < 1 || idx > max_idx) {
-        printf("Index out of range (0 < i < %d). Please try again: ", max_idx+1);
-        idx = enter_num(buffer, sizeof(buffer));
+    printf("\nPlease enter an index: ");
+    char buffer[INDEX_LEN+2];
+    int idx = enter_number(buffer, sizeof(buffer));
+    while (idx < 1 || idx > idx_max) {
+        printf("Index out of range (1 <= i <= %d). Please try again: ", idx_max);
+        idx = enter_number(buffer, sizeof(buffer));
     }
-    puts("");
     return idx;
 }
 
 book_t enter_book()
 {
     book_t book;
-    printf("Please enter an author: ");
-    safe_fgets(book.author, sizeof(book.author));
+    printf("\nPlease enter an author: ");
+    enter_string(book.author, sizeof(book.author));
     printf("Please enter an title: ");
-    safe_fgets(book.title, sizeof(book.title));
+    enter_string(book.title, sizeof(book.title));
     printf("Please enter a year: ");
-    char buffer[6];  // allow up to 4 digits for the year
-    book.year = enter_num(buffer, sizeof(buffer));
-    puts("");
+    char buffer[YEAR_LEN+2];
+    book.year = enter_number(buffer, sizeof(buffer));
     return book;
 }
 
-book_t generate_book(const char *restrict author, const char *restrict title, const short year)
+void print_book(const int idx, const book_t book)
 {
-    book_t book;
-    strcpy(book.author, author);
-    strcpy(book.title, title);
-    book.year = year;
-    return book;
+    printf("\n%d. %s - %s (%d)", idx, book.author, book.title, book.year);
 }
 
-void print_book(const int idx, const book_t *book)
+int is_not_last(book_t *current)
 {
-    printf("%d. %s - %s (%d)\n", idx, book->author, book->title, book->year);
+    return current->next != NULL;
 }
 
-int index_of_last_book(book_t *slot)
+book_t *get_last(book_t *current)
 {
-    int idx = 1;
-    book_t *current = slot;
-    while (current->next != NULL) {
-        idx++;
-        current = current->next;
-    }
-    return idx;
-}
-
-book_t *move_to_index(book_t *slot, const int idx)
-{
-    book_t *current = slot;
-    for (int curr_idx=1; curr_idx < idx; curr_idx++)
+    while (is_not_last(current))
         current = current->next;
     return current;
 }
 
-book_t *push(book_t *slot, const book_t book)
+int get_steps_to_last(book_t *current)
 {
-    book_t *temp = malloc(sizeof(*temp));
-    strcpy(temp->author, book.author);
-    strcpy(temp->title, book.title);
-    temp->year = book.year;
-    temp->next = slot;
-    return temp;
+    int steps = 0;
+    while (is_not_last(current)) {
+        steps++;
+        current = current->next;
+    }
+    return steps;
 }
 
-book_t *pop(book_t *slot)
+book_t *walk_n_steps(book_t *current, const int n)
 {
-    book_t *temp = slot;
-    slot = slot->next;
+    for (int i=0; i < n; i++)
+        current = current->next;
+    return current;
+}
+
+book_t *push(book_t *current, const book_t book)
+{
+    book_t *new = malloc(sizeof(*new));
+    if (new == NULL)
+        exit(EXIT_FAILURE);
+    strcpy(new->author, book.author);
+    strcpy(new->title, book.title);
+    new->year = book.year;
+    new->next = current;
+    return new;
+}
+
+book_t *pop(book_t *current)
+{
+    book_t *temp = current;
+    current = current->next;
     free(temp);
-    return slot;
+    return current;
+}
+
+book_t *init()
+{
+    book_t *head = malloc(sizeof(*head));
+    if (head == NULL)
+        exit(EXIT_FAILURE);
+    head->next = NULL;
+    return head;
 }
 
 book_t *add(book_t *head)
 {
-    puts("\nPlease enter the new book's characteristics.\n");
+    puts("\nPlease enter the new book's characteristics.");
     book_t book = enter_book();
-    if (head != NULL) {
-        puts("Now, please enter the index of the book in the database.\n");
-        int max_idx = index_of_last_book(head) + 1;
-        int idx = enter_index(max_idx);
-        if (idx != 1) {
-            book_t *current = move_to_index(head, idx-1);
-            current->next = push(current->next, book);
-        }
-    } else {
-        head = push(head, book);
-    }
-    pause("The book was successfully added.");
+    puts("\nNow, please enter the index of the book in the database.");
+    int idx_max = get_steps_to_last(head) + 1;
+    int idx = enter_index(idx_max);
+    book_t *current = walk_n_steps(head, idx-1);
+    current->next = push(current->next, book);
+    puts("\nThe book was successfully added.");
     return head;
 }
 
-void list(book_t *head)
+void display(book_t *head)
 {
-    if (head != NULL) {
-        puts("\nBooks currently in the database:\n");
-        int idx = 1;
-        book_t *current = head;
-        while (current != NULL) {
-            print_book(idx, current);
-            idx++;
-            current = current->next;
-        }
-        pause("");
+    if (is_not_last(head)) {
+        puts("\nBooks currently in the database:");
+        int idx = 0;
+        while (is_not_last(head))
+            print_book(++idx, *(head = head->next));
+        puts("\n");
     } else {
-        pause("\nSorry, there is no book to list.");
+        puts("\nThere is no book in the database.");
     }
 }
 
 book_t *delete(book_t *head)
 {
-    if (head != NULL) {
-        puts("\nPlease enter the index of the book to delete.\n");
-        int max_idx = index_of_last_book(head);
-        int idx = enter_index(max_idx);
-        if (idx != 1) {
-            book_t *current = move_to_index(head, idx-1);
-            current->next = pop(current->next);
-            return head;
-        }
-        head = pop(head);
-        pause("The book was successfully deleted.");
+    if (is_not_last(head)) {
+        puts("\nPlease enter the index of the book to remove.");
+        int idx_max = get_steps_to_last(head);
+        int idx = enter_index(idx_max);
+        book_t *current = walk_n_steps(head, idx-1);
+        current->next = pop(current->next);
+        puts("\nThe book was successfully deleted.");
     } else {
-        pause("\nSorry, there is no book to delete.");
-    }
-    return head;
-}
-
-book_t *sort(book_t *head)
-{
-    if (head != NULL) {
-        for (int total_idx=1; total_idx < index_of_last_book(head); total_idx++) {
-            for (int idx=total_idx; idx > 0; idx--) {
-                if (idx != 1) {
-                    book_t *current = move_to_index(head, idx-1);
-                    if (strcmp(current->next->author, current->next->next->author) > 0) {
-                        current->next->next->next = push(current->next->next->next, *(current->next));
-                        current->next = pop(current->next);
-                    }
-                } else {
-                    if (strcmp(head->author, head->next->author) > 0) {
-                        head->next->next = push(head->next->next, *head);
-                        head = pop(head);
-                    }
-                }
-            }
-        }
-        pause("\nThe books were successfully sorted by author.");
-    } else {
-        pause("\nSorry, there is no book to sort.");
+        puts("\nThere is no book in the database.");
     }
     return head;
 }
 
 book_t *clear(book_t *head)
 {
-    if (head != NULL) {
-        book_t *current;
-        do {
-            current = move_to_index(head, index_of_last_book(head));
-        } while(pop(current) != NULL);
-        pause("\nAll the books were successfully deleted.");
+    while (is_not_last(head = pop(head)));
+    puts("\nSuccessfully cleared database.");
+    return head;    
+}
+
+book_t *swap_with_next(book_t *first)
+{
+    book_t *second = first->next;
+    first->next = second->next;
+    second->next = first;
+    return second;
+}
+
+book_t *sort(book_t *head)
+{
+    if (is_not_last(head)) {
+        if (is_not_last(head->next)) {
+            int done = 0;
+            while (!done) {
+                book_t *current = head;
+                done = 1;
+                while (is_not_last(current->next)) {
+                    int cmp = strcmp(current->next->author, current->next->next->author);
+                    if (cmp > 0) {
+                        current->next = swap_with_next(current->next);
+                        done = 0;
+                    }
+                    current = current->next;
+                }
+            }
+        } else {
+            puts("\nThere is only one book in the database.");
+        }
     } else {
-        pause("\nSorry, there is no book to delete.");
+        puts("\nThere is no book in the database.");
     }
     return head;
 }
 
-void bye()
-{
-    pause("\nGood bye!");
-}
-
 int main()
 {
-    book_t *head = NULL;
-    head = push(head, generate_book("Ivan Cukic", "Functional Programming in C++", 2018));
-    head = push(head, generate_book("Daniel Kahneman", "Thinking, Fast and Slow", 2012));
-    head = push(head, generate_book("Nick Bostrom", "Superintelligence", 2008));
-    head = push(head, generate_book("Nassim Nicholas Taleb", "The Black Swan", 2008));
-    head = push(head, generate_book("Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978));
+    book_t *head = init();
+    head->next = push(head->next, (book_t) { "Ivan Cukic", "Functional Programming in C++", 2018 });
+    head->next = push(head->next, (book_t) { "Daniel Kahneman", "Thinking, Fast and Slow", 2012 });
+    head->next = push(head->next, (book_t) { "Nick Bostrom", "Superintelligence", 2008 });
+    head->next = push(head->next, (book_t) { "Nassim Nicholas Taleb", "The Black Swan", 2008 });
+    head->next = push(head->next, (book_t) { "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978 });
     while (1) {
         puts("Main menu.\n");
         puts("  1. Add a book.");
-        puts("  2. List all books.");
+        puts("  2. Display the books.");
         puts("  3. Remove a book.");
         puts("  4. Sort books by author.");
-        puts("  5. Remove all books.\n");
+        puts("  5. Clear database.\n");
         puts("  Q. Quit program.\n");
         printf("Please enter your selection: ");
-        switch (safe_getchar()) {
+        switch (enter_character()) {
         case '1': head = add(head); break;
-        case '2': list(head); break;
+        case '2': display(head); break;
         case '3': head = delete(head); break;
         case '4': head = sort(head); break;
         case '5': head = clear(head); break;
         case 'q':
-        case 'Q': bye(); return 0;
-        default: puts("\nPlease type either 1, 2, 3, or Q.\n"); break;
+        case 'Q': puts("\nGood bye!"); return 0;
+        default: puts("\nPlease enter a number between 1 and 5, or Q to quit."); break;
         }
+        puts("Press enter to continue...");
+        while(getchar() != '\n');
     }
 }
