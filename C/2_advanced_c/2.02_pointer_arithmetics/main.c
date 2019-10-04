@@ -1,4 +1,4 @@
-/* Check the equivalence between array indexing and pointer arithmetics. */
+/* How array indexing and pointer arithmetics are equivalent. */
 #include <stdio.h>
 #include <string.h>
 

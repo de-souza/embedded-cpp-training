@@ -1,4 +1,4 @@
-/* Check how to use the sizeof unary operator. */
+/* How to use the sizeof unary operator. */
 #include <limits.h>
 #include <stdio.h>
 

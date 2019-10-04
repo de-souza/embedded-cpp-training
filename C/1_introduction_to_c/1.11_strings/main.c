@@ -1,4 +1,4 @@
-/* Check how strings are manipulated using strcpy and strlen. */
+/* How to manipulate strings using strcpy and strlen. */
 #include <stdio.h>
 #include <string.h>
 

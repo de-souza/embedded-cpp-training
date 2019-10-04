@@ -1,4 +1,4 @@
-/* Check which addresses are on the stack and which are on the heap. */
+/* How addresses can be on the stack or on the heap. */
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -1,4 +1,4 @@
-/* How to create bit fields, and how to associate types using union. */
+/* How to create bit fields, and how to associate types using unions. */
 #include <stdio.h>
 
 int main()

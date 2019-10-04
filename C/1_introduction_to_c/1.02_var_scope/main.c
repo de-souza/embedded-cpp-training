@@ -1,4 +1,4 @@
-/* Check how scoping affects variables. */
+/* How scoping affects variables. */
 #include <stdio.h>
 
 int main()

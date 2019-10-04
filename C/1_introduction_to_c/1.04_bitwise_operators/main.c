@@ -1,4 +1,4 @@
-/* Check how bitwise operators affect different types of variables. */
+/* How bitwise operators affect different types of variables. */
 #include <stdio.h>
 
 int main()

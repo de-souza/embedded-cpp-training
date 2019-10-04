@@ -1,4 +1,4 @@
-/* Check how to manipulate arrays. */
+/* How to manipulate arrays. */
 #include <stdio.h>
 
 int main()

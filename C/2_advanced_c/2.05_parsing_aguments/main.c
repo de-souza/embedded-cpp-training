@@ -1,4 +1,4 @@
-/* How to parse arguments. */
+/* How to parse arguments to the program. */
 #include <stdio.h>
 
 int main(int argc, char **arg)

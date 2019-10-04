@@ -1,4 +1,4 @@
-/* How file input/output works. */
+/* How to manipulate linked lists. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

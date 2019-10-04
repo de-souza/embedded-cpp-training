@@ -1,4 +1,4 @@
-/* Implement various functions. */
+/* How to manipulate functions. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>

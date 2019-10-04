@@ -1,4 +1,4 @@
-/* Check how to use pointers in functions. */
+/* How to use manipulate pointers in functions. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

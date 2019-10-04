@@ -1,4 +1,4 @@
-/* Check how to manipulate pointers. */
+/* How to manipulate pointers. */
 #include <stdio.h>
 
 int main()

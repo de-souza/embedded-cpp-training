@@ -1,4 +1,4 @@
-/* Check different types of variable assignment. */
+/* How to assign values to variables. */
 #include <stdio.h>
 
 int main()
