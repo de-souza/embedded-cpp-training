@@ -205,6 +205,21 @@ book_t *clear(book_t *head)
     return head;    
 }
 
+int compare_next_author(book_t *current)
+{
+    return strcmp(current->author, current->next->author);
+}
+
+int compare_next_title(book_t *current)
+{
+    return strcmp(current->title, current->next->title);
+}
+
+int compare_next_year(book_t *current)
+{
+    return current->year - current->next->year;
+}
+
 book_t *swap_with_next(book_t *first)
 {
     book_t *second = first->next;
@@ -213,7 +228,7 @@ book_t *swap_with_next(book_t *first)
     return second;
 }
 
-book_t *sort(book_t *head)
+book_t *sort(book_t *head, int (*compare_next)(book_t *))
 {
     if (is_not_last(head)) {
         if (is_not_last(head->next)) {
@@ -222,14 +237,14 @@ book_t *sort(book_t *head)
                 book_t *current = head;
                 done = 1;
                 while (is_not_last(current->next)) {
-                    int cmp = strcmp(current->next->author, current->next->next->author);
-                    if (cmp > 0) {
+                    if (compare_next(current->next) > 0) {
                         current->next = swap_with_next(current->next);
                         done = 0;
                     }
                     current = current->next;
                 }
             }
+            puts("\nThe books were sorted successfully.");
         } else {
             puts("\nThere is only one book in the database.");
         }
@@ -269,7 +284,7 @@ book_t *load_file(book_t *head)
         }
         fclose(fp);
         if (is_success)
-            puts("\nSuccessfully loaded file.");
+            puts("\nSuccessfully added books from the file.");
         else
             puts("\nThe file is empty.");
     } else {
@@ -285,7 +300,7 @@ book_t *display_file(book_t *head)
     enter_string(buffer, sizeof(buffer));
     FILE *fp = fopen(buffer, "r");
     if (fp != NULL) {
-        puts("\nBooks in the file:");
+        puts("\nThe file contains:");
         book_t book;
         int idx = 1;
         int is_success = 0;
@@ -315,28 +330,33 @@ int main()
     head->next = push(head->next, (book_t) { "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1978 });
     while (1) {
         puts("Main menu.\n");
-        puts("  1. Add a book.");
-        puts("  2. Display the books.");
-        puts("  3. Remove a book.");
+        puts("  1. Display books.");
+        puts("  2. Add a book.");
+        puts("  3. Remove a book.\n");
         puts("  4. Sort books by author.");
-        puts("  5. Clear database.\n");
-        puts("  6. Save books to file.");
-        puts("  7. Load books from file.");
-        puts("  8. Display books from file.\n");
+        puts("  5. Sort books by title.");
+        puts("  6. Sort books by year.\n");
+        puts("  7. Save books to file.");
+        puts("  8. Load books from file.");
+        puts("  9. Display books from file.\n");
+        puts("  C. Clear database.\n");
         puts("  Q. Quit program.\n");
         printf("Please enter your selection: ");
         switch (enter_character()) {
-        case '1': head = add(head); break;
-        case '2': display(head); break;
+        case '1': display(head); break;
+        case '2': head = add(head); break;
         case '3': head = delete(head); break;
-        case '4': head = sort(head); break;
-        case '5': head = clear(head); break;
-        case '6': save_file(head); break;
-        case '7': head = load_file(head); break;
-        case '8': display_file(head); break;
+        case '4': head = sort(head, compare_next_author); break;
+        case '5': head = sort(head, compare_next_title); break;
+        case '6': head = sort(head, compare_next_year); break;
+        case '7': save_file(head); break;
+        case '8': head = load_file(head); break;
+        case '9': display_file(head); break;
+        case 'c':
+        case 'C': head = clear(head); break;
         case 'q':
         case 'Q': puts("\nGood bye!"); return 0;
-        default: puts("\nPlease enter a number between 1 and 8, or Q to quit."); break;
+        default: puts("\nPlease enter a number from 1-9, C to clear database, or Q to quit."); break;
         }
         puts("Press enter to continue...");
         while(getchar() != '\n');
