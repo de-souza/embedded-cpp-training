@@ -49,18 +49,6 @@ int enter_number(char *buffer, const int max_size)
     return number;
 }
 
-int enter_index(const int idx_max)
-{
-    printf("\nPlease enter an index: ");
-    char buffer[INDEX_LEN+2];
-    int idx = enter_number(buffer, sizeof(buffer));
-    while (idx < 1 || idx > idx_max) {
-        printf("Index out of range (1 <= i <= %d). Please try again: ", idx_max);
-        idx = enter_number(buffer, sizeof(buffer));
-    }
-    return idx;
-}
-
 book_t enter_book()
 {
     book_t book;
@@ -74,29 +62,16 @@ book_t enter_book()
     return book;
 }
 
-void print_book(const int idx, const book_t book)
+int enter_index(const int idx_max)
 {
-    printf("\n%d. %s - %s (%d)", idx, book.author, book.title, book.year);
-}
-
-book_t read_next_book(FILE *fp) {
-    book_t book;
-    if (fgets(book.author, sizeof(book.author), fp) != NULL) {
-            fgets(book.title, sizeof(book.title), fp);
-            fscanf(fp, "%hd ", &(book.year));
-            book.author[strlen(book.author)-1] = '\0';
-            book.title[strlen(book.title)-1] = '\0';
-    } else {
-        book = EMPTY_BOOK;
+    printf("\nPlease enter an index: ");
+    char buffer[INDEX_LEN+2];
+    int idx = enter_number(buffer, sizeof(buffer));
+    while (idx < 1 || idx > idx_max) {
+        printf("Index out of range (1 <= i <= %d). Please try again: ", idx_max);
+        idx = enter_number(buffer, sizeof(buffer));
     }
-    return book;
-}
-
-int is_book(book_t book)
-{
-    return strcmp(book.author, EMPTY_BOOK.author) != 0
-        || strcmp(book.title, EMPTY_BOOK.title) != 0
-        || book.year != EMPTY_BOOK.year;
+    return idx;
 }
 
 int is_not_last(book_t *current)
@@ -104,11 +79,9 @@ int is_not_last(book_t *current)
     return current->next != NULL;
 }
 
-book_t *get_last(book_t *current)
+void print_book(const int idx, const book_t book)
 {
-    while (is_not_last(current))
-        current = current->next;
-    return current;
+    printf("\n%d. %s - %s (%d)", idx, book.author, book.title, book.year);
 }
 
 int get_steps_to_last(book_t *current)
@@ -126,83 +99,6 @@ book_t *walk_n_steps(book_t *current, const int n)
     for (int i=0; i < n; i++)
         current = current->next;
     return current;
-}
-
-book_t *push(book_t *current, const book_t book)
-{
-    book_t *new = malloc(sizeof(*new));
-    if (new == NULL)
-        exit(EXIT_FAILURE);
-    strcpy(new->author, book.author);
-    strcpy(new->title, book.title);
-    new->year = book.year;
-    new->next = current;
-    return new;
-}
-
-book_t *pop(book_t *current)
-{
-    book_t *temp = current;
-    current = current->next;
-    free(temp);
-    return current;
-}
-
-book_t *init()
-{
-    book_t *head = malloc(sizeof(*head));
-    if (head == NULL)
-        exit(EXIT_FAILURE);
-    head->next = NULL;
-    return head;
-}
-
-book_t *add(book_t *head)
-{
-    puts("\nPlease enter the new book's characteristics.");
-    book_t book = enter_book();
-    puts("\nNow, please enter the index of the book in the database.");
-    int idx_max = get_steps_to_last(head) + 1;
-    int idx = enter_index(idx_max);
-    book_t *current = walk_n_steps(head, idx-1);
-    current->next = push(current->next, book);
-    puts("\nThe book was successfully added.");
-    return head;
-}
-
-void display(book_t *head)
-{
-    if (is_not_last(head)) {
-        puts("\nBooks currently in the database:");
-        int idx = 0;
-        while (is_not_last(head))
-            print_book(++idx, *(head = head->next));
-        puts("\n");
-    } else {
-        puts("\nThere is no book in the database.");
-    }
-}
-
-book_t *delete(book_t *head)
-{
-    if (is_not_last(head)) {
-        puts("\nPlease enter the index of the book to remove.");
-        int idx_max = get_steps_to_last(head);
-        int idx = enter_index(idx_max);
-        book_t *current = walk_n_steps(head, idx-1);
-        current->next = pop(current->next);
-        puts("\nThe book was successfully deleted.");
-    } else {
-        puts("\nThere is no book in the database.");
-    }
-    return head;
-}
-
-book_t *clear(book_t *head)
-{
-    while (is_not_last(head = pop(head)));
-    puts("\nSuccessfully cleared database.");
-    return head;    
 }
 
 int compare_next_author(book_t *current)
@@ -226,6 +122,109 @@ book_t *swap_with_next(book_t *first)
     first->next = second->next;
     second->next = first;
     return second;
+}
+
+void write_next_book(FILE *fp, book_t *current)
+{
+        fprintf(fp, "%s\n%s\n%d\n", current->author, current->title, current->year);
+}
+
+book_t read_next_book(FILE *fp)
+{
+    book_t book;
+    if (fgets(book.author, sizeof(book.author), fp) != NULL) {
+            fgets(book.title, sizeof(book.title), fp);
+            fscanf(fp, "%hd ", &(book.year));
+            book.author[strlen(book.author)-1] = '\0';
+            book.title[strlen(book.title)-1] = '\0';
+    } else {
+        book = EMPTY_BOOK;
+    }
+    return book;
+}
+
+int is_book(book_t book)
+{
+    return strcmp(book.author, EMPTY_BOOK.author) != 0
+        || strcmp(book.title, EMPTY_BOOK.title) != 0
+        || book.year != EMPTY_BOOK.year;
+}
+
+book_t *get_last(book_t *current)
+{
+    while (is_not_last(current))
+        current = current->next;
+    return current;
+}
+
+book_t *init()
+{
+    book_t *head = malloc(sizeof(*head));
+    if (head == NULL)
+        exit(EXIT_FAILURE);
+    head->next = NULL;
+    return head;
+}
+
+book_t *push(book_t *current, const book_t book)
+{
+    book_t *new = malloc(sizeof(*new));
+    if (new == NULL)
+        exit(EXIT_FAILURE);
+    strcpy(new->author, book.author);
+    strcpy(new->title, book.title);
+    new->year = book.year;
+    new->next = current;
+    return new;
+}
+
+book_t *pop(book_t *current)
+{
+    book_t *old = current;
+    current = current->next;
+    free(old);
+    return current;
+}
+
+void display(book_t *head)
+{
+    if (is_not_last(head)) {
+        puts("\nBooks currently in the database:");
+        int idx = 0;
+        while (is_not_last(head))
+            print_book(++idx, *(head = head->next));
+        puts("\n");
+    } else {
+        puts("\nThere is no book in the database.");
+    }
+}
+
+book_t *add(book_t *head)
+{
+    puts("\nPlease enter the new book's characteristics.");
+    book_t book = enter_book();
+    puts("\nNow, please enter the index of the book in the database.");
+    int idx_max = get_steps_to_last(head) + 1;
+    int idx = enter_index(idx_max);
+    book_t *current = walk_n_steps(head, idx-1);
+    current->next = push(current->next, book);
+    puts("\nThe book was successfully added.");
+    return head;
+}
+
+book_t *delete(book_t *head)
+{
+    if (is_not_last(head)) {
+        puts("\nPlease enter the index of the book to remove.");
+        int idx_max = get_steps_to_last(head);
+        int idx = enter_index(idx_max);
+        book_t *current = walk_n_steps(head, idx-1);
+        current->next = pop(current->next);
+        puts("\nThe book was successfully deleted.");
+    } else {
+        puts("\nThere is no book in the database.");
+    }
+    return head;
 }
 
 book_t *sort(book_t *head, int (*compare_next)(book_t *))
@@ -260,10 +259,8 @@ void save_file(book_t *head)
     char buffer[PATH_LEN+2];
     enter_string(buffer, sizeof(buffer));
     FILE *fp = fopen(buffer, "w");
-    while (is_not_last(head)) {
-        head = head->next;
-        fprintf(fp, "%s\n%s\n%d\n", head->author, head->title, head->year);
-    }
+    while (is_not_last(head))
+        write_next_book(fp, head = head->next);
     fclose(fp);
     puts("\nSuccessfully saved database.");
 }
@@ -284,7 +281,7 @@ book_t *load_file(book_t *head)
         }
         fclose(fp);
         if (is_success)
-            puts("\nSuccessfully added books from the file.");
+            puts("\nSuccessfully loaded file.");
         else
             puts("\nThe file is empty.");
     } else {
@@ -295,7 +292,7 @@ book_t *load_file(book_t *head)
 
 book_t *display_file(book_t *head)
 {
-    puts("\nPlease enter the path of the file to display the books from.");
+    printf("\nPlease enter the path of the file to display the books from: ");
     char buffer[PATH_LEN+2];
     enter_string(buffer, sizeof(buffer));
     FILE *fp = fopen(buffer, "r");
@@ -320,6 +317,13 @@ book_t *display_file(book_t *head)
     return head;
 }
 
+book_t *clear(book_t *head)
+{
+    while (is_not_last(head = pop(head)));
+    puts("\nSuccessfully cleared database.");
+    return head;    
+}
+
 int main()
 {
     book_t *head = init();
@@ -332,7 +336,7 @@ int main()
         puts("Main menu.\n");
         puts("  1. Display books.");
         puts("  2. Add a book.");
-        puts("  3. Remove a book.\n");
+        puts("  3. Remove a book.");
         puts("  4. Sort books by author.");
         puts("  5. Sort books by title.");
         puts("  6. Sort books by year.\n");
