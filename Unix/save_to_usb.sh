@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Backup a folder (by default ~) to an external device.
 # The device's UUID can be found with "lsblk -f".
-uuid="0E7A-4CAE"
+uuid="4f8a70bc-fde5-4988-b9f9-4ab91198246c"
 folder=~
 device="$(realpath /dev/disk/by-uuid/$uuid)"
 
