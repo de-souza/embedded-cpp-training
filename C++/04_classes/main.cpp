@@ -1,3 +1,4 @@
+/* How to manipulate classes. */
 #include "myclass.h"
 
 int main()

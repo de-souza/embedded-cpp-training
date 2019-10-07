@@ -1,3 +1,4 @@
+/* How to implement class methods. */
 #include "integer.h"
 
 int main()
