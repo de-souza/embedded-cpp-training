@@ -5,7 +5,12 @@
 class MyClass
 {
 public:
-    MyClass();
+    MyClass();      // Constructor (no type is required for constuctors and destructors).
+    MyClass(int a); // Overriden constructor.
+    ~MyClass();     // Destructor.
+    int i = 0;
+    void Display();
+    void Display2();
 };
 
 #endif // MYCLASS_H
