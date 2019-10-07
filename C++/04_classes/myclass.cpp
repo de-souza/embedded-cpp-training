@@ -2,7 +2,7 @@
 
 MyClass::MyClass()
 {
-    // Since C++11 variable initialisation can be done in the headers file.
+    // Since C++11, variables can be initialised in the header file.
 }
 
 MyClass::MyClass(int a)
