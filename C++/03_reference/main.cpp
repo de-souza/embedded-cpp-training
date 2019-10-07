@@ -1,6 +1,5 @@
 /* How to use references in functions. */
 #include <iostream>
-#include <cstdlib>
 
 void sort_integers(int* pA, int* pB)  // C style
 {
