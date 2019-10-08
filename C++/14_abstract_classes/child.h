@@ -1,11 +1,12 @@
 #ifndef CHILD_H
 #define CHILD_H
 
+#include "abstractparent.h"
 
-class Child
+class Child: public AbstractParent
 {
 public:
-    Child();
+    void Print();
 };
 
 #endif // CHILD_H

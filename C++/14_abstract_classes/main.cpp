@@ -1,9 +1,9 @@
-#include <iostream>
-
-using namespace std;
+/* How to implement abstract classes. */
+#include "abstractparent.h"
+#include "child.h"
 
 int main()
 {
-    cout << "Hello World!" << endl;
-    return 0;
+    AbstractParent* pChildInstance = new Child;
+    pChildInstance->Print();
 }
