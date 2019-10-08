@@ -6,7 +6,7 @@ class Parent
 public:
     void Print();
     virtual void SuperPrint();
-    virtual ~Parent();
+    virtual ~Parent() = default;
 };
 
 #endif // PARENT_H

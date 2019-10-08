@@ -10,5 +10,3 @@ void Parent::SuperPrint()
 {
     std::cout << "I AM THE PARENT." << std::endl;
 }
-
-Parent::~Parent() {}
