@@ -1,4 +1,4 @@
-/* Hw to implement polymorphism using virtual attributes. */
+/* How to implement polymorphism using virtual attributes. */
 #include "parent.h"
 #include "child.h"
 
