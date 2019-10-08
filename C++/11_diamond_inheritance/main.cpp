@@ -1,3 +1,4 @@
+/* How to deal with constructs with diamond inheritance. */
 #include "child.h"
 
 int main()

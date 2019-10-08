@@ -1,3 +1,4 @@
+/* How to encapsulate a class. */
 #include "child.h"
 
 int main()

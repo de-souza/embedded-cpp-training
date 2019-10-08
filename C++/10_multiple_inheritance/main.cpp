@@ -1,4 +1,4 @@
-/* How multiple inheritances can create ambiguous method calls. */
+/* How multiple inheritances can cause ambiguous method calls. */
 #include "child.h"
 
 int main()
