@@ -4,4 +4,5 @@ class Parent
 {
 public:
     Parent();
+    ~Parent();
 };

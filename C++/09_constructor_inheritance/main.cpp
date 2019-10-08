@@ -1,9 +1,12 @@
-/* How inheritance affects class constructors. */
+/* How inheritance affects class constructors and destructors. */
 #include "parent.h"
 #include "child.h"
 
 int main()
 {
-    Parent parent;
-    Child child;
+    Parent* pParent = new Parent;
+    delete pParent;
+
+    Child* pChild = new Child("Eve");
+    delete pChild;
 }
