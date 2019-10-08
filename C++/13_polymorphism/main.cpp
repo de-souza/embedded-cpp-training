@@ -1,7 +1,6 @@
 /* Hw to implement polymorphism using virtual attributes. */
 #include "parent.h"
 #include "child.h"
-#include <iostream>
 
 int main()
 {
