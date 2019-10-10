@@ -1,3 +1,4 @@
+/* How to overload operators using class members and/or friend functions. */
 #include "mytime.h"
 #include <iostream>
 

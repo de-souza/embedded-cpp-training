@@ -1,3 +1,4 @@
+/* How to implement an exception handler (catch-clause). */
 #include <iostream>
 #include "digit.h"
 
