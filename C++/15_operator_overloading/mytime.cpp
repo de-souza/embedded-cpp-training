@@ -1,6 +1,8 @@
 #include "mytime.h"
+#include <iostream>
+#include <iomanip>
 
-MyTime::MyTime(int h, int m, int s)
+MyTime::MyTime(const int h, const int m, const int s)
 {
     Hours = h;
     Minutes = m;
@@ -15,4 +17,18 @@ MyTime& MyTime::operator+=(const MyTime &rhs)
     Seconds %= 60;
     Minutes %= 60;
     return *this;
+}
+
+MyTime operator+(MyTime lhs, const MyTime &rhs)
+{
+    lhs += rhs;
+    return lhs;
+}
+
+std::ostream& operator<<(std::ostream &os, const MyTime time)
+{
+    os << std::setfill('0') << std::setw(2) << time.Hours << ":";
+    os << std::setfill('0') << std::setw(2) << time.Minutes << ":";
+    os << std::setfill('0') << std::setw(2) << time.Seconds;
+    return os;
 }
