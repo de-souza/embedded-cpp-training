@@ -6,13 +6,15 @@
 class MyTime
 {
 public:
-    int Hours;
-    int Minutes;
-    int Seconds;
-    MyTime(const int h, const int m, const int s);
+    MyTime(const int hours, const int minutes, const int seconds);
     MyTime& operator+=(const MyTime& rhs);
-    friend MyTime operator+(MyTime lhs, const MyTime& rhs);
+private:
+    int mHours;
+    int mMinutes;
+    int mSeconds;
     friend std::ostream& operator<<(std::ostream& os, const MyTime time);
 };
+
+MyTime operator+(MyTime lhs, const MyTime& rhs);
 
 #endif // MYTIME_H

@@ -2,32 +2,32 @@
 #include <iostream>
 #include <iomanip>
 
-MyTime::MyTime(const int h, const int m, const int s)
+MyTime::MyTime(const int hours, const int minutes, const int seconds)
 {
-    Hours = h;
-    Minutes = m;
-    Seconds = s;
+    mHours = hours;
+    mMinutes = minutes;
+    mSeconds = seconds;
 }
 
 MyTime& MyTime::operator+=(const MyTime &rhs)
 {
-    Seconds += rhs.Seconds;
-    Minutes += Seconds < 60 ? rhs.Minutes : rhs.Minutes + 1;
-    Hours += Minutes < 60 ? rhs.Hours : rhs.Hours + 1;
-    Seconds %= 60;
-    Minutes %= 60;
+    mSeconds += rhs.mSeconds;
+    mMinutes += rhs.mMinutes + mSeconds/60;
+    mHours += rhs.mHours + mMinutes/60;
+    mSeconds %= 60;
+    mMinutes %= 60;
     return *this;
+}
+
+std::ostream& operator<<(std::ostream &os, const MyTime time)
+{
+    return os << std::setfill('0') << std::setw(2) << time.mHours << ":"
+              << std::setw(2) << time.mMinutes << ":"
+              << std::setw(2) << time.mSeconds;
 }
 
 MyTime operator+(MyTime lhs, const MyTime &rhs)
 {
     lhs += rhs;
     return lhs;
-}
-
-std::ostream& operator<<(std::ostream &os, const MyTime time)
-{
-    return os << std::setfill('0') << std::setw(2) << time.Hours << ":"
-              << std::setw(2) << time.Minutes << ":"
-              << std::setw(2) << time.Seconds;
 }
