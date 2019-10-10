@@ -19,15 +19,15 @@ MyTime& MyTime::operator+=(const MyTime &rhs)
     return *this;
 }
 
+MyTime operator+(MyTime lhs, const MyTime &rhs)
+{
+    lhs += rhs;
+    return lhs;
+}
+
 std::ostream& operator<<(std::ostream &os, const MyTime time)
 {
     return os << std::setfill('0') << std::setw(2) << time.mHours << ":"
               << std::setw(2) << time.mMinutes << ":"
               << std::setw(2) << time.mSeconds;
-}
-
-MyTime operator+(MyTime lhs, const MyTime &rhs)
-{
-    lhs += rhs;
-    return lhs;
 }
