@@ -1,5 +1,5 @@
-QtCreator Keyboard Shortcuts
-============================
+Useful Keyboard Shortcuts in QtCreator
+======================================
 
 General Shortcuts
 -----------------
