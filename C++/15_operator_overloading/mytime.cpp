@@ -27,8 +27,7 @@ MyTime operator+(MyTime lhs, const MyTime &rhs)
 
 std::ostream& operator<<(std::ostream &os, const MyTime time)
 {
-    os << std::setfill('0') << std::setw(2) << time.Hours << ":";
-    os << std::setfill('0') << std::setw(2) << time.Minutes << ":";
-    os << std::setfill('0') << std::setw(2) << time.Seconds;
-    return os;
+    return os << std::setfill('0') << std::setw(2) << time.Hours << ":"
+              << std::setw(2) << time.Minutes << ":"
+              << std::setw(2) << time.Seconds;
 }
