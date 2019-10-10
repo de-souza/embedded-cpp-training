@@ -1,8 +1,8 @@
 QtCreator Keyboard Shortcuts
 ============================
 
-General
--------
+General Shortcuts
+-----------------
 
 | Action   | Shortcut     |
 |:--------:|:------------:|
@@ -12,8 +12,8 @@ General
 | Save All | Ctrl+Shift+S |
 
 
-Navigation
-----------
+Navigation Shortcuts
+--------------------
 
 | Action               | Shortcut       |
 |:--------------------:|:--------------:|
@@ -23,8 +23,8 @@ Navigation
 | Locator              | Ctrl+K         |
 
 
-User Interface
---------------
+User Interface Shortcuts
+------------------------
 
 | Action            | Shortcut    |
 |:-----------------:|:-----------:|
@@ -36,8 +36,8 @@ User Interface
 | File System View  | Alt+Y       |
 
 
-Window Splitting
-----------------
+Window Splitting Shortcuts
+--------------------------
 
 | Action               | Shortcut   |
 |:--------------------:|:----------:|
@@ -50,8 +50,8 @@ Window Splitting
 | Go to Previous Split | Ctrl+E, I  |
 
 
-Text Editor
------------
+Text Editor Shortcuts
+---------------------
 
 | Action         | Shortcut        |
 |:--------------:|:---------------:|
@@ -59,8 +59,8 @@ Text Editor
 | Move Line Down | Ctrl+Shift+Down |
 
 
-Building & Running
-------------------
+Building & Running Shortcuts
+----------------------------
 
 | Action                    | Shortcut |
 |:-------------------------:|:--------:|
