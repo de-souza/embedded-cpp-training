@@ -7,9 +7,9 @@ class Digit
 {
 public:
     Digit(int number);
+    friend std::ostream& operator<<(std::ostream& os, const Digit digit);
 private:
     int mDigit;
-    friend std::ostream& operator<<(std::ostream& os, const Digit digit);
 };
 
 #endif // DIGIT_H
