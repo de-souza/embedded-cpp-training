@@ -1,6 +1,6 @@
 /* How structures can contain functions in C++. */
 #include <iostream>
-#include <cstdlib>
+#include <memory>
 
 int main()
 {
@@ -8,11 +8,10 @@ int main()
         int i;
         void clear() {i = 0;}
     };
-    struct MyStruct* p = (struct MyStruct*) malloc(sizeof(*p));
+    auto p = std::make_unique<MyStruct>();
     p->i = 2;
-    std::cout << "p = " << p->i << std::endl;
+    std::cout << "p->i = " << p->i << "\n"
+              << "p->clear()" << "\n";
     p->clear();
-    std::cout << "p->clear()" << "\n"
-              << "p = " << p->i << std::endl;
-    free(p);
+    std::cout << "p->i = " << p->i << std::endl;
 }
