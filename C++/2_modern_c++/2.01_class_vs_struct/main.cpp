@@ -1,6 +1,5 @@
 /* How structures can contain functions in C++. */
 #include <iostream>
-#include <memory>
 
 int main()
 {
@@ -8,10 +7,10 @@ int main()
         int i;
         void clear() {i = 0;}
     };
-    auto p = std::make_unique<MyStruct>();
-    p->i = 2;
-    std::cout << "p->i = " << p->i << '\n'
-              << "p->clear()" << '\n';
-    p->clear();
-    std::cout << "p->i = " << p->i << '\n';
+    MyStruct s;
+    s.i = 2;
+    std::cout << "s.i = " << s.i << '\n';
+    s.clear();
+    std::cout << "s.clear()" << '\n'
+              << "s.i = " << s.i << '\n';
 }

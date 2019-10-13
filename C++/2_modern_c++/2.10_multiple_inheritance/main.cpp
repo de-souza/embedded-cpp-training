@@ -4,8 +4,8 @@
 
 int main()
 {
-    auto p = std::make_unique<Child>();
-    // p->Say("Hello!");  // Ambiguous, does not compile.
-    p->FirstParent::Say("Hello!");
-    p->SecondParent::Say("Hello!");
+    Child c;
+    // c.Say("Hello!");  // Ambiguous, does not compile.
+    c.FirstParent::Say("Hello!");
+    c.SecondParent::Say("Hello!");
 }
