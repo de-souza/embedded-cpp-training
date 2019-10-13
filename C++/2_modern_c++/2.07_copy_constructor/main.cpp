@@ -10,5 +10,5 @@ int main()
     b.Display();
 
     b.content = 8;
-    b.Display();  // print 8 thanks to the copy consstructor
+    b.Display();  // print 8 thanks to the copy constructor
 }
