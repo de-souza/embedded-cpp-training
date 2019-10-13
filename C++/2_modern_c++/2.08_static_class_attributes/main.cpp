@@ -3,7 +3,7 @@
 
 int main()
 {
-    Hi::Display();  // can be used without instance
+    Hi::Display();  // can be used without an instance
     Hi a;
     a.Display();
 }
