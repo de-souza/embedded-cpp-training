@@ -4,7 +4,7 @@
 class Integer
 {
 public:
-    Integer(int i);
+    Integer(const int i);
     Integer(const Integer &other);
     int content;
     int* pContent;

@@ -5,6 +5,6 @@ int main()
 {
     MyClass a;
     a.Display();
-    MyClass b(3);
+    MyClass b = 3;
     b.Display();
 }

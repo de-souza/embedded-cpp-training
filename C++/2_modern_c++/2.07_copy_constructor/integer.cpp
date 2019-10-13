@@ -1,7 +1,7 @@
 #include "integer.h"
 #include <iostream>
 
-Integer::Integer(int i)
+Integer::Integer(const int i)
 {
     content = i;
     pContent = &content;

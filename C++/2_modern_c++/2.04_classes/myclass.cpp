@@ -6,7 +6,7 @@ MyClass::MyClass()
     // Since C++11, variables can be initialised in the header file.
 }
 
-MyClass::MyClass(int a)
+MyClass::MyClass(const int a)
 {
     i = a;
 }
