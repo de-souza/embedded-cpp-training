@@ -5,6 +5,6 @@
 
 int main()
 {
-    {auto parent = std::make_unique<Parent>();}
-    {auto child = std::make_unique<Child>("Eve");}
+    {auto pParent = std::make_unique<Parent>();}
+    {auto pChild = std::make_unique<Child>("Eve");}
 }
