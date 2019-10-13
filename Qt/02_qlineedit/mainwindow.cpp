@@ -21,6 +21,6 @@ void MainWindow::on_pushButton_clicked()
     palette->setColor(QPalette::Base, Qt::lightGray);
     palette->setColor(QPalette::Text, Qt::gray);
     ui->lineEdit_FirstName->setPalette(*palette);
-//    ui->lineEdit_FirstName->setDisabled(true);
+    // ui->lineEdit_FirstName->setDisabled(true);
     ui->lineEdit_FirstName->setText("Grayed Out");
 }
