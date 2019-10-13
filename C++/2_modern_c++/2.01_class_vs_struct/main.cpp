@@ -10,8 +10,8 @@ int main()
     };
     auto p = std::make_unique<MyStruct>();
     p->i = 2;
-    std::cout << "p->i = " << p->i << "\n"
-              << "p->clear()" << "\n";
+    std::cout << "p->i = " << p->i << '\n'
+              << "p->clear()" << '\n';
     p->clear();
-    std::cout << "p->i = " << p->i << std::endl;
+    std::cout << "p->i = " << p->i << '\n';
 }
