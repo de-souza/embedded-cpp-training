@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    // connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(Quit()));
+    // connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(Quit()));  // Before C++11
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::Quit);
 }
 
