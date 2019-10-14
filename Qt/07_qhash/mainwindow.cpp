@@ -7,10 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->comboBox, &QComboBox::currentTextChanged, this, &MainWindow::mShowAge);
-    mHashTable = new QHash<QString, int>;
-    (*mHashTable)["Léo"] = 24;
-    (*mHashTable)["Karim"] = 31;
-    ui->comboBox->addItems(mHashTable->keys());
+    mHashTable["Léo"] = 24;
+    mHashTable["Karim"] = 31;
+    ui->comboBox->addItems(mHashTable.keys());
     ui->lineEdit->setReadOnly(true);
 }
 
@@ -21,5 +20,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::mShowAge(QString name)
 {
-    ui->lineEdit->setText(QString::number(mHashTable->value(name)));
+    ui->lineEdit->setText(QString::number(mHashTable.value(name)));
 }

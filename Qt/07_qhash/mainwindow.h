@@ -20,6 +20,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QHash<QString, int>* mHashTable;
+    QHash<QString, int> mHashTable;
 };
 #endif // MAINWINDOW_H
