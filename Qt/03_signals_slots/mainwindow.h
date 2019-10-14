@@ -16,7 +16,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void Quit();
+    void mQuit();
 
 private:
     Ui::MainWindow *ui;

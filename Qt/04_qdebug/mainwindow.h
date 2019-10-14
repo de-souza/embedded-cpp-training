@@ -16,7 +16,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void PrintString();
+    void mPrintString();
 
 private:
     Ui::MainWindow *ui;
