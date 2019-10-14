@@ -18,5 +18,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::PrintString()
 {
-    qDebug() << ui->lineEdit->text().toUpper();
+    const QString lineEdit_text = ui->lineEdit->text();
+    qDebug() << lineEdit_text;
+    ui->lineEdit->setText(lineEdit_text.toUpper());
 }
