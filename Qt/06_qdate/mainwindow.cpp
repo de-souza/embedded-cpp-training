@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->spinBox->setRange(-100, 100);
+    connect(ui->dateEdit, &QDateEdit::dateChanged, this, &MainWindow::mShowNewDate);
     connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, &MainWindow::mShowNewDate);
 }
 
