@@ -16,17 +16,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ../../../../Other/Qt5.13.1/5.13.1/gcc_64/include/QtCore/mydialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mydialog.cpp
 
 HEADERS += \
-    ../../../../Other/Qt5.13.1/5.13.1/gcc_64/include/QtCore/mydialog.h \
-    mainwindow.h
+    mainwindow.h \
+    mydialog.h
 
 FORMS += \
-    ../../../../Other/Qt5.13.1/5.13.1/gcc_64/include/QtCore/mydialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    mydialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
