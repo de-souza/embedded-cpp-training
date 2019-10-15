@@ -27,7 +27,10 @@ void MainWindow::mAbout()
 
 void MainWindow::mOpen()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
+    QString filename = QFileDialog::getOpenFileName(this,
                                                     QString("Open File"),
                                                     QDir::homePath());
+    QFile file(filename);
+    file.open(QIODevice::ReadWrite);
+    ui->plainTextEdit->setPlainText(file.readAll());
 }
