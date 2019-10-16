@@ -99,15 +99,7 @@ QFont::Weight Options::IndexToWeight(const int index)
 
 void Options::mLoadFont()
 {
-    QSettings settings;
-    mCurrentFont.setFamily(settings.value("font/family").toString());
-    mCurrentFont.setStyle(
-        static_cast<QFont::Style>(settings.value("font/style").toInt())
-    );
-    mCurrentFont.setPointSize(settings.value("font/size").toInt());
-    mCurrentFont.setWeight(
-        static_cast<QFont::Weight>(settings.value("font/weight").toInt())
-    );
+    mCurrentFont = MainWindow::LoadFont();
     ui->fontComboBox->setCurrentFont(mCurrentFont.family());
     ui->comboBox_style->setCurrentIndex(StyleToIndex(mCurrentFont.style()));
     ui->spinBox->setValue(mCurrentFont.pointSize());

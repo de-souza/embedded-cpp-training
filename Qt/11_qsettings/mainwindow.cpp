@@ -3,6 +3,7 @@
 #include "options.h"
 
 #include <QSettings>
+#include <QCoreApplication>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,21 +24,29 @@ MainWindow::~MainWindow()
 QFont MainWindow::LoadFont()
 {
     QFont font;
-    QSettings settings;
-    font.setFamily(settings.value("font/family").toString());
-    font.setStyle(
-        static_cast<QFont::Style>(settings.value("font/style").toInt())
+    QSettings settings(
+        QCoreApplication::applicationDirPath() + "/settings.ini",
+        QSettings::IniFormat
     );
-    font.setPointSize(settings.value("font/size").toInt());
-    font.setWeight(
-        static_cast<QFont::Weight>(settings.value("font/weight").toInt())
-    );
+    if (settings.childGroups().contains("font")) {
+        font.setFamily(settings.value("font/family").toString());
+        font.setStyle(
+            static_cast<QFont::Style>(settings.value("font/style").toInt())
+        );
+        font.setPointSize(settings.value("font/size").toInt());
+        font.setWeight(
+            static_cast<QFont::Weight>(settings.value("font/weight").toInt())
+        );
+    }
     return font;
 }
 
 void MainWindow::SaveFont(QFont font)
 {
-    QSettings settings;
+    QSettings settings(
+        QCoreApplication::applicationDirPath() + "/settings.ini",
+        QSettings::IniFormat
+    );
     settings.setValue("font/family", font.family());
     settings.setValue("font/style", font.style());
     settings.setValue("font/size", font.pointSize());
