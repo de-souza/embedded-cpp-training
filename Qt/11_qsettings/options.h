@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSettings>
+#include <QAbstractButton>
 
 namespace Ui {
 class Options;
@@ -21,15 +22,16 @@ public:
     static QFont::Weight IndexToWeight(const int index);
 
 private slots:
+    void mOnClick(QAbstractButton *button);
     void mSetFontFamily(const QFont& font);
     void mSetFontStyle(const int& index);
     void mSetFontSize(const int& size);
     void mSetFontWeight(const int& index);
-    void mSaveFont();
 
 private:
     Ui::Options *ui;
     QFont mCurrentFont;
+    void mSaveFont(QFont font);
     void mLoadFont();
     void mUpdateExample();
 };

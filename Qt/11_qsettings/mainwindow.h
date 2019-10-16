@@ -21,7 +21,6 @@ public:
 
 private slots:
     void mOptions();
-    void mResetFont();
 
 private:
     Ui::MainWindow *ui;

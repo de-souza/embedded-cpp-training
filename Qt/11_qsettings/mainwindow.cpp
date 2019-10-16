@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
     mUpdateFont();
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
     connect(ui->actionOptions, &QAction::triggered, this, &MainWindow::mOptions);
-    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::mResetFont);
 }
 
 MainWindow::~MainWindow()
@@ -28,29 +27,38 @@ QFont MainWindow::LoadFont()
         QCoreApplication::applicationDirPath() + "/settings.ini",
         QSettings::IniFormat
     );
-    if (settings.childGroups().contains("font")) {
-        font.setFamily(settings.value("font/family").toString());
+    if (settings.contains("font/family"))
+        font.setFamily(settings.value("font/family") .toString());
+    if (settings.contains("font/style"))
         font.setStyle(
             static_cast<QFont::Style>(settings.value("font/style").toInt())
         );
+    if (settings.contains("font/size"))
         font.setPointSize(settings.value("font/size").toInt());
+    if (settings.contains("font/weight"))
         font.setWeight(
             static_cast<QFont::Weight>(settings.value("font/weight").toInt())
         );
-    }
     return font;
 }
 
-void MainWindow::SaveFont(QFont font)
+void MainWindow::mOptions()
 {
-    QSettings settings(
-        QCoreApplication::applicationDirPath() + "/settings.ini",
-        QSettings::IniFormat
+    Options options_dialog;
+    options_dialog.exec();
+    mUpdateFont();
+}
+
+void MainWindow::mUpdateFont()
+{
+    QFont font = LoadFont();
+    ui->label_familyValue->setText(font.family());
+    ui->label_styleValue->setText(StyleToString(font.style()));
+    ui->label_sizeValue->setText(QString::number(font.pointSize()));
+    ui->label_weightValue->setText(
+        WeightToString(static_cast<QFont::Weight>(font.weight()))
     );
-    settings.setValue("font/family", font.family());
-    settings.setValue("font/style", font.style());
-    settings.setValue("font/size", font.pointSize());
-    settings.setValue("font/weight", font.weight());
+    ui->plainTextEdit->setFont(font);
 }
 
 QString MainWindow::StyleToString(QFont::Style style)
@@ -75,30 +83,4 @@ QString MainWindow::WeightToString(QFont::Weight weight)
     case QFont::ExtraBold: return "ExtraBold";
     case QFont::Black: return "Black";
     }
-}
-
-void MainWindow::mOptions()
-{
-    Options options_dialog;
-    options_dialog.exec();
-    mUpdateFont();
-}
-
-void MainWindow::mResetFont()
-{
-    QFont default_font;
-    SaveFont(default_font);
-    mUpdateFont();
-}
-
-void MainWindow::mUpdateFont()
-{
-    QFont font = LoadFont();
-    ui->label_familyValue->setText(font.family());
-    ui->label_styleValue->setText(StyleToString(font.style()));
-    ui->label_sizeValue->setText(QString::number(font.pointSize()));
-    ui->label_weightValue->setText(
-        WeightToString(static_cast<QFont::Weight>(font.weight()))
-    );
-    ui->plainTextEdit->setFont(font);
 }

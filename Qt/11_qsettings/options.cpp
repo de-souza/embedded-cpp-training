@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 
 #include <QSettings>
+#include <QPushButton>
 
 Options::Options(QWidget *parent) :
     QDialog(parent),
@@ -10,6 +11,12 @@ Options::Options(QWidget *parent) :
 {
     ui->setupUi(this);
     mLoadFont();
+    connect(
+        ui->buttonBox,
+        &QDialogButtonBox::clicked,
+        this,
+        &Options::mOnClick
+    );
     connect(
         ui->fontComboBox,
         &QFontComboBox::currentFontChanged,
@@ -34,17 +41,69 @@ Options::Options(QWidget *parent) :
         this,
         &Options::mSetFontWeight
     );
-    connect(
-        ui->buttonBox,
-        &QDialogButtonBox::accepted,
-        this,
-        &Options::mSaveFont
-    );
 }
 
 Options::~Options()
 {
     delete ui;
+}
+
+void Options::mOnClick(QAbstractButton* button)
+{
+    if (static_cast<QPushButton*>(button) == ui->buttonBox->button(QDialogButtonBox::Ok)) {
+        mSaveFont(mCurrentFont);
+    } else if (static_cast<QPushButton*>(button) == ui->buttonBox->button(QDialogButtonBox::Reset)) {
+        QFont default_font;
+        mSaveFont(default_font);
+        mLoadFont();
+    }
+}
+void Options::mSetFontFamily(const QFont& font)
+{
+    mCurrentFont.setFamily(font.family());
+    ui->label_example->setFont(mCurrentFont);
+}
+
+void Options::mSetFontStyle(const int& index)
+{
+    mCurrentFont.setStyle(IndexToStyle(index));
+    ui->label_example->setFont(mCurrentFont);
+}
+
+void Options::mSetFontSize(const int& size)
+{
+    mCurrentFont.setPointSize(size);
+    ui->label_example->setFont(mCurrentFont);
+}
+
+void Options::mSetFontWeight(const int& index)
+{
+    mCurrentFont.setWeight(IndexToWeight(index));
+    ui->label_example->setFont(mCurrentFont);
+}
+
+void Options::mSaveFont(QFont font)
+{
+    QSettings settings(
+        QCoreApplication::applicationDirPath() + "/settings.ini",
+        QSettings::IniFormat
+    );
+    settings.setValue("font/family", font.family());
+    settings.setValue("font/style", font.style());
+    settings.setValue("font/size", font.pointSize());
+    settings.setValue("font/weight", font.weight());
+}
+
+void Options::mLoadFont()
+{
+    mCurrentFont = MainWindow::LoadFont();
+    ui->fontComboBox->setCurrentFont(mCurrentFont.family());
+    ui->comboBox_style->setCurrentIndex(StyleToIndex(mCurrentFont.style()));
+    ui->spinBox->setValue(mCurrentFont.pointSize());
+    ui->comboBox_weight->setCurrentIndex(
+        WeightToIndex(static_cast<QFont::Weight>(mCurrentFont.weight()))
+    );
+    ui->label_example->setFont(mCurrentFont);
 }
 
 int Options::StyleToIndex(const QFont::Style style)
@@ -95,45 +154,4 @@ QFont::Weight Options::IndexToWeight(const int index)
     case 8: return QFont::Black;
     default: throw std::range_error("index out of range");
     }
-}
-
-void Options::mLoadFont()
-{
-    mCurrentFont = MainWindow::LoadFont();
-    ui->fontComboBox->setCurrentFont(mCurrentFont.family());
-    ui->comboBox_style->setCurrentIndex(StyleToIndex(mCurrentFont.style()));
-    ui->spinBox->setValue(mCurrentFont.pointSize());
-    ui->comboBox_weight->setCurrentIndex(
-        WeightToIndex(static_cast<QFont::Weight>(mCurrentFont.weight()))
-    );
-    ui->label_example->setFont(mCurrentFont);
-}
-
-void Options::mSetFontFamily(const QFont& font)
-{
-    mCurrentFont.setFamily(font.family());
-    ui->label_example->setFont(mCurrentFont);
-}
-
-void Options::mSetFontStyle(const int& index)
-{
-    mCurrentFont.setStyle(IndexToStyle(index));
-    ui->label_example->setFont(mCurrentFont);
-}
-
-void Options::mSetFontSize(const int& size)
-{
-    mCurrentFont.setPointSize(size);
-    ui->label_example->setFont(mCurrentFont);
-}
-
-void Options::mSetFontWeight(const int& index)
-{
-    mCurrentFont.setWeight(IndexToWeight(index));
-    ui->label_example->setFont(mCurrentFont);
-}
-
-void Options::mSaveFont()
-{
-    MainWindow::SaveFont(mCurrentFont);
 }
