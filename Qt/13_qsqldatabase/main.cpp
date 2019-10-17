@@ -5,7 +5,7 @@
 int main()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("communes-01042019.db");
+    db.setDatabaseName("communes.db");
     if (!db.open())
         exit(EXIT_FAILURE);
     QSqlQuery query(R"(SELECT * FROM communes WHERE dep="33")");

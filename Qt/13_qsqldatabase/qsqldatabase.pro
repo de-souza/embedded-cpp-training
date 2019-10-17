@@ -24,4 +24,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 # Copy database to build directory
-QMAKE_POST_LINK = $$QMAKE_COPY $$shell_path($$PWD/communes-01042019.db) $$shell_path($$OUT_PWD)
+QMAKE_POST_LINK = $$QMAKE_COPY $$shell_path($$PWD/communes.db) $$shell_path($$OUT_PWD)

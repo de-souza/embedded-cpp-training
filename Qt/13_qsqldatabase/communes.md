@@ -1,3 +1,7 @@
+The SQLite database communes.db is converted from the file communes-01042019.csv ditributed at https://www.insee.fr/fr/information/3720946.
+
+Information on variables:
+
 | Nom de la variable | Longueur de la variable | Désignation et modalités de la variable       |
 | ------------------ | ----------------------- | --------------------------------------------- |
 | MOD                | 2                       | Type d'événement de communes                  |
