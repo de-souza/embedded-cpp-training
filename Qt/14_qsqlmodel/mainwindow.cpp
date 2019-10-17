@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     db.setDatabaseName("communes.db");
     if (!db.open())
         exit(EXIT_FAILURE);
-    QSqlTableModel *model = new QSqlTableModel(this, db);
+    auto model = new QSqlTableModel(this);
     model->setTable("communes");
     model->select();
     ui->tableView->setModel(model);
