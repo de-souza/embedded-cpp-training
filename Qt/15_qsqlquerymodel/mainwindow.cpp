@@ -26,11 +26,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::mOnChange(const QString& rText)
 {
-    if (mpCityListModel != nullptr)
-        delete mpCityListModel;
-    mpCityListModel = new QSqlQueryModel(this);
-    mpCityListModel->setQuery(QString("SELECT libelle FROM communes WHERE dep=\"%1\"").arg(rText));
-    ui->listView->setModel(mpCityListModel);
+    if (mpCitesModel != nullptr)
+        delete mpCitesModel;
+    mpCitesModel = new QSqlQueryModel(this);
+    mpCitesModel->setQuery(QString("SELECT libelle FROM communes WHERE dep=\"%1\"").arg(rText));
+    ui->listView->setModel(mpCitesModel);
     QSqlQuery query(QString("SELECT COUNT(libelle) FROM communes WHERE dep=\"%1\"").arg(rText));
     query.next();
     ui->lineEdit->setText(query.value(0).toString());

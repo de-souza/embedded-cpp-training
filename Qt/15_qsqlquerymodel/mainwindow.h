@@ -21,7 +21,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QSqlQueryModel* mpCityListModel = nullptr;
-    QSqlQueryModel* mpCityCountModel = nullptr;
+    QSqlQueryModel* mpCitesModel = nullptr;
 };
 #endif // MAINWINDOW_H
