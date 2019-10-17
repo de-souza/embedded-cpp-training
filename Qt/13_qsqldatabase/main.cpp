@@ -8,7 +8,7 @@ int main()
     db.setDatabaseName("communes.db");
     if (!db.open())
         exit(EXIT_FAILURE);
-    QSqlQuery query(R"(SELECT * FROM communes WHERE dep="33")");
+    QSqlQuery query("SELECT * FROM communes WHERE dep='33'");
     while (query.next())
         qDebug() << query.value("libelle").toString();
 }

@@ -29,9 +29,9 @@ void MainWindow::mOnChange(const QString& rText)
     if (mpCitesModel != nullptr)
         delete mpCitesModel;
     mpCitesModel = new QSqlQueryModel(this);
-    mpCitesModel->setQuery(QString("SELECT libelle FROM communes WHERE dep=\"%1\"").arg(rText));
+    mpCitesModel->setQuery(QString("SELECT libelle FROM communes WHERE dep='%1'").arg(rText));
     ui->listView->setModel(mpCitesModel);
-    QSqlQuery query(QString("SELECT COUNT(libelle) FROM communes WHERE dep=\"%1\"").arg(rText));
+    QSqlQuery query(QString("SELECT COUNT(libelle) FROM communes WHERE dep='%1'").arg(rText));
     query.next();
     ui->lineEdit->setText(query.value(0).toString());
 }
