@@ -24,9 +24,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::mOnPress(const QModelIndex &idx)
+void MainWindow::mOnPress(const QModelIndex& rIdx)
 {
-    ui->lineEdit_value->setText(idx.data().toString());
-    ui->lineEdit_row->setText(QString::number(idx.row()));
-    ui->lineEdit_column->setText(QString::number(idx.column()));
+    ui->lineEdit_value->setText(rIdx.data().toString());
+    ui->lineEdit_row->setText(QString::number(rIdx.row()));
+    ui->lineEdit_column->setText(QString::number(rIdx.column()));
 }
