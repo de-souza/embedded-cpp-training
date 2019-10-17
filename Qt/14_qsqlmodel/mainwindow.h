@@ -15,6 +15,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void mDisplayValue(const QModelIndex &idx);
+
 private:
     Ui::MainWindow *ui;
 };
