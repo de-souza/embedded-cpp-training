@@ -16,7 +16,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void mDisplayValue(const QModelIndex &idx);
+    void mOnPress(const QModelIndex &idx);
 
 private:
     Ui::MainWindow *ui;

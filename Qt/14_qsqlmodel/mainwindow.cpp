@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     model->setTable("communes");
     model->select();
     ui->tableView->setModel(model);
-    connect(ui->tableView, &QTableView::pressed, this, &MainWindow::mDisplayValue);
+    connect(ui->tableView, &QTableView::pressed, this, &MainWindow::mOnPress);
 }
 
 MainWindow::~MainWindow()
@@ -24,7 +24,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::mDisplayValue(const QModelIndex &idx)
+void MainWindow::mOnPress(const QModelIndex &idx)
 {
-    ui->lineEdit->setText(idx.data().toString());
+    ui->lineEdit_value->setText(idx.data().toString());
+    ui->lineEdit_row->setText(QString::number(idx.row()));
+    ui->lineEdit_column->setText(QString::number(idx.column()));
 }
