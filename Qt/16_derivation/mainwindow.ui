@@ -18,6 +18,13 @@
     <item>
      <widget class="MyPlainTextEdit" name="myPlainTextEdit"/>
     </item>
+    <item>
+     <widget class="MyPushButton" name="myPushButton">
+      <property name="text">
+       <string>MyPushButton</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -37,6 +44,11 @@
    <class>MyPlainTextEdit</class>
    <extends>QPlainTextEdit</extends>
    <header>myplaintextedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyPushButton</class>
+   <extends>QPushButton</extends>
+   <header>mypushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

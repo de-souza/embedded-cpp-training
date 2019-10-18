@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->myPushButton, &MyPushButton::clicked, this, &MainWindow::mOnClick);
+    connect(ui->myPushButton, &MyPushButton::doubleClicked, this, &MainWindow::mOnDoubleClick);
 }
 
 MainWindow::~MainWindow()
@@ -23,5 +25,15 @@ void MainWindow::paintEvent(QPaintEvent*)
 void MainWindow::mousePressEvent(QMouseEvent* pEvent)
 {
     if (pEvent->pos().y() > this->height()/2)
-        qDebug() << "The mouse is in the bottom half of the window";
+        qDebug() << "Mouse press in the bottom half of the window";
+}
+
+void MainWindow::mOnClick()
+{
+    qDebug() << "Click";
+}
+
+void MainWindow::mOnDoubleClick()
+{
+    qDebug() << "Double-click";
 }

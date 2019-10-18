@@ -11,9 +11,9 @@ public:
     MyPlainTextEdit(QWidget* parent = nullptr);
 
 private slots:
-    void OnTrigger();
+    void mOnTrigger();
 
 private:
-    void contextMenuEvent(QContextMenuEvent* event);
+    void contextMenuEvent(QContextMenuEvent* pEvent);
 };
 #endif // MYPLAINTEXTEDIT_H

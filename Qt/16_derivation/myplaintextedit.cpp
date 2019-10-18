@@ -7,17 +7,17 @@ MyPlainTextEdit::MyPlainTextEdit(QWidget* parent)
     : QPlainTextEdit(parent)
 {}
 
-void MyPlainTextEdit::contextMenuEvent(QContextMenuEvent* event)
+void MyPlainTextEdit::contextMenuEvent(QContextMenuEvent* pEvent)
 {
     QMenu* pMenu = createStandardContextMenu();
     auto pAction = new QAction("My Action", this);
     pMenu->addAction(pAction);
-    connect(pAction, &QAction::triggered, this, &MyPlainTextEdit::OnTrigger);
-    pMenu->exec(event->globalPos());
+    connect(pAction, &QAction::triggered, this, &MyPlainTextEdit::mOnTrigger);
+    pMenu->exec(pEvent->globalPos());
     delete pMenu;
 }
 
-void MyPlainTextEdit::OnTrigger()
+void MyPlainTextEdit::mOnTrigger()
 {
-    qDebug() << "Triggered";
+    qDebug() << "Trigger";
 }

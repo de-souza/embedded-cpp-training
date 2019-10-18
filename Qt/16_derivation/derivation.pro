@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    myplaintextedit.cpp
+    myplaintextedit.cpp \
+    mypushbutton.cpp
 
 HEADERS += \
     mainwindow.h \
-    myplaintextedit.h
+    myplaintextedit.h \
+    mypushbutton.h
 
 FORMS += \
     mainwindow.ui
