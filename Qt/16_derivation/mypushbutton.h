@@ -14,6 +14,6 @@ signals:
     void doubleClicked();
 
 private:
-    void mouseDoubleClickEvent(QMouseEvent*);
+    void mouseDoubleClickEvent(QMouseEvent*) override;
 };
 #endif // MYPUSHBUTTON_H
