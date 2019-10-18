@@ -15,6 +15,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void mSetSize(int sizePx);
+    void mSetCharacterColor();
+    void mSetBackgroundColor();
+    void mSetOutlineWidth(int widthPx);
+    void mSetOutlineColor();
+
 private:
     Ui::MainWindow *ui;
 };

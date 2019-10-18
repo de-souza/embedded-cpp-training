@@ -41,7 +41,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="pushButton_characterColor">
            <property name="text">
             <string>PushButton</string>
            </property>
