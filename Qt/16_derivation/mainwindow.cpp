@@ -20,3 +20,8 @@ void MainWindow::paintEvent(QPaintEvent*)
     qDebug() << this->width() << this->height();
 }
 
+void MainWindow::mousePressEvent(QMouseEvent* pEvent)
+{
+    if (pEvent->pos().y() > this->height()/2)
+        qDebug() << "The mouse is in the bottom half of the window";
+}

@@ -18,5 +18,6 @@ public:
 private:
     Ui::MainWindow *ui;
     void paintEvent(QPaintEvent*) override;
+    void mousePressEvent(QMouseEvent* pEvent) override;
 };
 #endif // MAINWINDOW_H
