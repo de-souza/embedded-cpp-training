@@ -5,12 +5,13 @@
 
 class MyPlainTextEdit: public QPlainTextEdit
 {
-Q_OBJECT
+    Q_OBJECT
+
 public:
     MyPlainTextEdit(QWidget* parent = nullptr);
     void contextMenuEvent(QContextMenuEvent* event);
+
 private slots:
     void OnTrigger();
 };
-
 #endif // MYPLAINTEXTEDIT_H
