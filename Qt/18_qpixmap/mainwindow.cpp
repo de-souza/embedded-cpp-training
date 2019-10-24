@@ -74,15 +74,19 @@ MainWindow::MainWindow(QWidget* parent)
         this,
         &MainWindow::mUpdateOutlineRadiusPercent
     );
-    mString = "W";
-    mSetSizePx(200);
-    mSetStringSizePx(10);
-    mSetStringColor(Qt::darkBlue);
-    mSetBackgroundColor(Qt::lightGray);
-    mSetOutlineWidthPx(10);
-    mSetOutlineColor(Qt::black);
-    mSetOutlineRadiusPercent(25);
-    mUpdatePreview();
+    connect(
+        ui->lineEdit_string,
+        &QLineEdit::textChanged,
+        this,
+        &MainWindow::mUpdateString
+    );
+    connect(
+        ui->buttonBox,
+        &QDialogButtonBox::clicked,
+        this,
+        &MainWindow::mOnButtonClick
+    );
+    mSetDefaults();
 }
 
 MainWindow::~MainWindow()
@@ -138,6 +142,20 @@ void MainWindow::mUpdateOutlineRadiusPercent(const int outlineRadiusPercent)
     mUpdatePreview();
 }
 
+void MainWindow::mUpdateString(const QString string)
+{
+    mSetString(string);
+    mUpdatePreview();
+}
+
+void MainWindow::mOnButtonClick(const QAbstractButton* button)
+{
+    if (button == ui->buttonBox->button(QDialogButtonBox::RestoreDefaults))
+        mSetDefaults();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::Close))
+        close();
+}
+
 QPixmap MainWindow::mCreatePixmap(QString string)
 {
     QPixmap pixmap(mSizePx, mSizePx);
@@ -167,11 +185,17 @@ QPixmap MainWindow::mCreatePixmap(QString string)
     return pixmap;
 }
 
-void MainWindow::mSetStringSizePx(const int stringSizePx)
+void MainWindow::mSetDefaults()
 {
-    ui->horizontalSlider_stringSizePx->setValue(stringSizePx);
-    ui->spinBox_stringSizePx->setValue(stringSizePx);
-    mStringSizePx = stringSizePx;
+    mSetSizePx(200);
+    mSetString("W");
+    mSetStringSizePx(100);
+    mSetStringColor(Qt::darkBlue);
+    mSetBackgroundColor(Qt::lightGray);
+    mSetOutlineWidthPx(20);
+    mSetOutlineColor(Qt::black);
+    mSetOutlineRadiusPercent(25);
+    mUpdatePreview();
 }
 
 void MainWindow::mSetSizePx(const int sizePx)
@@ -183,6 +207,13 @@ void MainWindow::mSetSizePx(const int sizePx)
     ui->horizontalSlider_stringSizePx->setMaximum(sizePx - 2*mOutlineWidthPx);
     ui->spinBox_stringSizePx->setMaximum(sizePx - 2*mOutlineWidthPx);
     mSizePx = sizePx;
+}
+
+void MainWindow::mSetStringSizePx(const int stringSizePx)
+{
+    ui->horizontalSlider_stringSizePx->setValue(stringSizePx);
+    ui->spinBox_stringSizePx->setValue(stringSizePx);
+    mStringSizePx = stringSizePx;
 }
 
 void MainWindow::mSetStringColor(const QColor stringColor)
@@ -225,10 +256,16 @@ void MainWindow::mSetOutlineRadiusPercent(const int outlineRadiusPercent)
     mOutlineRadiusPercent = outlineRadiusPercent;
 }
 
+void MainWindow::mSetString(const QString string)
+{
+    mString = string;
+    ui->lineEdit_string->setText(string);
+}
+
 void MainWindow::mUpdatePreview()
 {
     delete ui->graphicsView_preview->scene();
     auto scene = new QGraphicsScene(this);
-    scene->addPixmap(mCreatePixmap("W"));
+    scene->addPixmap(mCreatePixmap(mString));
     ui->graphicsView_preview->setScene(scene);
 }

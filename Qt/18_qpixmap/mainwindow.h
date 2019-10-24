@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QAbstractButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,25 +24,29 @@ private slots:
     void mUpdateOutlineColor();
     void mUpdateOutlineWidthPx(const int);
     void mUpdateOutlineRadiusPercent(const int);
+    void mUpdateString(const QString);
+    void mOnButtonClick(const QAbstractButton*);
 
 private:
     Ui::MainWindow* ui;
-    QString mString;
-    int mStringSizePx;
     int mSizePx;
+    int mStringSizePx;
+    QString mString;
     QColor mStringColor;
     QColor mBackgroundColor;
     QColor mOutlineColor;
     int mOutlineWidthPx;
     int mOutlineRadiusPercent;
     QPixmap mCreatePixmap(QString string);
-    void mSetStringSizePx(const int);
+    void mSetDefaults();
     void mSetSizePx(const int);
+    void mSetStringSizePx(const int);
     void mSetStringColor(const QColor);
     void mSetBackgroundColor(const QColor);
     void mSetOutlineColor(const QColor);
     void mSetOutlineWidthPx(const int);
     void mSetOutlineRadiusPercent(const int);
+    void mSetString(const QString);
     void mUpdatePreview();
 };
 
