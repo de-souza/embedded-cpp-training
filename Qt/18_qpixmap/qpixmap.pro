@@ -17,12 +17,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    mypixmap.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    mypixmap.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>608</width>
-    <height>303</height>
+    <width>584</width>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,20 +20,13 @@
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="title">
-         <string>Image Settings:</string>
+         <string>Settings:</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_sizePx">
-           <property name="text">
-            <string>Size:</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QSlider" name="horizontalSlider_sizePx">
            <property name="minimum">
-            <number>1</number>
+            <number>16</number>
            </property>
            <property name="maximum">
             <number>512</number>
@@ -43,25 +36,10 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="lineEdit_sizePx">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
+         <item row="3" column="3">
+          <widget class="QPushButton" name="pushButton_outlineColor">
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </item>
@@ -72,23 +50,77 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="pushButton_stringColor">
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_outlineWidthPx">
            <property name="text">
-            <string>Choose</string>
+            <string>Outline Width (px):</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="lineEdit_stringColor">
+         <item row="2" column="3">
+          <widget class="QPushButton" name="pushButton_backgroundColor">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QSlider" name="horizontalSlider_outlineWidthPx">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_sizePx">
+           <property name="text">
+            <string>Image Size (px):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QSpinBox" name="spinBox_sizePx">
            <property name="maximumSize">
             <size>
-             <width>48</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
-           <property name="readOnly">
-            <bool>true</bool>
+           <property name="minimum">
+            <number>16</number>
+           </property>
+           <property name="maximum">
+            <number>512</number>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QSpinBox" name="spinBox_outlineWidthPx">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QPushButton" name="pushButton_stringColor">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_outlineColor">
+           <property name="text">
+            <string>Outline Color:</string>
            </property>
           </widget>
          </item>
@@ -99,86 +131,27 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="pushButton_backgroundColor">
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_outlineRadiusPercent">
            <property name="text">
-            <string>Choose</string>
+            <string>Outline Curvature (%):</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QLineEdit" name="lineEdit_backgroundColor">
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_outlineWidthPx">
-           <property name="text">
-            <string>Outline Width:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QSlider" name="horizontalSlider_outlineWidthPx">
-           <property name="minimum">
-            <number>1</number>
-           </property>
+         <item row="5" column="1">
+          <widget class="QSlider" name="horizontalSlider_outlineRadiusPercent">
            <property name="maximum">
-            <number>256</number>
+            <number>100</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="3" column="2">
-          <widget class="QLineEdit" name="lineEdit_outlineWidthPx">
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_outlineColor">
-           <property name="text">
-            <string>Outline Color:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QPushButton" name="pushButton_outlineColor">
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="2">
-          <widget class="QLineEdit" name="lineEdit_outlineColor">
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
+         <item row="5" column="3">
+          <widget class="QSpinBox" name="spinBox_outlineRadiusPercent">
+           <property name="maximum">
+            <number>100</number>
            </property>
           </widget>
          </item>
@@ -221,7 +194,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>608</width>
+     <width>584</width>
      <height>22</height>
     </rect>
    </property>

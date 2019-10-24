@@ -12,34 +12,64 @@ MainWindow::MainWindow(QWidget* parent)
         ui->horizontalSlider_sizePx,
         QOverload<int>::of(&QSlider::valueChanged),
         this,
-        &MainWindow::mSetSizePx
+        &MainWindow::mUpdateSizePx
+    );
+    connect(
+        ui->spinBox_sizePx,
+        QOverload<int>::of(&QSpinBox::valueChanged),
+        this,
+        &MainWindow::mUpdateSizePx
     );
     connect(
         ui->pushButton_stringColor,
         &QPushButton::clicked,
         this,
-        &MainWindow::mSetStringColor
+        &MainWindow::mUpdateStringColor
     );
     connect(
         ui->pushButton_backgroundColor,
         &QPushButton::clicked,
         this,
-        &MainWindow::mSetBackgroundColor
-    );
-    connect(
-        ui->horizontalSlider_outlineWidthPx,
-        QOverload<int>::of(&QSlider::valueChanged),
-        this,
-        &MainWindow::mSetOutlineWidthPx
+        &MainWindow::mUpdateBackgroundColor
     );
     connect(
         ui->pushButton_outlineColor,
         &QPushButton::clicked,
         this,
-        &MainWindow::mSetOutlineColor
+        &MainWindow::mUpdateOutlineColor
     );
-    mpScene = new QGraphicsScene(this);
-    mInitInterface();
+    connect(
+        ui->horizontalSlider_outlineWidthPx,
+        QOverload<int>::of(&QSlider::valueChanged),
+        this,
+        &MainWindow::mUpdateOutlineWidthPx
+    );
+    connect(
+        ui->spinBox_outlineWidthPx,
+        QOverload<int>::of(&QSpinBox::valueChanged),
+        this,
+        &MainWindow::mUpdateOutlineWidthPx
+    );
+    connect(
+        ui->horizontalSlider_outlineRadiusPercent,
+        QOverload<int>::of(&QSlider::valueChanged),
+        this,
+        &MainWindow::mUpdateOutlineRadiusPercent
+    );
+    connect(
+        ui->spinBox_outlineRadiusPercent,
+        QOverload<int>::of(&QSpinBox::valueChanged),
+        this,
+        &MainWindow::mUpdateOutlineRadiusPercent
+    );
+    mSetString("W");
+    mSetSizePx(200);
+    mSetStringColor(Qt::darkBlue);
+    mSetBackgroundColor(Qt::lightGray);
+    mSetOutlineWidthPx(10);
+    mSetOutlineColor(Qt::black);
+    mSetOutlineRadiusPercent(25);
+    mUpdatePreview();
 }
 
 MainWindow::~MainWindow()
@@ -47,99 +77,132 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::mSetSizePx(const int sizePx)
+void MainWindow::mUpdateSizePx(const int sizePx)
 {
-    mUpdateSizePx(sizePx);
+    mSetSizePx(sizePx);
     mUpdatePreview();
 }
 
-void MainWindow::mSetStringColor()
+void MainWindow::mUpdateStringColor()
 {
-    mUpdateStringColor(
+    mSetStringColor(
         QColorDialog::getColor(Qt::black, this, "Character Color")
     );
     mUpdatePreview();
 }
 
-void MainWindow::mSetBackgroundColor()
+void MainWindow::mUpdateBackgroundColor()
 {
-    mUpdateBackgroundColor(
+    mSetBackgroundColor(
         QColorDialog::getColor(Qt::lightGray, this, "Background Color")
     );
     mUpdatePreview();
 }
 
-void MainWindow::mSetOutlineWidthPx(const int outlineWidthPx)
+void MainWindow::mUpdateOutlineColor()
 {
-    mUpdateOutlineWidthPx(outlineWidthPx);
-    mUpdatePreview();
-}
-
-void MainWindow::mSetOutlineColor()
-{
-    mUpdateOutlineColor(
+    mSetOutlineColor(
         QColorDialog::getColor(Qt::black, this, "Outline Color")
     );
     mUpdatePreview();
 }
 
-void MainWindow::mInitInterface()
+void MainWindow::mUpdateOutlineWidthPx(const int outlineWidthPx)
 {
-    mUpdateString("a");
-    mUpdateSizePx(50);
-    mUpdateStringColor(Qt::black);
-    mUpdateBackgroundColor(Qt::lightGray);
-    mUpdateOutlineWidthPx(5);
-    mUpdateOutlineColor(Qt::black);
+    mSetOutlineWidthPx(outlineWidthPx);
     mUpdatePreview();
 }
 
-void MainWindow::mUpdateString(const QString string)
+void MainWindow::mUpdateOutlineRadiusPercent(const int outlineRadiusPercent)
 {
-    mMyPixmap.SetString(string);
+    mSetOutlineRadiusPercent(outlineRadiusPercent);
+    mUpdatePreview();
 }
 
-void MainWindow::mUpdateSizePx(const int sizePx)
+QPixmap MainWindow::mCreatePixmap(mPixmapSettings settings)
 {
-    ui->lineEdit_sizePx->setText(QString("%1 px").arg(sizePx));
-    mMyPixmap.SetSizePx(sizePx);
+    QPixmap pixmap(settings.SizePx, settings.SizePx);
+    pixmap.fill(Qt::transparent);
+    QPainter painter(&pixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    QPainterPath path;
+    path.addRoundedRect(
+        settings.OutlineWidthPx / 2.0,
+        settings.OutlineWidthPx / 2.0,
+        settings.SizePx - settings.OutlineWidthPx,
+        settings.SizePx - settings.OutlineWidthPx,
+        settings.OutlineRadiusPercent,
+        settings.OutlineRadiusPercent,
+        Qt::RelativeSize
+    );
+    painter.fillPath(path, settings.BackgroundColor);
+    QPen pen(settings.OutlineColor, settings.OutlineWidthPx);
+    painter.setPen(pen);
+    painter.drawPath(path);
+    QFont font;
+    font.setPixelSize(settings.SizePx - 2*settings.OutlineWidthPx);
+    painter.setFont(font);
+    painter.setPen(settings.StringColor);
+    painter.drawText(pixmap.rect(), Qt::AlignCenter, settings.String);
+    return pixmap;
 }
 
-void MainWindow::mUpdateStringColor(const QColor stringColor)
+void MainWindow::mSetString(const QString string)
+{
+    mPreviewSettings.String = string;
+}
+
+void MainWindow::mSetSizePx(const int sizePx)
+{
+    ui->horizontalSlider_sizePx->setValue(sizePx);
+    ui->spinBox_sizePx->setValue(sizePx);
+    ui->horizontalSlider_outlineWidthPx->setMaximum(sizePx/2 - 6);
+    ui->spinBox_outlineWidthPx->setMaximum(sizePx/2 - 6);
+    mPreviewSettings.SizePx = sizePx;
+}
+
+void MainWindow::mSetStringColor(const QColor stringColor)
 {
     QPalette palette;
-    palette.setColor(QPalette::Base, stringColor);
-    ui->lineEdit_stringColor->setPalette(palette);
-    mMyPixmap.SetCharacterColor(stringColor);
+    palette.setColor(QPalette::Button, stringColor);
+    ui->pushButton_stringColor->setPalette(palette);
+    mPreviewSettings.StringColor = stringColor;
 }
 
-void MainWindow::mUpdateBackgroundColor(const QColor backgroundColor)
+void MainWindow::mSetBackgroundColor(const QColor backgroundColor)
 {
     QPalette palette;
-    palette.setColor(QPalette::Base, backgroundColor);
-    ui->lineEdit_backgroundColor->setPalette(palette);
-    mMyPixmap.SetBackgroundColor(backgroundColor);
+    palette.setColor(QPalette::Button, backgroundColor);
+    ui->pushButton_backgroundColor->setPalette(palette);
+    mPreviewSettings.BackgroundColor = backgroundColor;
 }
 
-void MainWindow::mUpdateOutlineWidthPx(const int outlineWidthPx)
-{
-    ui->lineEdit_outlineWidthPx->setText(QString("%1 px").arg(outlineWidthPx));
-    mMyPixmap.SetOutlineWidthPx(outlineWidthPx);
-}
-
-void MainWindow::mUpdateOutlineColor(const QColor outlineColor)
+void MainWindow::mSetOutlineColor(const QColor outlineColor)
 {
     QPalette palette;
-    palette.setColor(QPalette::Base, outlineColor);
-    ui->lineEdit_outlineColor->setPalette(palette);
-    mMyPixmap.SetOutlineColor(outlineColor);
+    palette.setColor(QPalette::Button, outlineColor);
+    ui->pushButton_outlineColor->setPalette(palette);
+    mPreviewSettings.OutlineColor = outlineColor;
+}
+
+void MainWindow::mSetOutlineWidthPx(const int outlineWidthPx)
+{
+    ui->horizontalSlider_outlineWidthPx->setValue(outlineWidthPx);
+    ui->spinBox_outlineWidthPx->setValue(outlineWidthPx);
+    mPreviewSettings.OutlineWidthPx = outlineWidthPx;
+}
+
+void MainWindow::mSetOutlineRadiusPercent(const int outlineRadiusPercent)
+{
+    ui->horizontalSlider_outlineRadiusPercent->setValue(outlineRadiusPercent);
+    ui->spinBox_outlineRadiusPercent->setValue(outlineRadiusPercent);
+    mPreviewSettings.OutlineRadiusPercent = outlineRadiusPercent;
 }
 
 void MainWindow::mUpdatePreview()
 {
-    QPixmap pixmap = mMyPixmap.GetPixmap();
-    mpScene->setSceneRect(pixmap.rect());
-    mpScene->clear();
-    mpScene->addPixmap(pixmap);
-    ui->graphicsView_preview->setScene(mpScene);
+    delete ui->graphicsView_preview->scene();
+    auto scene = new QGraphicsScene(this);
+    scene->addPixmap(mCreatePixmap(mPreviewSettings));
+    ui->graphicsView_preview->setScene(scene);
 }

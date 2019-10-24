@@ -1,10 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "mypixmap.h"
-
 #include <QMainWindow>
-#include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,23 +16,33 @@ public:
     ~MainWindow();
 
 private slots:
-    void mSetSizePx(const int sizePx);
-    void mSetStringColor();
-    void mSetBackgroundColor();
-    void mSetOutlineWidthPx(const int outlineWidthPx);
-    void mSetOutlineColor();
+    void mUpdateSizePx(const int);
+    void mUpdateStringColor();
+    void mUpdateBackgroundColor();
+    void mUpdateOutlineColor();
+    void mUpdateOutlineWidthPx(const int);
+    void mUpdateOutlineRadiusPercent(const int);
 
 private:
     Ui::MainWindow* ui;
-    MyPixmap mMyPixmap;
-    QGraphicsScene* mpScene;
-    void mInitInterface();
-    void mUpdateString(const QString string);
-    void mUpdateSizePx(const int sizePx);
-    void mUpdateStringColor(const QColor stringColor);
-    void mUpdateBackgroundColor(const QColor backgroundColor);
-    void mUpdateOutlineWidthPx(const int outlineWidthPx);
-    void mUpdateOutlineColor(const QColor outlineColor);
+    struct mPixmapSettings {
+        QString String;
+        int SizePx;
+        QColor StringColor;
+        QColor BackgroundColor;
+        QColor OutlineColor;
+        int OutlineWidthPx;
+        int OutlineRadiusPercent;
+    };
+    mPixmapSettings mPreviewSettings;
+    QPixmap mCreatePixmap(mPixmapSettings settings);
+    void mSetString(const QString);
+    void mSetSizePx(const int);
+    void mSetStringColor(const QColor);
+    void mSetBackgroundColor(const QColor);
+    void mSetOutlineColor(const QColor);
+    void mSetOutlineWidthPx(const int);
+    void mSetOutlineRadiusPercent(const int);
     void mUpdatePreview();
 };
 
