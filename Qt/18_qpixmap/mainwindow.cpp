@@ -200,14 +200,14 @@ QPixmap MainWindow::mCreatePixmap(QString string)
 
 void MainWindow::mSetDefaults()
 {
-    mSetSizePx(200);
+    mSetSizePx(300);
     mSetString("W");
-    mSetStringSizePx(100);
+    mSetStringSizePx(200);
     mSetStringColor(Qt::darkBlue);
     mSetBackgroundColor(Qt::lightGray);
     mSetOutlineWidthPx(20);
     mSetOutlineColor(Qt::black);
-    mSetOutlineRadiusPercent(25);
+    mSetOutlineRadiusPercent(50);
     mUpdatePreview();
 }
 

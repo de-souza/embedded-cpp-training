@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>599</width>
-    <height>431</height>
+    <width>726</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -216,11 +216,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QGraphicsView" name="graphicsView_preview"/>
-      </item>
-     </layout>
+     <widget class="QGraphicsView" name="graphicsView_preview"/>
     </item>
    </layout>
   </widget>
@@ -229,7 +225,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>599</width>
+     <width>726</width>
      <height>22</height>
     </rect>
    </property>
