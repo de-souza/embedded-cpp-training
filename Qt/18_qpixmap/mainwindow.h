@@ -48,6 +48,8 @@ private:
     void mSetOutlineRadiusPercent(const int);
     void mSetString(const QString);
     void mUpdatePreview();
+    void mSaveVisibleAscii();
+    void mSaveChar(char ch, QString directory);
 };
 
 #endif // MAINWINDOW_H

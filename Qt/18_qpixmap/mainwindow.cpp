@@ -2,12 +2,16 @@
 #include "ui_mainwindow.h"
 
 #include <QColorDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    mSetDefaults();
+    // Size (px):
     connect(
         ui->horizontalSlider_sizePx,
         QOverload<int>::of(&QSlider::valueChanged),
@@ -20,6 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
         this,
         &MainWindow::mUpdateSizePx
     );
+    // Character Size (px):
     connect(
         ui->horizontalSlider_stringSizePx,
         QOverload<int>::of(&QSlider::valueChanged),
@@ -32,24 +37,28 @@ MainWindow::MainWindow(QWidget* parent)
         this,
         &MainWindow::mUpdateStringSizePx
     );
+    // Character Color:
     connect(
         ui->pushButton_stringColor,
         &QPushButton::clicked,
         this,
         &MainWindow::mUpdateStringColor
     );
+    // Background Color:
     connect(
         ui->pushButton_backgroundColor,
         &QPushButton::clicked,
         this,
         &MainWindow::mUpdateBackgroundColor
     );
+    // Outline Color:
     connect(
         ui->pushButton_outlineColor,
         &QPushButton::clicked,
         this,
         &MainWindow::mUpdateOutlineColor
     );
+    // Outline Width (px):
     connect(
         ui->horizontalSlider_outlineWidthPx,
         QOverload<int>::of(&QSlider::valueChanged),
@@ -62,6 +71,7 @@ MainWindow::MainWindow(QWidget* parent)
         this,
         &MainWindow::mUpdateOutlineWidthPx
     );
+    // Outline Radius (%):
     connect(
         ui->horizontalSlider_outlineRadiusPercent,
         QOverload<int>::of(&QSlider::valueChanged),
@@ -74,19 +84,20 @@ MainWindow::MainWindow(QWidget* parent)
         this,
         &MainWindow::mUpdateOutlineRadiusPercent
     );
+    // Preview Character:
     connect(
         ui->lineEdit_string,
         &QLineEdit::textChanged,
         this,
         &MainWindow::mUpdateString
     );
+    // Restore Defaults, Close, Save
     connect(
         ui->buttonBox,
         &QDialogButtonBox::clicked,
         this,
         &MainWindow::mOnButtonClick
     );
-    mSetDefaults();
 }
 
 MainWindow::~MainWindow()
@@ -154,6 +165,8 @@ void MainWindow::mOnButtonClick(const QAbstractButton* button)
         mSetDefaults();
     else if (button == ui->buttonBox->button(QDialogButtonBox::Close))
         close();
+    else if (button == ui->buttonBox->button(QDialogButtonBox::Save))
+        mSaveVisibleAscii();
 }
 
 QPixmap MainWindow::mCreatePixmap(QString string)
@@ -268,4 +281,32 @@ void MainWindow::mUpdatePreview()
     auto scene = new QGraphicsScene(this);
     scene->addPixmap(mCreatePixmap(mString));
     ui->graphicsView_preview->setScene(scene);
+}
+
+void MainWindow::mSaveVisibleAscii()
+{
+    QString directory = QFileDialog::getExistingDirectory(
+        this,
+        "Choose Directory",
+        "",
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
+    );
+    if (!directory.isNull()) {
+        for (char ch = 32; ch < 127; ch++)
+            mSaveChar(ch, directory);
+        QMessageBox::information(
+            this,
+            "qpixmap.pro",
+            "The files were successfully saved."
+        );
+        close();
+    }
+}
+
+void MainWindow::mSaveChar(char ch, QString directory)
+{
+    QPixmap pixmap = mCreatePixmap(QString(ch));
+    QFile file(directory + '/' + QString::number(ch) + ".png");
+    file.open(QIODevice::WriteOnly);
+    pixmap.save(&file, "PNG");
 }
