@@ -17,6 +17,7 @@ public:
 
 private slots:
     void mUpdateSizePx(const int);
+    void mUpdateStringSizePx(const int);
     void mUpdateStringColor();
     void mUpdateBackgroundColor();
     void mUpdateOutlineColor();
@@ -25,18 +26,16 @@ private slots:
 
 private:
     Ui::MainWindow* ui;
-    struct mPixmapSettings {
-        QString String;
-        int SizePx;
-        QColor StringColor;
-        QColor BackgroundColor;
-        QColor OutlineColor;
-        int OutlineWidthPx;
-        int OutlineRadiusPercent;
-    };
-    mPixmapSettings mPreviewSettings;
-    QPixmap mCreatePixmap(mPixmapSettings settings);
-    void mSetString(const QString);
+    QString mString;
+    int mStringSizePx;
+    int mSizePx;
+    QColor mStringColor;
+    QColor mBackgroundColor;
+    QColor mOutlineColor;
+    int mOutlineWidthPx;
+    int mOutlineRadiusPercent;
+    QPixmap mCreatePixmap(QString string);
+    void mSetStringSizePx(const int);
     void mSetSizePx(const int);
     void mSetStringColor(const QColor);
     void mSetBackgroundColor(const QColor);
