@@ -7,31 +7,29 @@
           +-+
      +-+  | |
      | |  +-+  +-+
+     | |       | |  <---  Planning Client
+     +-+  +-+  | |
+          | |  | |               ^
+     +-+  +-+  | |               |
      | |       | |
-     +-+  +-+  | |
-          | |  | |  <---  Planning Client
-     +-+  +-+  | |
-     | |       | |               ^
-     | |  +-+  +-+               |
+     | |  +-+  +-+         Rétrospective
      +-+  | |
-          +-+              Rétrospective
-
-    Backlog produit              ^
+          +-+                    ^
                                  |
+    Backlog produit
+                           Démo. produit  --->  Release
            |
-           v               Démo. produit  --->  Release
-
-        +-+                      ^
-        | |                      |
-        | |                      +--------------+
-        | | +-+ +-+              |              |
-+-+ +-+ | | | | | | +-+          |              v
+           v                     ^
+                                 |
+        +-+                      +--------------+
+        | |                      |              |
+        | |                      |              v
+        | | +-+ +-+
++-+ +-+ | | | | | | +-+    Développement  Daily Meeting
 | | | | | | | | | | | |
-+-+ +-+ +-+ +-+ +-+ +-+    Développement  Daily Meeting
-
-Classement par priorité          ^              |
-selon importance client          |              |
-et difficulté équipe             +--------------+
++-+ +-+ +-+ +-+ +-+ +-+          ^              |
+                                 |              |
+Classement par priorité          +--------------+
                                  |
            |
            v                +-+ +-+ +-+
@@ -39,4 +37,5 @@ et difficulté équipe             +--------------+
     Sprint Planning  --->   +-+ +-+ +-+
 
                            Backlog sprint
+
 ```
