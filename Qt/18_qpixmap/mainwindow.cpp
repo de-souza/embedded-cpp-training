@@ -238,8 +238,8 @@ void MainWindow::mLoadPixmap()
     // String Color:
     palette.setColor(QPalette::Button, mMyPixmap.StringColor);
     ui->pushButton_stringColor->setPalette(palette);
-    // Outline Color:
 
+    // Outline Color:
     palette.setColor(QPalette::Button, mMyPixmap.OutlineColor);
     ui->pushButton_outlineColor->setPalette(palette);
 
