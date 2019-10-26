@@ -186,7 +186,7 @@ void MainWindow::Save()
             mMyPixmap.String = QString(ch);
             mMyPixmap.Pixmap().save(&file);
         }
-        QMessageBox::information(this, "", "Files successfully saved.");
+        QMessageBox::information(this, "Info", "Files saved successfully.");
         close();
     }
 }
@@ -201,7 +201,6 @@ void MainWindow::Reset(const QAbstractButton* button)
 
 void MainWindow::mLoadPixmap()
 {
-    QPalette palette;
     // Preview String:
     ui->lineEdit_string->setText(mMyPixmap.String);
     // Total Size (px):
@@ -227,6 +226,7 @@ void MainWindow::mLoadPixmap()
     ui->slider_outlineRadiusPercent->setValue(mMyPixmap.OutlineRadiusPercent);
     ui->spinBox_outlineRadiusPercent->setValue(mMyPixmap.OutlineRadiusPercent);
     // Background Color:
+    QPalette palette;
     palette.setColor(QPalette::Button, mMyPixmap.BackgroundColor);
     ui->pushButton_backgroundColor->setPalette(palette);
     // String Color:
