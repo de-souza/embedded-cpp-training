@@ -27,8 +27,8 @@ public slots:
     void SetBackgroundColor();
     void SetStringColor();
     void SetOutlineColor();
-    void Reset(const QAbstractButton*);
     void Save();
+    void Reset(const QAbstractButton*);
 
 private:
     Ui::MainWindow* ui;

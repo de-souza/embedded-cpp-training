@@ -16,7 +16,7 @@ MyPixmap::MyPixmap()
 
 QPixmap MyPixmap::Pixmap()
 {
-    // Create pixmap with transparent background
+    // Create a pixmap with a transparent background
     QPixmap pixmap(SizePx, SizePx);
     pixmap.fill(Qt::transparent);
 
