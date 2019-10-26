@@ -120,8 +120,6 @@ répartition équitable de la parole et une réunion de courte durée :
   * Demander aux membres de l'équipe de se mettre en position « de gainage »,
   * Utiliser un sablier…
 
-Un _Kanban_ peut être utilisé.
-
 
 IV. Démonstration produit
 -------------------------
@@ -146,5 +144,49 @@ graphe de la vélocité de l'équipe en fonction du temps. Une régression perme
 alors d'essayer de prédire la vélocité de l'équipe au prochain _Sprint_.
 
 
+V. Rétrospective
+----------------
+
+Lors de la rétrospective, chaque membre de l'équipe de développement explique
+quel a été son ressenti pendant le _Sprint_. Cette rénion n'a pas de limite de
+durée et comporte plusieurs règles :
+
+  * Seuls les membres de l'équipe sont présents,
+  * La présence de téléphones portables et d'ordinateurs est interdite,
+  * « Tout ce qui est dit en rétrospective reste en rétrospective »,
+  * « Pas de jugement, pas de coupale »,
+  * Personne ne peut couper la parole.
+
+Le _Scrum Master_ dispose une fois de plus de plusieurs méthodes pour animer la
+retrospective :
+
+  * Demander à chaque membre de l'équipe de noter son ressenti sur une échelle
+  de un à cinq, puis afficher et discuter des résultats,
+  * Demander à chaque membre ce qui l'a rendu heureux, triste et malheureux et
+  placer des post-its correspondants dans trois colonnes : « _Mad Sad Glad_ »,
+  * Dresser cinq catégories d'actions pouvant être augmentées en fréquence,
+  diminuées en fréquence, commencées, arrêtées ou conservées :  « _Starfish_ »,
+  * Déterminer quelles actions vont être mises en œuvre immédiatement pour
+  améliorer la situation. Celles-ci deviennent alors des _User Stories_.
 
 
+VI. Planning Client
+-------------------
+
+Le _Planning Client_ consiste à mettre à jour le _Backlog Produit_ avec le
+client.
+
+Tout au long de l'application de la méthode Scrum, un _Kanban_ peut être établi
+pour tracer quelles actions sont réalisées et par qui, et ainsi donner une idée
+de ce qui prend le plus de temps. Cette méthode consiste à représenter les
+tâches par des post-its et à les répartir dans un tableau de quatre colonnes :
+« _Todo_, _In Progress_, _Review_, _Done_ ». Chaque post-it comprend :
+
+  * La description de la tâche,
+  * La personne qui l'effectue,
+  * Les ressources nécessaires pour réaliser cette tâche,
+  * Les conditions à satisfaire pour réaliser la tâche.
+
+Les post-its sont déplacés de colonne en colonne suivant leur état d'avancement.
+Une pastille de couleur peut être ajoutée sur un post-it à chaque fois que la
+personne effectuant une tâche rencontre un problème.
