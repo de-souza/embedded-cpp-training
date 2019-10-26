@@ -198,7 +198,7 @@ void MainWindow::Save()
             mMyPixmap.String = QString(ch);
             mMyPixmap.Pixmap().save(&file);
         }
-        QMessageBox::information(this, "Info", "Files saved successfully.");
+        QMessageBox::information(this, "Success", "Files saved successfully.");
         close();
     }
 }
