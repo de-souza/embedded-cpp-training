@@ -203,9 +203,11 @@ void MainWindow::mLoadPixmap()
 {
     // Preview String:
     ui->lineEdit_string->setText(mMyPixmap.String);
+
     // Total Size (px):
     ui->slider_sizePx->setValue(mMyPixmap.SizePx);
     ui->spinBox_sizePx->setValue(mMyPixmap.SizePx);
+
     // Outline Width (px):
     int max_outline_width_px = mMyPixmap.SizePx / 2 - 5;
     if (mMyPixmap.OutlineWidthPx > max_outline_width_px)
@@ -214,6 +216,7 @@ void MainWindow::mLoadPixmap()
     ui->slider_outlineWidthPx->setMaximum(max_outline_width_px);
     ui->spinBox_outlineWidthPx->setValue(mMyPixmap.OutlineWidthPx);
     ui->spinBox_outlineWidthPx->setMaximum(max_outline_width_px);
+
     // String Size (px):
     int max_string_size_px = mMyPixmap.SizePx - (2 * mMyPixmap.OutlineWidthPx);
     if (mMyPixmap.StringSizePx > max_string_size_px)
@@ -222,19 +225,24 @@ void MainWindow::mLoadPixmap()
     ui->slider_stringSizePx->setMaximum(max_string_size_px);
     ui->spinBox_stringSizePx->setValue(mMyPixmap.StringSizePx);
     ui->spinBox_stringSizePx->setMaximum(max_string_size_px);
+
     // Outline Radius (%):
     ui->slider_outlineRadiusPercent->setValue(mMyPixmap.OutlineRadiusPercent);
     ui->spinBox_outlineRadiusPercent->setValue(mMyPixmap.OutlineRadiusPercent);
+
     // Background Color:
     QPalette palette;
     palette.setColor(QPalette::Button, mMyPixmap.BackgroundColor);
     ui->pushButton_backgroundColor->setPalette(palette);
+
     // String Color:
     palette.setColor(QPalette::Button, mMyPixmap.StringColor);
     ui->pushButton_stringColor->setPalette(palette);
     // Outline Color:
+
     palette.setColor(QPalette::Button, mMyPixmap.OutlineColor);
     ui->pushButton_outlineColor->setPalette(palette);
+
     // Preview:
     delete ui->graphicsView_preview->scene();
     auto scene = new QGraphicsScene(this);
