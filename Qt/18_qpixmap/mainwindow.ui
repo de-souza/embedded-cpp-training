@@ -6,60 +6,56 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>726</width>
-    <height>391</height>
+    <width>628</width>
+    <height>364</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>qpixmap.pro</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="title">
-         <string>Settings:</string>
+         <string>Image Settings:</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="6" column="3">
-          <widget class="QPushButton" name="pushButton_stringColor">
+         <item row="14" column="3">
+          <widget class="QPushButton" name="pushButton_backgroundColor">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="label_backgroundColor">
-           <property name="text">
-            <string>Background Color:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="3">
+         <item row="16" column="3">
           <widget class="QPushButton" name="pushButton_outlineColor">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="13" column="4">
+          <widget class="QSlider" name="slider_outlineRadiusPercent">
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="0">
           <widget class="QLabel" name="label_stringColor">
            <property name="text">
-            <string>Character Color:</string>
+            <string>String Color:</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_stringSizePx">
-           <property name="text">
-            <string>Character Size (px):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="4">
-          <widget class="QSlider" name="horizontalSlider_outlineWidthPx">
+         <item row="10" column="4">
+          <widget class="QSlider" name="slider_outlineWidthPx">
            <property name="minimum">
             <number>1</number>
            </property>
@@ -68,14 +64,73 @@
            </property>
           </widget>
          </item>
-         <item row="9" column="0">
+         <item row="10" column="0">
           <widget class="QLabel" name="label_outlineWidthPx">
            <property name="text">
             <string>Outline Width (px):</string>
            </property>
           </widget>
          </item>
-         <item row="9" column="3">
+         <item row="8" column="3">
+          <widget class="QSpinBox" name="spinBox_stringSizePx">
+           <property name="minimum">
+            <number>8</number>
+           </property>
+          </widget>
+         </item>
+         <item row="13" column="3">
+          <widget class="QSpinBox" name="spinBox_outlineRadiusPercent">
+           <property name="maximum">
+            <number>100</number>
+           </property>
+          </widget>
+         </item>
+         <item row="13" column="0">
+          <widget class="QLabel" name="label_outlineRadiusPercent">
+           <property name="text">
+            <string>Outline Radius (%):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="3">
+          <widget class="QPushButton" name="pushButton_stringColor">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="16" column="0">
+          <widget class="QLabel" name="label_outlineColor">
+           <property name="text">
+            <string>Outline Color:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="4">
+          <widget class="QSlider" name="slider_stringSizePx">
+           <property name="minimum">
+            <number>8</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_stringSizePx">
+           <property name="text">
+            <string>String Size (px):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="14" column="0">
+          <widget class="QLabel" name="label_backgroundColor">
+           <property name="text">
+            <string>Background Color:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="3">
           <widget class="QSpinBox" name="spinBox_outlineWidthPx">
            <property name="maximumSize">
             <size>
@@ -88,44 +143,7 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_sizePx">
-           <property name="text">
-            <string>Total Size (px):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="4">
-          <widget class="QSlider" name="horizontalSlider_stringSizePx">
-           <property name="minimum">
-            <number>8</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="4">
-          <widget class="QSlider" name="horizontalSlider_sizePx">
-           <property name="minimum">
-            <number>16</number>
-           </property>
-           <property name="maximum">
-            <number>512</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLabel" name="label_outlineColor">
-           <property name="text">
-            <string>Outline Color:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
+         <item row="1" column="3">
           <widget class="QSpinBox" name="spinBox_sizePx">
            <property name="minimum">
             <number>16</number>
@@ -135,52 +153,34 @@
            </property>
           </widget>
          </item>
-         <item row="10" column="4">
-          <widget class="QSlider" name="horizontalSlider_outlineRadiusPercent">
+         <item row="1" column="4">
+          <widget class="QSlider" name="slider_sizePx">
+           <property name="minimum">
+            <number>16</number>
+           </property>
            <property name="maximum">
-            <number>100</number>
+            <number>512</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="7" column="3">
-          <widget class="QPushButton" name="pushButton_backgroundColor">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_sizePx">
            <property name="text">
-            <string/>
+            <string>Total Size (px):</string>
            </property>
           </widget>
          </item>
-         <item row="10" column="0">
-          <widget class="QLabel" name="label_outlineRadiusPercent">
-           <property name="text">
-            <string>Outline Radius (%):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="3">
-          <widget class="QSpinBox" name="spinBox_stringSizePx">
-           <property name="minimum">
-            <number>8</number>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="3">
-          <widget class="QSpinBox" name="spinBox_outlineRadiusPercent">
-           <property name="maximum">
-            <number>100</number>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="0">
+         <item row="0" column="0">
           <widget class="QLabel" name="label_string">
            <property name="text">
-            <string>Preview Character:</string>
+            <string>Preview String:</string>
            </property>
           </widget>
          </item>
-         <item row="11" column="3">
+         <item row="0" column="3">
           <widget class="QLineEdit" name="lineEdit_string">
            <property name="maximumSize">
             <size>
@@ -194,29 +194,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QDialogButtonBox" name="buttonBox">
-        <property name="standardButtons">
-         <set>QDialogButtonBox::Close|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Save</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+       <widget class="QGraphicsView" name="graphicsView_preview"/>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QGraphicsView" name="graphicsView_preview"/>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Close|QDialogButtonBox::Reset|QDialogButtonBox::Save</set>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -225,8 +212,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>726</width>
-     <height>22</height>
+     <width>628</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>

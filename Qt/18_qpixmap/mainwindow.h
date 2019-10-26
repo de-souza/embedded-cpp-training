@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "mypixmap.h"
+
 #include <QMainWindow>
 #include <QAbstractButton>
 
@@ -16,40 +18,22 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void mUpdateSizePx(const int);
-    void mUpdateStringSizePx(const int);
-    void mUpdateStringColor();
-    void mUpdateBackgroundColor();
-    void mUpdateOutlineColor();
-    void mUpdateOutlineWidthPx(const int);
-    void mUpdateOutlineRadiusPercent(const int);
-    void mUpdateString(const QString);
-    void mOnButtonClick(const QAbstractButton*);
+public slots:
+    void SetString(const QString);
+    void SetSizePx(const int);
+    void SetStringSizePx(const int);
+    void SetOutlineWidthPx(const int);
+    void SetOutlineRadiusPercent(const int);
+    void SetBackgroundColor();
+    void SetStringColor();
+    void SetOutlineColor();
+    void Reset(const QAbstractButton*);
+    void Save();
 
 private:
     Ui::MainWindow* ui;
-    int mSizePx;
-    int mStringSizePx;
-    QString mString;
-    QColor mStringColor;
-    QColor mBackgroundColor;
-    QColor mOutlineColor;
-    int mOutlineWidthPx;
-    int mOutlineRadiusPercent;
-    QPixmap mCreatePixmap(QString string);
-    void mSetDefaults();
-    void mSetSizePx(const int);
-    void mSetStringSizePx(const int);
-    void mSetStringColor(const QColor);
-    void mSetBackgroundColor(const QColor);
-    void mSetOutlineColor(const QColor);
-    void mSetOutlineWidthPx(const int);
-    void mSetOutlineRadiusPercent(const int);
-    void mSetString(const QString);
-    void mUpdatePreview();
-    void mSaveVisibleAscii();
-    void mSaveChar(char ch, QString directory);
+    MyPixmap mMyPixmap;
+    void mLoadPixmap();
 };
 
 #endif // MAINWINDOW_H
