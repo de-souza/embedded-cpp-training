@@ -7,7 +7,7 @@ timeout=5
 echo "This computer's IP address: $ip"
 echo "Other IPs on the network:"
 
-for i in $(seq -f "${ip%\.*}.%g" 0 254); do
+for i in $(seq -f "${ip%\.*}.%g" 1 254); do
     (ping "$i" -c 1 -w "$timeout" >/dev/null && echo "$i" &)
 done
 sleep "$timeout"
