@@ -21,8 +21,8 @@ done
 sleep "$timeout"
 cat "$reachable"
 
-# Prepare a program to use SSH without entering the password
-echo 'echo "ajc"' >> "$getpassword"
+# Prepare a program to output password to ssh
+echo "echo '$password'" >> "$getpassword"
 chmod +x "$getpassword"
 export SSH_ASKPASS="$getpassword" DISPLAY=
 
