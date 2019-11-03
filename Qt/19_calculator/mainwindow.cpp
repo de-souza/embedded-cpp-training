@@ -1,27 +1,34 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "calculate.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->pushButton_0, &QPushButton::clicked, this, &MainWindow::On0);
-    connect(ui->pushButton_1, &QPushButton::clicked, this, &MainWindow::On1);
-    connect(ui->pushButton_2, &QPushButton::clicked, this, &MainWindow::On2);
-    connect(ui->pushButton_3, &QPushButton::clicked, this, &MainWindow::On3);
-    connect(ui->pushButton_4, &QPushButton::clicked, this, &MainWindow::On4);
-    connect(ui->pushButton_5, &QPushButton::clicked, this, &MainWindow::On5);
-    connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::On6);
-    connect(ui->pushButton_7, &QPushButton::clicked, this, &MainWindow::On7);
-    connect(ui->pushButton_8, &QPushButton::clicked, this, &MainWindow::On8);
-    connect(ui->pushButton_9, &QPushButton::clicked, this, &MainWindow::On9);
-    connect(ui->pushButton_dot, &QPushButton::clicked, this, &MainWindow::OnDot);
-    connect(ui->pushButton_add, &QPushButton::clicked, this, &MainWindow::OnAdd);
-    connect(ui->pushButton_diff, &QPushButton::clicked, this, &MainWindow::OnDiff);
-    connect(ui->pushButton_mult, &QPushButton::clicked, this, &MainWindow::OnMult);
-    connect(ui->pushButton_div, &QPushButton::clicked, this, &MainWindow::OnDiv);
-    connect(ui->pushButton_equal, &QPushButton::clicked, this, &MainWindow::OnEqual);
+    ui->buttonGroup->setId(ui->pushButton_0, IdNum0);
+    ui->buttonGroup->setId(ui->pushButton_1, IdNum1);
+    ui->buttonGroup->setId(ui->pushButton_2, IdNum2);
+    ui->buttonGroup->setId(ui->pushButton_3, IdNum3);
+    ui->buttonGroup->setId(ui->pushButton_4, IdNum4);
+    ui->buttonGroup->setId(ui->pushButton_5, IdNum5);
+    ui->buttonGroup->setId(ui->pushButton_6, IdNum6);
+    ui->buttonGroup->setId(ui->pushButton_7, IdNum7);
+    ui->buttonGroup->setId(ui->pushButton_8, IdNum8);
+    ui->buttonGroup->setId(ui->pushButton_9, IdNum9);
+    ui->buttonGroup->setId(ui->pushButton_dot, IdDot);
+    ui->buttonGroup->setId(ui->pushButton_equal, IdEqual);
+    ui->buttonGroup->setId(ui->pushButton_add, IdAdd);
+    ui->buttonGroup->setId(ui->pushButton_diff, IdDiff);
+    ui->buttonGroup->setId(ui->pushButton_mult, IdMult);
+    ui->buttonGroup->setId(ui->pushButton_div, IdDiv);
+    connect(
+        ui->buttonGroup,
+        QOverload<int>::of(&QButtonGroup::buttonClicked),
+        this,
+        &MainWindow::OnButtonClick
+    );
 }
 
 MainWindow::~MainWindow()
@@ -29,82 +36,32 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::On0()
+QString MainWindow::GetText(const int id)
 {
-    ui->lineEdit->setText(ui->lineEdit->text() + "0");
+    switch (id) {
+    case IdNum0: return "0";
+    case IdNum1: return "1";
+    case IdNum2: return "2";
+    case IdNum3: return "3";
+    case IdNum4: return "4";
+    case IdNum5: return "5";
+    case IdNum6: return "6";
+    case IdNum7: return "7";
+    case IdNum8: return "8";
+    case IdNum9: return "9";
+    case IdDot: return ".";
+    case IdAdd: return "+";
+    case IdDiff: return "-";
+    case IdMult: return "*";
+    case IdDiv: return "/";
+    default: return "?";
+    }
 }
 
-void MainWindow::On1()
+void MainWindow::OnButtonClick(const int id)
 {
-    ui->lineEdit->setText(ui->lineEdit->text() + "1");
-}
-
-void MainWindow::On2()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "2");
-}
-
-void MainWindow::On3()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "3");
-}
-
-void MainWindow::On4()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "4");
-}
-
-void MainWindow::On5()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "5");
-}
-
-void MainWindow::On6()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "6");
-}
-
-void MainWindow::On7()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "7");
-}
-
-void MainWindow::On8()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "8");
-}
-
-void MainWindow::On9()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "9");
-}
-
-void MainWindow::OnDot()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + ".");
-}
-
-void MainWindow::OnAdd()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "+");
-}
-
-void MainWindow::OnDiff()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "-");
-}
-
-void MainWindow::OnMult()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "*");
-}
-
-void MainWindow::OnDiv()
-{
-    ui->lineEdit->setText(ui->lineEdit->text() + "/");
-}
-
-void MainWindow::OnEqual()
-{
-
+    if (id == IdEqual)
+        ui->lineEdit->setText(Calculate::GetResult(ui->lineEdit->text()));
+    else
+        ui->lineEdit->setText(ui->lineEdit->text() + GetText(id));
 }

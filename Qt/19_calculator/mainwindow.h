@@ -11,27 +11,15 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public slots:
-    void On0();
-    void On1();
-    void On2();
-    void On3();
-    void On4();
-    void On5();
-    void On6();
-    void On7();
-    void On8();
-    void On9();
-    void OnDot();
-    void OnAdd();
-    void OnDiff();
-    void OnMult();
-    void OnDiv();
-    void OnEqual();
-
 public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
+    enum {IdNum0, IdNum1, IdNum2, IdNum3, IdNum4, IdNum5, IdNum6, IdNum7,
+          IdNum8, IdNum9, IdDot, IdAdd, IdDiff, IdMult, IdDiv, IdEqual};
+    QString GetText(const int);
+
+public slots:
+    void OnButtonClick(const int);
 
 private:
     Ui::MainWindow* ui;
