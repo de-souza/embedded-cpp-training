@@ -23,7 +23,12 @@ MainWindow::~MainWindow()
 void MainWindow::OnButtonClick(const QAbstractButton* button)
 {
     if (button == ui->pushButton_equal)
-        ui->lineEdit->setText(Calculate::Evaluate(ui->lineEdit->text()));
+        ui->lineEdit->setText(Evaluate(ui->lineEdit->text()));
     else
         ui->lineEdit->setText(ui->lineEdit->text() + button->text());
+}
+
+QString MainWindow::Evaluate(const QString)
+{
+
 }

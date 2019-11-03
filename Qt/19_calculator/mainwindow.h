@@ -12,12 +12,13 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+public slots:
+    void OnButtonClick(const QAbstractButton*);
+
 public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
-
-public slots:
-    void OnButtonClick(const QAbstractButton*);
+    QString Evaluate(const QString);
 
 private:
     Ui::MainWindow* ui;
