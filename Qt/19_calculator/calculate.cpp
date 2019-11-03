@@ -5,7 +5,7 @@ Calculate::Calculate()
 
 }
 
-QString Calculate::GetResult(const QString)
+QString Calculate::Evaluate(const QString)
 {
     return "Result";
 }

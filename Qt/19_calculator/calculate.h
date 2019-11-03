@@ -7,7 +7,7 @@ class Calculate
 {
 public:
     Calculate();
-    static QString GetResult(const QString);
+    static QString Evaluate(const QString);
 };
 
 #endif // CALCULATE_H
