@@ -19,6 +19,8 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
     QString Evaluate(const QString);
+    float Process(const QString op, const float lhs, const float rhs);
+    bool IsOperator(const QString);
 
 private:
     Ui::MainWindow* ui;
