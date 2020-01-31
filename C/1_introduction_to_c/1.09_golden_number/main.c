@@ -14,7 +14,7 @@ int main()
         printf("Please enter a number between 0 and 99. n = ");
         while (!scanf("%d", &guess)) {
             printf("This is not a number. Please try again. n = ");
-            while ((guess = getchar()) != '\n' && guess != EOF) {}  // flush stdin
+            while (getchar() != '\n');  // flush stdin
         }
         if (guess < number) {
             puts("The number is higher.");
