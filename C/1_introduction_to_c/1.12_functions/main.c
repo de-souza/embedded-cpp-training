@@ -47,8 +47,7 @@ void lowercase(char *restrict s)
 
 void flush_stdin()
 {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}
+    while (getchar() != '\n');
 }
 
 void query_string(char *restrict s, const char *restrict message)
