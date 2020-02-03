@@ -7,8 +7,8 @@ void reverse_using_arr(char arr[])
     int len = strlen(arr);
     for (int i = 0; i < len/2; i++) {
         char temp = arr[i];
-        arr[i] = arr[len-(i+1)];
-        arr[len-(i+1)] = temp;
+        arr[i] = arr[len-1-i];
+        arr[len-1-i] = temp;
     }
 }
 
