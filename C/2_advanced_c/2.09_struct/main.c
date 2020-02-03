@@ -15,8 +15,7 @@ typedef struct {
 
 void flush_stdin()
 {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    while (getchar() != '\n');
 }
 
 void safe_fgets(char *buffer, const int max_size)
