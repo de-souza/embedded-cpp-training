@@ -126,17 +126,17 @@ book_t *swap_with_next(book_t *first)
 
 void write_next_book(FILE *fp, book_t *current)
 {
-        fprintf(fp, "%s\n%s\n%d\n", current->author, current->title, current->year);
+    fprintf(fp, "%s\n%s\n%d\n", current->author, current->title, current->year);
 }
 
 book_t read_next_book(FILE *fp)
 {
     book_t book;
     if (fgets(book.author, sizeof(book.author), fp) != NULL) {
-            fgets(book.title, sizeof(book.title), fp);
-            fscanf(fp, "%hd ", &(book.year));
-            book.author[strlen(book.author)-1] = '\0';
-            book.title[strlen(book.title)-1] = '\0';
+        fgets(book.title, sizeof(book.title), fp);
+        fscanf(fp, "%hd ", &(book.year));
+        book.author[strlen(book.author)-1] = '\0';
+        book.title[strlen(book.title)-1] = '\0';
     } else {
         book = EMPTY_BOOK;
     }
